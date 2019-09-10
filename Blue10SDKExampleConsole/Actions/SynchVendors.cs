@@ -43,19 +43,34 @@ namespace Blue10SDKExampleConsole
                 }
                 else
                 {
+                    SaveIfChanged(fVendor, fVendorB10);
                     fHandled.Add(fVendorB10);
                 }
             }
             var fToDelete = pVendorsB10.Where(p => !fHandled.Contains(p));
             foreach(var fDelItem in fToDelete)
             {
-
+                mDesk.DeleteVendor(fDelItem);
             }
         }
 
         private void SaveIfChanged(Vendor pVendor, Vendor pVendorB10)
         {
+            if (pVendor.blocked == pVendorB10.blocked && pVendor.country_code == pVendorB10.country_code && pVendor.currency_code == pVendorB10.currency_code && pVendor.name == pVendorB10.name &&
+                pVendor.vat_number == pVendorB10.vat_number && pVendor.vendor_customer_code == pVendorB10.vendor_customer_code)
+            {
+                if (pVendor.iban == null && pVendorB10.iban == null) return;
+                if (pVendor.iban != null && pVendorB10.iban != null && Enumerable.SequenceEqual(pVendor.iban, pVendorB10.iban)) return;
+            }
 
+            pVendorB10.blocked = pVendor.blocked;
+            pVendorB10.country_code = pVendor.country_code;
+            pVendorB10.currency_code = pVendor.currency_code;
+            pVendorB10.iban = pVendor.iban;
+            pVendorB10.name = pVendor.name;
+            pVendorB10.vat_number = pVendor.vat_number;
+            pVendorB10.vendor_customer_code = pVendor.vendor_customer_code;
+            mDesk.EditVendor(pVendorB10);
         }
 
         private  List<Vendor> GetVendorsFromInput(DataTable pTable, string pCompanyCode)

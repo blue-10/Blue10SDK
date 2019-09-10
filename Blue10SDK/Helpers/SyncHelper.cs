@@ -11,18 +11,6 @@ namespace Blue10SDK
     {
         private static readonly TaskFactory mTaskFactory = new TaskFactory(CancellationToken.None, TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
 
-        public static void RunAsyncAsSync(Func<Task> pFunc)
-        {
-            var fCultureUi = CultureInfo.CurrentUICulture;
-            var fCulture = CultureInfo.CurrentCulture;
-            mTaskFactory.StartNew(() =>
-            {
-                Thread.CurrentThread.CurrentCulture = fCulture;
-                Thread.CurrentThread.CurrentUICulture = fCultureUi;
-                return pFunc();
-            }).Unwrap().GetAwaiter().GetResult();
-        }
-
         public static TResult RunAsyncAsSync<TResult>(Func<Task<TResult>> pFunc)
         {
             var fCultureUi = CultureInfo.CurrentUICulture;

@@ -1,10 +1,8 @@
 ﻿using Blue10SDK.Model;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blue10SDK
@@ -81,6 +79,40 @@ namespace Blue10SDK
         private async Task<Vendor> AddVendor(HttpClient client, Vendor pVendor, string url)
         {
             var fRet = await Blue10ApiHelper.PostAsync<Vendor>(client, pVendor, url);
+            return fRet;
+        }
+
+        public Vendor EditVendor(Vendor pVendor)
+        {
+            using (var client = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{client.BaseAddress}/vendors/{pVendor.id}";
+                client.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditVendor(client, pVendor, fUrl));
+                return fRet;
+            }
+        }
+
+        private async Task<Vendor> EditVendor(HttpClient client, Vendor pVendor, string url)
+        {
+            var fRet = await Blue10ApiHelper.PutAsync<Vendor>(client, pVendor, url);
+            return fRet;
+        }
+
+        public bool DeleteVendor(Vendor pVendor)
+        {
+            using (var client = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{client.BaseAddress}/vendors/{pVendor.id}";
+                client.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => DeleteVendor(client, fUrl));
+                return fRet;
+            }
+        }
+
+        private async Task<bool> DeleteVendor(HttpClient client, string url)
+        {
+            var fRet = await Blue10ApiHelper.DeleteAsync(client, url);
             return fRet;
         }
     }
