@@ -10,8 +10,8 @@ namespace Blue10SDKExampleConsole
 {
     public class SynchVendors
     {
-        private string mFileName { get; set; }
-        private Desk mDesk { get; set; }
+        private string mFileName { get; }
+        private Desk mDesk { get; }
         public SynchVendors(Desk pDesk, string pFileName)
         {
             mDesk = pDesk;

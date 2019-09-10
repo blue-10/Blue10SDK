@@ -1,8 +1,5 @@
 ﻿using Blue10SDK;
-using Blue10SDK.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Blue10SDKExampleConsole
 {

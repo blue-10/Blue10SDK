@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public class Blue10ApiHelper
+    public static class Blue10ApiHelper
     {
         private static T ParseJson<T>(string json)
         {
@@ -19,10 +18,10 @@ namespace Blue10SDK
             {
                 var fResponseHttp = await pHttpCLient.GetAsync(pUrl);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = Blue10ApiHelper.ParseJson<JsonDataResult<TResult>>(fJson);
+                var fResponsObject = ParseJson<JsonDataResult<TResult>>(fJson);
                 if (fResponsObject == null) return default;
                 if (fResponsObject.Code == 200) return fResponsObject.Data;
-                throw new Exception(fResponsObject.Message);
+                throw new Blue10ApiException(fResponsObject.Message);
             }
             catch
             {
@@ -38,10 +37,10 @@ namespace Blue10SDK
                 var fHttpContent = new StringContent(fJsonObject);
                 var fResponseHttp = await pHttpCLient.PostAsync(pUrl, fHttpContent);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = Blue10ApiHelper.ParseJson<JsonDataResult<TObject>>(fJson);
+                var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
                 if (fResponsObject == null) return default;
                 if (fResponsObject.Code == 200) return fResponsObject.Data;
-                throw new Exception(fResponsObject.Message);
+                throw new Blue10ApiException(fResponsObject.Message);
             }
             catch
             {
@@ -57,10 +56,10 @@ namespace Blue10SDK
                 var fHttpContent = new StringContent(fJsonObject);
                 var fResponseHttp = await pHttpCLient.PutAsync(pUrl, fHttpContent);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = Blue10ApiHelper.ParseJson<JsonDataResult<TObject>>(fJson);
+                var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
                 if (fResponsObject == null) return default;
                 if (fResponsObject.Code == 200) return fResponsObject.Data;
-                throw new Exception(fResponsObject.Message);
+                throw new Blue10ApiException(fResponsObject.Message);
             }
             catch
             {
@@ -74,10 +73,10 @@ namespace Blue10SDK
             {
                 var fResponseHttp = await pHttpCLient.DeleteAsync(pUrl);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = Blue10ApiHelper.ParseJson<JsonDataResult<bool>>(fJson);
+                var fResponsObject = ParseJson<JsonDataResult<bool>>(fJson);
                 if (fResponsObject == null) return default;
                 if (fResponsObject.Code == 200 && fResponsObject.Status == "success") return true;
-                throw new Exception(fResponsObject.Message);
+                throw new Blue10ApiException(fResponsObject.Message);
             }
             catch
             {

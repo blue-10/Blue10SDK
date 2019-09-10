@@ -46,7 +46,7 @@ namespace Blue10SDKExampleConsole
 
         private static void ProcessAction()
         {
-            var fHttpClientHelper = new htppClientHelper();
+            var fHttpClientHelper = new httpClientHelper();
 
             var fDesk = new Desk(fHttpClientHelper);
             switch (mAction)

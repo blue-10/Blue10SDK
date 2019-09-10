@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Blue10SDKExampleConsole
 {
-    public class htppClientHelper : IHttpClientFactory
+    public class httpClientHelper : IHttpClientFactory
     {
         public HttpClient CreateClient(string name)
         {
