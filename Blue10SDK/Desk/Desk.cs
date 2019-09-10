@@ -11,9 +11,9 @@ namespace Blue10SDK
     {
         IHttpClientFactory mHttpClientFactory;
 
-        public Desk(IHttpClientFactory httpClientFactory)
+        public Desk(IHttpClientFactory pHttpClientFactory)
         {
-            mHttpClientFactory = httpClientFactory;
+            mHttpClientFactory = pHttpClientFactory;
 
             JsonConvert.DefaultSettings = (() =>
             {
@@ -33,18 +33,18 @@ namespace Blue10SDK
         // alles documenteren
         public List<Company> GetCompanies()
         {          
-            using (var client = mHttpClientFactory.CreateClient())
+            using (var fClient = mHttpClientFactory.CreateClient())
             {
-                var fUrl = $"{client.BaseAddress}/companies";
-                client.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(()=> GetCompanies(client, fUrl));
+                var fUrl = $"{fClient.BaseAddress}/companies";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(()=> GetCompanies(fClient, fUrl));
                 return fRet;
             }
         }
 
-        private async Task<List<Company>> GetCompanies(HttpClient client, string url)
+        private async Task<List<Company>> GetCompanies(HttpClient pClient, string pUrl)
         {
-            var fRet = await Blue10ApiHelper.GetAsync<List<Company>>(client, url);
+            var fRet = await Blue10ApiHelper.GetAsync<List<Company>>(pClient, pUrl);
             return fRet;
         }
 
@@ -59,9 +59,9 @@ namespace Blue10SDK
             }
         }
 
-        private async Task<List<Vendor>> GetVendors(HttpClient client, string url)
+        private async Task<List<Vendor>> GetVendors(HttpClient pClient, string pUrl)
         {
-            var fRet = await Blue10ApiHelper.GetAsync<List<Vendor>>(client, url);
+            var fRet = await Blue10ApiHelper.GetAsync<List<Vendor>>(pClient, pUrl);
             return fRet;
         }
 
@@ -76,9 +76,9 @@ namespace Blue10SDK
             }
         }
 
-        private async Task<Vendor> AddVendor(HttpClient client, Vendor pVendor, string url)
+        private async Task<Vendor> AddVendor(HttpClient pClient, Vendor pVendor, string pUrl)
         {
-            var fRet = await Blue10ApiHelper.PostAsync<Vendor>(client, pVendor, url);
+            var fRet = await Blue10ApiHelper.PostAsync<Vendor>(pClient, pVendor, pUrl);
             return fRet;
         }
 
@@ -93,9 +93,9 @@ namespace Blue10SDK
             }
         }
 
-        private async Task<Vendor> EditVendor(HttpClient client, Vendor pVendor, string url)
+        private async Task<Vendor> EditVendor(HttpClient pClient, Vendor pVendor, string pUrl)
         {
-            var fRet = await Blue10ApiHelper.PutAsync<Vendor>(client, pVendor, url);
+            var fRet = await Blue10ApiHelper.PutAsync<Vendor>(pClient, pVendor, pUrl);
             return fRet;
         }
 
@@ -110,9 +110,9 @@ namespace Blue10SDK
             }
         }
 
-        private async Task<bool> DeleteVendor(HttpClient client, string url)
+        private async Task<bool> DeleteVendor(HttpClient pClient, string pUrl)
         {
-            var fRet = await Blue10ApiHelper.DeleteAsync(client, url);
+            var fRet = await Blue10ApiHelper.DeleteAsync(pClient, pUrl);
             return fRet;
         }
     }
