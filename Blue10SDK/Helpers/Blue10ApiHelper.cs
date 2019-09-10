@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,8 +21,8 @@ namespace Blue10SDK
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = ParseJson<JsonDataResult<TResult>>(fJson);
                 if (fResponsObject == null) return default;
-                if (fResponsObject.Code == 200) return fResponsObject.Data;
-                throw new Blue10ApiException(fResponsObject.Message);
+                if (fResponsObject.code == 200) return fResponsObject.data;
+                throw new Blue10ApiException(fResponsObject.message);
             }
             catch
             {
@@ -39,8 +40,8 @@ namespace Blue10SDK
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
                 if (fResponsObject == null) return default;
-                if (fResponsObject.Code == 200) return fResponsObject.Data;
-                throw new Blue10ApiException(fResponsObject.Message);
+                if (fResponsObject.code == 200) return fResponsObject.data;
+                throw new Blue10ApiException(fResponsObject.message);
             }
             catch
             {
@@ -58,8 +59,8 @@ namespace Blue10SDK
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
                 if (fResponsObject == null) return default;
-                if (fResponsObject.Code == 200) return fResponsObject.Data;
-                throw new Blue10ApiException(fResponsObject.Message);
+                if (fResponsObject.code == 200) return fResponsObject.data;
+                throw new Blue10ApiException(fResponsObject.message);
             }
             catch
             {
@@ -75,8 +76,8 @@ namespace Blue10SDK
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = ParseJson<JsonDataResult<bool>>(fJson);
                 if (fResponsObject == null) return default;
-                if (fResponsObject.Code == 200 && fResponsObject.Status == "success") return true;
-                throw new Blue10ApiException(fResponsObject.Message);
+                if (fResponsObject.code == 200 && fResponsObject.status == "success") return true;
+                throw new Blue10ApiException(fResponsObject.message);
             }
             catch
             {

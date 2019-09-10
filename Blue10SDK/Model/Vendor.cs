@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Blue10SDK
 {
-    public class Vendor
+    public class Vendor : BaseObject
     {
-        public string id { get; set; }
-        public string id_company { get; set; }
-        public string administration_code { get; set; }
         public string name { get; set; }
         public string vat_number { get; set; }
         public string country_code { get; set; } = "NL";

@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Blue10SDK
 {
-    public abstract class JsonDataResult<T>
+    public class JsonDataResult<T>
     {
-        public string Status { get; set; }
-        public T Data { get; set; }
-        public string Message { get; set; }
-        public int Code { get; set; }
+        public string status { get; set; }
+        public T data { get; set; }
+        public string message { get; set; }
+        public int code { get; set; }
     }
 }

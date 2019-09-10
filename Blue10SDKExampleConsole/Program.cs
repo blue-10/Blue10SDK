@@ -55,6 +55,18 @@ namespace Blue10SDKExampleConsole
                     var fSyncVendors = new SynchVendors(fDesk, mFile);
                     fSyncVendors.Synch(mCompanyCode);
                     break;
+                case "SyncGLAccounts":
+                    var fSyncGLAccounts = new SynchGLAccounts(fDesk, mFile);
+                    fSyncGLAccounts.Synch(mCompanyCode);
+                    break;
+                case "SyncCostCenters":
+                    var fSynchCostCenters = new SynchCostCenters(fDesk, mFile);
+                    fSynchCostCenters.Synch(mCompanyCode);
+                    break;
+                case "SyncVatCodes":
+                    var fSynchVATCodes = new SynchVATCodes(fDesk, mFile);
+                    fSynchVATCodes.Synch(mCompanyCode);
+                    break;
                 case "GetCompanies":
                     var fGetCompanies = new GetCompanies(fDesk);
                     fGetCompanies.GetAll();

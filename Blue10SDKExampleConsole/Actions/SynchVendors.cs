@@ -79,7 +79,7 @@ namespace Blue10SDKExampleConsole
             foreach(DataRow fRow in pTable.Rows)
             {
                 var fVendor = GetFromDataRow(fRow, pCompanyCode);
-                fRes.Add(fVendor);
+                if (!string.IsNullOrEmpty(fVendor.administration_code)) fRes.Add(fVendor);
             }
             return fRes;
         }
