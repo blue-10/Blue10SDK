@@ -71,6 +71,14 @@ namespace Blue10SDKExampleConsole
                     var fGetCompanies = new GetCompanies(fDesk);
                     fGetCompanies.GetAll();
                     break;
+                case "ProcessDocumentActions":
+                    var fProcessDocumentActions = new ProcessDocumentActions(fDesk, mFile);
+                    fProcessDocumentActions.Process();
+                    break;
+                case "ProcessAdministrationActions":
+                    var fProcessAdministrationActions = new ProcessAdministrationActions(fDesk);
+                    fProcessAdministrationActions.Process();
+                    break;
             }
         }
 

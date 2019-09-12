@@ -13,6 +13,7 @@ namespace Blue10SDK
         documentactions,
         documentoriginals,
         glaccounts,
+        logisticsdocumentactions,
         paymentterms,
         projects,
         purchaseinvoices,

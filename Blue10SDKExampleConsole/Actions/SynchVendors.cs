@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Blue10SDKExampleConsole
 {

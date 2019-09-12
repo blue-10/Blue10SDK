@@ -78,7 +78,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.companies}/{pCompany.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<Company>(fClient, pCompany, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<Company>(fClient, pCompany, fUrl));
                 return fRet;
             }
         }
@@ -121,7 +121,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.costunits}/{pCostUnit.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<CostUnit>(fClient, pCostUnit, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<CostUnit>(fClient, pCostUnit, fUrl));
                 return fRet;
             }
         }
@@ -177,7 +177,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.costcenters}/{pCostCenter.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<CostCenter>(fClient, pCostCenter, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<CostCenter>(fClient, pCostCenter, fUrl));
                 return fRet;
             }
         }
@@ -194,7 +194,33 @@ namespace Blue10SDK
                 return fRet;
             }
         }
-        #endregion 
+        #endregion
+
+        #region DocumentActions
+
+        public List<DocumentAction> GetDocumentActions()
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.documentactions}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<List<DocumentAction>>(fClient, fUrl));
+                return fRet;
+            }
+        }
+
+        public string EditDocumentAction(DocumentAction pDocumentAction)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.documentactions}/{pDocumentAction.id}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<DocumentAction>(fClient, pDocumentAction, fUrl));
+                return fRet;
+            }
+        }
+
+        #endregion
 
         #region GLAccounts
         /// <summary>
@@ -233,7 +259,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.glaccounts}/{pGLAccount.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<GLAccount>(fClient, pGLAccount, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<GLAccount>(fClient, pGLAccount, fUrl));
                 return fRet;
             }
         }
@@ -251,6 +277,32 @@ namespace Blue10SDK
             }
         }
         #endregion 
+
+        #region DocumentActions
+
+        public List<LogisticsDocumentAction> GetLogisticsDocumentActions()
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.logisticsdocumentactions}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<List<LogisticsDocumentAction>>(fClient, fUrl));
+                return fRet;
+            }
+        }
+
+        public string EditLogisticsDocumentAction(LogisticsDocumentAction pLogisticsDocumentAction)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.logisticsdocumentactions}/{pLogisticsDocumentAction.id}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<LogisticsDocumentAction>(fClient, pLogisticsDocumentAction, fUrl));
+                return fRet;
+            }
+        }
+
+        #endregion
 
         #region PaymentTerms
         /// <summary>
@@ -289,7 +341,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.paymentterms}/{pPaymentTerm.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<PaymentTerm>(fClient, pPaymentTerm, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<PaymentTerm>(fClient, pPaymentTerm, fUrl));
                 return fRet;
             }
         }
@@ -345,7 +397,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.projects}/{pProject.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<Project>(fClient, pProject, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<Project>(fClient, pProject, fUrl));
                 return fRet;
             }
         }
@@ -357,6 +409,105 @@ namespace Blue10SDK
             using (var fClient = mHttpClientFactory.CreateClient())
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.projects}/{pProject.id}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => DeleteItem(fClient, fUrl));
+                return fRet;
+            }
+        }
+        #endregion
+
+        #region PurchaseInvoice
+        /// <summary>
+        /// Returns purchase invoice with blue10 id pId
+        /// </summary>
+        public PurchaseInvoice GetPurchaseInvoice(Guid pId)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseinvoices}/{pId}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<PurchaseInvoice>(fClient, fUrl));
+                return fRet;
+            }
+        }
+
+        /// <summary>
+        /// Returns purchase invoice original (PDF) for purchase invoice with blue10 id pId
+        /// </summary>
+
+        public byte[] GetPurchaseInvoiceOriginal(Guid pId)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseinvoices}/{pId}/documentoriginal";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<DocumentOriginal>(fClient, fUrl));
+                return Base64Helper.GetBytesFromJsonResult(fRet.content);
+            }
+        }
+
+        public List<PurchaseInvoice> GetPurchaseInvoiceWithoutPaymentdate(string pIdCompany)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseinvoices}/?filter[payment_date]=null&filter[id_company]={pIdCompany}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<List<PurchaseInvoice>>(fClient, fUrl));
+                return fRet;
+            }
+        }
+
+        #endregion
+
+        #region PurchaseOrder
+        /// <summary>
+        /// Returns all PurchaseOrders for company. Input is id from company
+        /// </summary>
+        public List<PurchaseOrder> GetPurchaseOrders(string pIdCompany)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseorders}/{pIdCompany}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<List<PurchaseOrder>>(fClient, fUrl));
+                return fRet;
+            }
+        }
+
+        /// <summary>
+        /// Add PurchaseOrder and returns Project as saved in blue10
+        /// </summary>
+        public PurchaseOrder AddPurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseorders}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => AddItem<PurchaseOrder>(fClient, pPurchaseOrder, fUrl));
+                return fRet;
+            }
+        }
+        /// <summary>
+        /// Updates PurchaseOrder information and returns PurchaseOrder as saved in blue10
+        /// </summary>
+        public PurchaseOrder EditPurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseorders}/{pPurchaseOrder.id}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<PurchaseOrder>(fClient, pPurchaseOrder, fUrl));
+                return fRet;
+            }
+        }
+        /// <summary>
+        /// Delete PurchaseOrder from blue10, returns true if successful
+        /// </summary>
+        public bool DeletePurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.purchaseorders}/{pPurchaseOrder.id}";
                 fClient.BaseAddress = new Uri(fUrl);
                 var fRet = SyncHelper.RunAsyncAsSync(() => DeleteItem(fClient, fUrl));
                 return fRet;
@@ -401,7 +552,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.vatcodes}/{pVatCode.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<VatCode>(fClient, pVatCode, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<VatCode>(fClient, pVatCode, fUrl));
                 return fRet;
             }
         }
@@ -457,7 +608,7 @@ namespace Blue10SDK
             {
                 var fUrl = $"{fClient.BaseAddress}{B10Endpoint.vendors}/{pVendor.id}";
                 fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => EditItem<Vendor>(fClient, pVendor, fUrl));
+                var fRet = SyncHelper.RunAsyncAsSync(() => EditAndReturnItem<Vendor>(fClient, pVendor, fUrl));
                 return fRet;
             }
         }
@@ -481,7 +632,9 @@ namespace Blue10SDK
             await Blue10ApiHelper.GetAsync<T>(pClient, pUrl);
         private async Task<T> AddItem<T>(HttpClient pClient, T pItem, string pUrl) =>
             await Blue10ApiHelper.PostAsync<T>(pClient, pItem, pUrl);
-        private async Task<T> EditItem<T>(HttpClient pClient, T pItem, string pUrl) =>
+        private async Task<T> EditAndReturnItem<T>(HttpClient pClient, T pItem, string pUrl) =>
+            await Blue10ApiHelper.PutAndReturnAsync<T>(pClient, pItem, pUrl);
+        private async Task<string> EditItem<T>(HttpClient pClient, T pItem, string pUrl) =>
             await Blue10ApiHelper.PutAsync<T>(pClient, pItem, pUrl);
         private async Task<bool> DeleteItem(HttpClient pClient, string pUrl) =>
             await Blue10ApiHelper.DeleteAsync(pClient, pUrl);

@@ -49,7 +49,7 @@ namespace Blue10SDK
             }
         }
 
-        public static async Task<TObject> PutAsync<TObject>(HttpClient pHttpCLient, TObject pObject, string pUrl)
+        public static async Task<TObject> PutAndReturnAsync<TObject>(HttpClient pHttpCLient, TObject pObject, string pUrl)
         {
             try
             {
@@ -58,6 +58,25 @@ namespace Blue10SDK
                 var fResponseHttp = await pHttpCLient.PutAsync(pUrl, fHttpContent);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
+                if (fResponsObject == null) return default;
+                if (fResponsObject.code == 200) return fResponsObject.data;
+                throw new Blue10ApiException(fResponsObject.message);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static async Task<string> PutAsync<TObject>(HttpClient pHttpCLient, TObject pObject, string pUrl)
+        {
+            try
+            {
+                var fJsonObject = JsonConvert.SerializeObject(pObject);
+                var fHttpContent = new StringContent(fJsonObject);
+                var fResponseHttp = await pHttpCLient.PutAsync(pUrl, fHttpContent);
+                var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var fResponsObject = ParseJson<JsonDataResult<string>>(fJson);
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code == 200) return fResponsObject.data;
                 throw new Blue10ApiException(fResponsObject.message);
