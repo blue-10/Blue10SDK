@@ -1,0 +1,7 @@
+-a SyncCostCenters -f "C:\Temp\costcenters_001.csv" -c "001"
+-a SyncGLAccounts -f "C:\Temp\glaccounts_001.csv" -c "001"
+-a SyncVatCodes -f "C:\Temp\vatcodes_001.csv" -c "001"
+-a SyncVendors -f "C:\Temp\vendors_001.csv" -c "001"
+
+-a ProcessDocumentActions -f "C:\Temp\freepack\IMPORT" 
+-a ProcessAdministrationActions 
