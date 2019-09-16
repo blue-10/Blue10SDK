@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Blue10SDKWinformExample
 {
-    public partial class Form1 : Form
+    public partial class Blue10 : Form
     {
-        public Form1()
+        public Blue10()
         {
             InitializeComponent();
         }
