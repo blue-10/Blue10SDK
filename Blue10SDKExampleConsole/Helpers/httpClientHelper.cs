@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 
@@ -18,6 +19,7 @@ namespace Blue10SDKExampleConsole
                 BaseAddress = new Uri(fApiUrl),
                 Timeout = TimeSpan.FromMinutes(3)
             };
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
             fHttpClient.DefaultRequestHeaders.Add("Authorization", $"access_token {fApiKey}");
             fHttpClient.DefaultRequestHeaders.Add("content-typen", "application/json");
             return fHttpClient;

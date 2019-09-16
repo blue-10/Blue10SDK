@@ -1,0 +1,3 @@
+
+page 1:
+- Apikey & Url input (default https://api.blue10.com/v2)
