@@ -24,6 +24,22 @@ namespace Blue10SDK
             };
         }
 
+        #region Me
+        /// <summary>
+        /// Returns environment name of API key if valid
+        /// </summary>
+        public string GetMe()
+        {
+            using (var fClient = mHttpClientFactory.CreateClient())
+            {
+                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.me}";
+                fClient.BaseAddress = new Uri(fUrl);
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<Me>(fClient, fUrl));
+                return fRet.environment_name;
+            }
+        }
+        #endregion
+
         #region AdministrationActions
         /// <summary>
         /// Returns all document actions which has to be processed

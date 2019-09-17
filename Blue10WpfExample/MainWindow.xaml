@@ -7,7 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="288,152,0,0" Text="Môguh" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TabControl x:Name="tabControl">
+            <TabItem Header="Config">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock Padding="5">
+                        <Label Margin="0,0,0,0" >Apikey : </Label>
+                     <TextBox x:Name="ApiKey" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" Text="PYjIuwfgGFJbiRcX8U9bmioPyehJ7JPtWc4F3PCT5sFH4TbtlaEtPxQtSLysZ4Bs" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
+                    </TextBlock>
+                    <TextBlock Padding="5">
+                        <Label Margin="0,0,0,0" >Api url : </Label>
+                     <TextBox x:Name="ApiUrl" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" Text="http://localhost:52476" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+                    </TextBlock>
+                    <Button x:Name="button" Content="Test connection" HorizontalAlignment="Left" Margin="70,95,0,0" VerticalAlignment="Top" Width="120"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Companies">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock Padding="5">List companies</TextBlock>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
