@@ -11,10 +11,10 @@ namespace Blue10SDKExampleConsole
     public class SynchCostCenters
     {
         private string mFileName { get; }
-        private IBlue10Desk MBlue10Desk { get; }
-        public SynchCostCenters(IBlue10Desk pBlue10Desk, string pFileName)
+        private IBlue10Client MBlue10Client { get; }
+        public SynchCostCenters(IBlue10Client pBlue10Client, string pFileName)
         {
-            MBlue10Desk = pBlue10Desk;
+            MBlue10Client = pBlue10Client;
             mFileName = pFileName;           
         }
 
@@ -27,7 +27,7 @@ namespace Blue10SDKExampleConsole
             }
             var fDataTable = CsvHelper.ConvertCSVtoDataTable(mFileName, ';');
             var fCostCenters = GetCostCentersFromInput(fDataTable, pCompanyCode);
-            var fCostCentersB10 = MBlue10Desk.GetCostCenters(pCompanyCode);
+            var fCostCentersB10 = MBlue10Client.GetCostCenters(pCompanyCode);
             Synch(fCostCenters, fCostCentersB10);
         }
 
@@ -39,7 +39,7 @@ namespace Blue10SDKExampleConsole
                 var fCostCenterB10 = pCostCentersB10.FirstOrDefault(x => x.administration_code == fCostCenter.administration_code && x.id_company == fCostCenter.id_company);
                 if(fCostCenterB10 == null)
                 {
-                    var fAdded = MBlue10Desk.AddCostCenter(fCostCenter);
+                    var fAdded = MBlue10Client.AddCostCenter(fCostCenter);
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Blue10SDKExampleConsole
             var fToDelete = pCostCentersB10.Where(p => !fHandled.Contains(p));
             foreach(var fDelItem in fToDelete)
             {
-                MBlue10Desk.DeleteCostCenter(fDelItem);
+                MBlue10Client.DeleteCostCenter(fDelItem);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Blue10SDKExampleConsole
             if (pCostCenter.name == pCostCenterB10.name) return;
             
             pCostCenterB10.name = pCostCenter.name;
-            MBlue10Desk.EditCostCenter(pCostCenterB10);
+            MBlue10Client.EditCostCenter(pCostCenterB10);
         }
 
         private  List<CostCenter> GetCostCentersFromInput(DataTable pTable, string pCompanyCode)

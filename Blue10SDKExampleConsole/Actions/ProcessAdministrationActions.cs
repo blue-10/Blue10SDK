@@ -7,16 +7,16 @@ namespace Blue10SDKExampleConsole
 {
     public class ProcessAdministrationActions
     {
-        private IBlue10Desk MBlue10Desk { get; }
+        private IBlue10Client MBlue10Client { get; }
 
-        public ProcessAdministrationActions(IBlue10Desk pBlue10Desk)
+        public ProcessAdministrationActions(IBlue10Client pBlue10Client)
         {
-            MBlue10Desk = pBlue10Desk;
+            MBlue10Client = pBlue10Client;
         }
 
         public void Process(string pFilePath)
         {
-            var fAdministrationActions = MBlue10Desk.GetAdministrationActions();
+            var fAdministrationActions = MBlue10Client.GetAdministrationActions();
             foreach(var fAdministrationAction in fAdministrationActions)
             {
                 switch (fAdministrationAction.action)
@@ -26,12 +26,12 @@ namespace Blue10SDKExampleConsole
                         break;
                     case EAdministrationAction.update_vendors:
                         // Update all vendors here
-                        var fSynchVendors = new SynchVendors(MBlue10Desk, pFilePath);
+                        var fSynchVendors = new SynchVendors(MBlue10Client, pFilePath);
                         fSynchVendors.Synch(fAdministrationAction.id_company);
                         break;
                 }
 
-                MBlue10Desk.FinishAdministrationAction(fAdministrationAction);
+                MBlue10Client.FinishAdministrationAction(fAdministrationAction);
             }
         }
     }

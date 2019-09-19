@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public interface IBlue10Desk
+    public interface IBlue10Client
     {
       
 

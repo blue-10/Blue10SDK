@@ -6,15 +6,15 @@ namespace Blue10SDKExampleConsole
     
     public class GetCompanies
     {
-        private IBlue10Desk MBlue10Desk { get; set; }
-        public GetCompanies(IBlue10Desk pBlue10Desk)
+        private IBlue10Client MBlue10Client { get; set; }
+        public GetCompanies(IBlue10Client pBlue10Client)
         {
-            MBlue10Desk = pBlue10Desk;
+            MBlue10Client = pBlue10Client;
         }
 
         public List<Company> GetAll()
         {
-            var fRet = MBlue10Desk.GetCompanies();
+            var fRet = MBlue10Client.GetCompanies();
             return fRet;
         }
     }

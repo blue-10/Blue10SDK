@@ -10,10 +10,10 @@ namespace Blue10SDKExampleConsole
     public class ProcessDocumentActions
     {
         private string mExportPath { get; }
-        private IBlue10Desk MBlue10Desk { get; }
-        public ProcessDocumentActions(IBlue10Desk pBlue10Desk, string pExportPath)
+        private IBlue10Client MBlue10Client { get; }
+        public ProcessDocumentActions(IBlue10Client pBlue10Client, string pExportPath)
         {
-            MBlue10Desk = pBlue10Desk;
+            MBlue10Client = pBlue10Client;
             mExportPath = pExportPath;
         }
 
@@ -23,7 +23,7 @@ namespace Blue10SDKExampleConsole
             {
                 Directory.CreateDirectory(mExportPath);
             }
-            var fDocumentActions = MBlue10Desk.GetDocumentActions();
+            var fDocumentActions = MBlue10Client.GetDocumentActions();
             foreach (var fDocumentAction in fDocumentActions)
             {
                 switch (fDocumentAction.action)
@@ -55,7 +55,7 @@ namespace Blue10SDKExampleConsole
         {
             try
             {
-                var fDocumentOriginal = MBlue10Desk.GetPurchaseInvoiceOriginal(pDocumentAction.purchase_invoice.id);
+                var fDocumentOriginal = MBlue10Client.GetPurchaseInvoiceOriginal(pDocumentAction.purchase_invoice.id);
                 var fDocumentFolder = string.Empty;
                 var fDocumentId = string.Empty;
                 var fExportCompanyPath = Path.Combine(mExportPath, pDocumentAction.purchase_invoice.id_company);
@@ -111,7 +111,7 @@ namespace Blue10SDKExampleConsole
                         payment_due_date = pDocumentAction.purchase_invoice.invoice_date.AddDays(30)
                     }
                 };
-                MBlue10Desk.EditDocumentAction(fDocumentActionReturn);
+                MBlue10Client.EditDocumentAction(fDocumentActionReturn);
             } 
             catch(Exception ex)
             {
@@ -123,7 +123,7 @@ namespace Blue10SDKExampleConsole
                     message = ex.Message,
                     
                 };
-                MBlue10Desk.EditDocumentAction(fDocumentActionReturn);
+                MBlue10Client.EditDocumentAction(fDocumentActionReturn);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Blue10SDKExampleConsole
                 id = pDocumentAction.id,
                 status = "done"                
             };
-            MBlue10Desk.EditDocumentAction(fDocumentActionReturn);
+            MBlue10Client.EditDocumentAction(fDocumentActionReturn);
         }
     }
 }

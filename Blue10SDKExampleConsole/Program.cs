@@ -28,7 +28,7 @@ namespace Blue10SDKExampleConsole
                     .AddLogging(builder => builder.AddConsole())
                     //Reserve a special HTTPClient used for IBlu10Desk services
                     //Configured with baseURL and apikey
-                    .AddHttpClient<Blue10ApiHelper>(client =>
+                    .AddHttpClient<WebWebApiAdapter>(client =>
                         {
                             client.BaseAddress = new Uri(pConf["ApiUrl"]);
                             client.Timeout = TimeSpan.FromMinutes(3);
@@ -36,8 +36,8 @@ namespace Blue10SDKExampleConsole
                             //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                         }).Services
                     //Added Blue10 desk itself
-                    .AddSingleton<Blue10ApiHelper>()
-                    .AddSingleton<IBlue10Desk, Blue10Desk>()
+                    .AddSingleton<WebWebApiAdapter>()
+                    .AddSingleton<IBlue10Client, Blue10WebApiClient>()
                     
                     .BuildServiceProvider();
        
@@ -54,38 +54,37 @@ namespace Blue10SDKExampleConsole
             var services  = BuildServices(configuration);
             var logger = services.GetService<ILoggerFactory>().CreateLogger<Program>();
             logger.LogWarning("Starting application");
-            
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o =>
                 {
                     switch (o.Action)
                     {
                         case "SyncVendors":
-                            var fSyncVendors = new SynchVendors(services.GetService<IBlue10Desk>(), o.FileName);
+                            var fSyncVendors = new SynchVendors(services.GetService<IBlue10Client>(), o.FileName);
                             fSyncVendors.Synch(o.Company);
                             break;
                         case "SyncGLAccounts":
-                            var fSyncGLAccounts = new SynchGLAccounts(services.GetService<IBlue10Desk>(), o.FileName);
+                            var fSyncGLAccounts = new SynchGLAccounts(services.GetService<IBlue10Client>(), o.FileName);
                             fSyncGLAccounts.Synch(o.Company);
                             break;
                         case "SyncCostCenters":
-                            var fSynchCostCenters = new SynchCostCenters(services.GetService<IBlue10Desk>(), o.FileName);
+                            var fSynchCostCenters = new SynchCostCenters(services.GetService<IBlue10Client>(), o.FileName);
                             fSynchCostCenters.Synch(o.Company);
                             break;
                         case "SyncVatCodes":
-                            var fSynchVATCodes = new SynchVATCodes(services.GetService<IBlue10Desk>(), o.FileName);
+                            var fSynchVATCodes = new SynchVATCodes(services.GetService<IBlue10Client>(), o.FileName);
                             fSynchVATCodes.Synch(o.Company);
                             break;
                         case "GetCompanies":
-                            var fGetCompanies = new GetCompanies(services.GetService<IBlue10Desk>());
+                            var fGetCompanies = new GetCompanies(services.GetService<IBlue10Client>());
                              Console.WriteLine(JsonConvert.SerializeObject(fGetCompanies.GetAll()));
                             break;
                         case "ProcessDocumentActions":
-                            var fProcessDocumentActions = new ProcessDocumentActions(services.GetService<IBlue10Desk>(), o.FileName);
+                            var fProcessDocumentActions = new ProcessDocumentActions(services.GetService<IBlue10Client>(), o.FileName);
                             fProcessDocumentActions.Process();
                             break;
                         case "ProcessAdministrationActions":
-                            var fProcessAdministrationActions = new ProcessAdministrationActions(services.GetService<IBlue10Desk>());
+                            var fProcessAdministrationActions = new ProcessAdministrationActions(services.GetService<IBlue10Client>());
                             fProcessAdministrationActions.Process("C:\\FileToVendors.csv");
                             break;
                     }

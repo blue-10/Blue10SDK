@@ -10,10 +10,10 @@ namespace Blue10SDKExampleConsole
     public class SynchVendors
     {
         private string mFileName { get; }
-        private IBlue10Desk MBlue10Desk { get; }
-        public SynchVendors(IBlue10Desk pBlue10Desk, string pFileName)
+        private IBlue10Client MBlue10Client { get; }
+        public SynchVendors(IBlue10Client pBlue10Client, string pFileName)
         {
-            MBlue10Desk = pBlue10Desk;
+            MBlue10Client = pBlue10Client;
             mFileName = pFileName;           
         }
 
@@ -26,7 +26,7 @@ namespace Blue10SDKExampleConsole
             }
             var fDataTable = CsvHelper.ConvertCSVtoDataTable(mFileName, ';');
             var fVendors = GetVendorsFromInput(fDataTable, pCompanyCode);
-            var fVendorsB10 = MBlue10Desk.GetVendors(pCompanyCode);
+            var fVendorsB10 = MBlue10Client.GetVendors(pCompanyCode);
             Synch(fVendors, fVendorsB10);
         }
 
@@ -38,7 +38,7 @@ namespace Blue10SDKExampleConsole
                 var fVendorB10 = pVendorsB10.FirstOrDefault(x => x.administration_code == fVendor.administration_code && x.id_company == fVendor.id_company);
                 if(fVendorB10 == null)
                 {
-                    var fAdded = MBlue10Desk.AddVendor(fVendor);
+                    var fAdded = MBlue10Client.AddVendor(fVendor);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Blue10SDKExampleConsole
             var fToDelete = pVendorsB10.Where(p => !fHandled.Contains(p));
             foreach(var fDelItem in fToDelete)
             {
-                MBlue10Desk.DeleteVendor(fDelItem);
+                MBlue10Client.DeleteVendor(fDelItem);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Blue10SDKExampleConsole
             pVendorB10.name = pVendor.name;
             pVendorB10.vat_number = pVendor.vat_number;
             pVendorB10.vendor_customer_code = pVendor.vendor_customer_code;
-            MBlue10Desk.EditVendor(pVendorB10);
+            MBlue10Client.EditVendor(pVendorB10);
         }
 
         private  List<Vendor> GetVendorsFromInput(DataTable pTable, string pCompanyCode)

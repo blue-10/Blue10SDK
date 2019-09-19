@@ -5,23 +5,20 @@ using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public class Blue10ApiHelper
+    public class WebWebApiAdapter : IWebApiAdapter
     {
 
         private IHttpClientFactory mHttpClientFactory;
-        public Blue10ApiHelper(IHttpClientFactory pHttpClientFactory)
+        public WebWebApiAdapter(IHttpClientFactory pHttpClientFactory)
         {
             mHttpClientFactory = pHttpClientFactory;
         }
         
-        
-     
-
         public async Task<TResult> GetAsync<TResult>(string pUrl)
         {
             try
             {
-                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(Blue10ApiHelper));
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(WebWebApiAdapter));
                 var fResponseHttp = await pHttpClient.GetAsync(pUrl);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = fJson.DeserializeTo<JsonDataResult<TResult>>();
@@ -39,7 +36,7 @@ namespace Blue10SDK
         {
             try
             {
-                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(Blue10ApiHelper));
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(WebWebApiAdapter));
                 var fJsonObject = JsonConvert.SerializeObject(pObject);
                 var fHttpContent = new StringContent(fJsonObject);
                 var fResponseHttp = await pHttpClient.PostAsync(pUrl, fHttpContent);
@@ -59,7 +56,7 @@ namespace Blue10SDK
         {
             try
             {
-                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(Blue10ApiHelper));
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(WebWebApiAdapter));
                 var fJsonObject = JsonConvert.SerializeObject(pObject);
                 var fHttpContent = new StringContent(fJsonObject);
                 var fResponseHttp = await pHttpClient.PutAsync(pUrl, fHttpContent);
@@ -79,7 +76,7 @@ namespace Blue10SDK
         {
             try
             {
-                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(Blue10ApiHelper));
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(WebWebApiAdapter));
                 var fJsonObject = JsonConvert.SerializeObject(pObject);
                 var fHttpContent = new StringContent(fJsonObject);
                 var fResponseHttp = await pHttpClient.PutAsync(pUrl, fHttpContent);
@@ -99,7 +96,7 @@ namespace Blue10SDK
         {
             try
             {
-                 using var pHttpClient = mHttpClientFactory.CreateClient(nameof(Blue10ApiHelper));
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(WebWebApiAdapter));
                 var fResponseHttp = await pHttpClient.DeleteAsync(pUrl);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var fResponsObject = fJson.DeserializeTo<JsonDataResult<bool>>();

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public class Blue10Desk : IBlue10Desk
+    public class Blue10WebApiClient : IBlue10Client
     {
-        private Blue10ApiHelper mB10Api;
+        private WebWebApiAdapter _mB10WebWebApi;
         
-        public Blue10Desk(Blue10ApiHelper pB10Api)
+        public Blue10WebApiClient(WebWebApiAdapter pB10WebWebApi)
         {
-            mB10Api = pB10Api;
+            _mB10WebWebApi = pB10WebWebApi;
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -370,19 +370,19 @@ namespace Blue10SDK
         #region privates
 
         private async Task<T> GetItems<T>(string pPath) => 
-            await mB10Api.GetAsync<T>( pPath);
+            await _mB10WebWebApi.GetAsync<T>( pPath);
         
         private async Task<T> AddItem<T>(T pItem, string path) => 
-            await mB10Api.PostAsync( pItem, path);
+            await _mB10WebWebApi.PostAsync( pItem, path);
         
         private async Task<T> EditAndReturnItem<T>(T pItem, string pUrl) =>
-            await mB10Api.PutAndReturnAsync(pItem, pUrl);
+            await _mB10WebWebApi.PutAndReturnAsync(pItem, pUrl);
         
         private async Task<string> EditItem<T>( T pItem, string pUrl) =>
-            await mB10Api.PutAsync( pItem, pUrl);
+            await _mB10WebWebApi.PutAsync( pItem, pUrl);
         
         private async Task<bool> DeleteItem(string pUrl) =>
-            await mB10Api.DeleteAsync(pUrl);
+            await _mB10WebWebApi.DeleteAsync(pUrl);
     
     
         private const string  ADMINISTRATIONACTIONS = "administrationactions";
