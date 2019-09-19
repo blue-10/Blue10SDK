@@ -5,21 +5,23 @@ using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public static class Blue10ApiHelper
+    public class B10WebApiAdapter : IWebApiAdapter
     {
-        private static T ParseJson<T>(string json)
-        {
-            var fRes = (T)JsonConvert.DeserializeObject(json, typeof(T));
-            return fRes;
-        }
 
-        public static async Task<TResult> GetAsync<TResult>(HttpClient pHttpCLient, string pUrl)
+        private IHttpClientFactory mHttpClientFactory;
+        public B10WebApiAdapter(IHttpClientFactory pHttpClientFactory)
+        {
+            mHttpClientFactory = pHttpClientFactory;
+        }
+        
+        public async Task<TResult> GetAsync<TResult>(string pUrl)
         {
             try
             {
-                var fResponseHttp = await pHttpCLient.GetAsync(pUrl);
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
+                var fResponseHttp = await pHttpClient.GetAsync(pUrl);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = ParseJson<JsonDataResult<TResult>>(fJson);
+                var fResponsObject = fJson.DeserializeTo<JsonDataResult<TResult>>();
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code == 200) return fResponsObject.data;
                 throw new Blue10ApiException(fResponsObject.message);
@@ -30,15 +32,16 @@ namespace Blue10SDK
             }
         }
 
-        public static async Task<TObject> PostAsync<TObject>(HttpClient pHttpCLient, TObject pObject, string pUrl)
+        public async Task<TObject> PostAsync<TObject>(TObject pObject, string pUrl)
         {
             try
             {
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
                 var fJsonObject = JsonConvert.SerializeObject(pObject);
                 var fHttpContent = new StringContent(fJsonObject);
-                var fResponseHttp = await pHttpCLient.PostAsync(pUrl, fHttpContent);
+                var fResponseHttp = await pHttpClient.PostAsync(pUrl, fHttpContent);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
+                var fResponsObject = fJson.DeserializeTo<JsonDataResult<TObject>>();
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code == 200) return fResponsObject.data;
                 throw new Blue10ApiException(fResponsObject.message);
@@ -49,15 +52,16 @@ namespace Blue10SDK
             }
         }
 
-        public static async Task<TObject> PutAndReturnAsync<TObject>(HttpClient pHttpCLient, TObject pObject, string pUrl)
+        public async Task<TObject> PutAndReturnAsync<TObject>(TObject pObject, string pUrl)
         {
             try
             {
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
                 var fJsonObject = JsonConvert.SerializeObject(pObject);
                 var fHttpContent = new StringContent(fJsonObject);
-                var fResponseHttp = await pHttpCLient.PutAsync(pUrl, fHttpContent);
+                var fResponseHttp = await pHttpClient.PutAsync(pUrl, fHttpContent);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = ParseJson<JsonDataResult<TObject>>(fJson);
+                var fResponsObject = fJson.DeserializeTo<JsonDataResult<TObject>>();
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code == 200) return fResponsObject.data;
                 throw new Blue10ApiException(fResponsObject.message);
@@ -68,15 +72,16 @@ namespace Blue10SDK
             }
         }
 
-        public static async Task<string> PutAsync<TObject>(HttpClient pHttpCLient, TObject pObject, string pUrl)
+        public async Task<string> PutAsync<TObject>(TObject pObject, string pUrl)
         {
             try
             {
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
                 var fJsonObject = JsonConvert.SerializeObject(pObject);
                 var fHttpContent = new StringContent(fJsonObject);
-                var fResponseHttp = await pHttpCLient.PutAsync(pUrl, fHttpContent);
+                var fResponseHttp = await pHttpClient.PutAsync(pUrl, fHttpContent);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = ParseJson<JsonDataResult<string>>(fJson);
+                var fResponsObject = fJson.DeserializeTo<JsonDataResult<string>>();
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code == 200) return fResponsObject.data;
                 throw new Blue10ApiException(fResponsObject.message);
@@ -87,13 +92,14 @@ namespace Blue10SDK
             }
         }
 
-        public static async Task<bool> DeleteAsync(HttpClient pHttpCLient, string pUrl)
+        public async Task<bool> DeleteAsync(string pUrl)
         {
             try
             {
-                var fResponseHttp = await pHttpCLient.DeleteAsync(pUrl);
+                using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
+                var fResponseHttp = await pHttpClient.DeleteAsync(pUrl);
                 var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var fResponsObject = ParseJson<JsonDataResult<bool>>(fJson);
+                var fResponsObject = fJson.DeserializeTo<JsonDataResult<bool>>();
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code == 200 && fResponsObject.status == "success") return true;
                 throw new Blue10ApiException(fResponsObject.message);
@@ -103,5 +109,10 @@ namespace Blue10SDK
                 throw;
             }
         }
+    }
+
+    internal static class JsonExtension
+    {
+        internal static T DeserializeTo<T>(this string json) => (T)JsonConvert.DeserializeObject(json, typeof(T));
     }
 }

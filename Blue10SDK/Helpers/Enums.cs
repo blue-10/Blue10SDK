@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Blue10SDK
 {
-    public enum B10Endpoint
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum EB10Endpoint
     {
         administrationactions,
         companies,

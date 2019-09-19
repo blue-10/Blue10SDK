@@ -11,4 +11,5 @@ namespace Blue10SDK
         public string message { get; set; }
         public int code { get; set; }
     }
+    
 }
