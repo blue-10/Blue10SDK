@@ -8,9 +8,9 @@ namespace Blue10SDK
 {
     public class Blue10WebApiClient : IBlue10Client
     {
-        private WebWebApiAdapter _mB10WebWebApi;
+        private IWebApiAdapter _mB10WebWebApi;
         
-        public Blue10WebApiClient(WebWebApiAdapter pB10WebWebApi)
+        public Blue10WebApiClient(IWebApiAdapter pB10WebWebApi)
         {
             _mB10WebWebApi = pB10WebWebApi;
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
