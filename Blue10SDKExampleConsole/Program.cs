@@ -28,7 +28,7 @@ namespace Blue10SDKExampleConsole
                     .AddLogging(builder => builder.AddConsole())
                     //Reserve a special HTTPClient used for IBlu10Desk services
                     //Configured with baseURL and apikey
-                    .AddHttpClient<Blue10Desk>(client =>
+                    .AddHttpClient<Blue10ApiHelper>(client =>
                         {
                             client.BaseAddress = new Uri(pConf["ApiUrl"]);
                             client.Timeout = TimeSpan.FromMinutes(3);
