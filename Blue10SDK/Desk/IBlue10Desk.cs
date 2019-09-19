@@ -157,7 +157,7 @@ namespace Blue10SDK
         /// </summary>
         byte[] GetPurchaseInvoiceOriginal(Guid pId);
 
-        List<PurchaseInvoice> GetPurchaseInvoiceWithoutPaymentdate(string pIdCompany);
+        List<PurchaseInvoice> GetPurchaseInvoiceWithoutPaymentDate(string pIdCompany);
 
         /// <summary>
         /// Returns all PurchaseOrders for company. Input is id from company

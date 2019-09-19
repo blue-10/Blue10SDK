@@ -36,7 +36,9 @@ namespace Blue10SDKExampleConsole
                             //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                         }).Services
                     //Added Blue10 desk itself
+                    .AddSingleton<Blue10ApiHelper>()
                     .AddSingleton<IBlue10Desk, Blue10Desk>()
+                    
                     .BuildServiceProvider();
        
         private static IConfigurationRoot BuildConfiguration() =>
@@ -76,7 +78,7 @@ namespace Blue10SDKExampleConsole
                             break;
                         case "GetCompanies":
                             var fGetCompanies = new GetCompanies(services.GetService<IBlue10Desk>());
-                            Console.WriteLine(JsonConvert.SerializeObject(fGetCompanies.GetAll()));
+                             Console.WriteLine(JsonConvert.SerializeObject(fGetCompanies.GetAll()));
                             break;
                         case "ProcessDocumentActions":
                             var fProcessDocumentActions = new ProcessDocumentActions(services.GetService<IBlue10Desk>(), o.FileName);
