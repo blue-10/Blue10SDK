@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public class Blue10WebApiClient : IBlue10Client
+    public class Blue10Desk : IBlue10Client
     {
         private IWebApiAdapter _mB10WebWebApi;
         
-        public Blue10WebApiClient(IWebApiAdapter pB10WebWebApi)
+        public Blue10Desk(IWebApiAdapter pB10WebWebApi)
         {
             _mB10WebWebApi = pB10WebWebApi;
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
@@ -25,7 +25,8 @@ namespace Blue10SDK
 
         #region Me
         /// <summary>
-        /// Returns environment name of API key if valid
+        /// Customer Name associated with api key used by this Blue10Desk
+        /// <returns>Customer Name</returns>
         /// </summary>
         public string GetMe() =>
             SyncHelper.RunAsyncAsSync(() => GetItems<Me>(ME)).environment_name;
@@ -139,6 +140,11 @@ namespace Blue10SDK
                 SyncHelper.RunAsyncAsSync(() => 
                     GetItems<List<DocumentAction>>(DOCUMENTACTIONS));
 
+        /// <summary>
+        /// Updates Document action
+        /// </summary>
+        /// <returns>Okay?</returns>
+        /// <param name="pDocumentAction"> new state of existing DocumentAction record</param>
         public string EditDocumentAction(DocumentAction pDocumentAction) =>
                 SyncHelper.RunAsyncAsSync(() => 
                     EditItem<DocumentAction>( pDocumentAction, $"{DOCUMENTACTIONS}/{pDocumentAction.id}"));

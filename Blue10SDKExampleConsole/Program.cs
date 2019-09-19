@@ -28,6 +28,7 @@ namespace Blue10SDKExampleConsole
                     .AddLogging(builder => builder.AddConsole())
                     //Reserve a special HTTPClient used for IBlu10Desk services
                     //Configured with baseURL and apikey
+                    //ToDo Make this into a service extension
                     .AddHttpClient<B10WebApiAdapter>(client =>
                         {
                             client.BaseAddress = new Uri(pConf["ApiUrl"]);
@@ -37,8 +38,7 @@ namespace Blue10SDKExampleConsole
                         }).Services
                     //Added Blue10 desk itself
                     .AddSingleton<IWebApiAdapter,B10WebApiAdapter>()
-                    .AddSingleton<IBlue10Client, Blue10WebApiClient>()
-                    
+                    .AddSingleton<IBlue10Client, Blue10Desk>()
                     .BuildServiceProvider();
        
         private static IConfigurationRoot BuildConfiguration() =>

@@ -7,12 +7,12 @@ namespace Tests
     public class Tests
     {
         private IWebApiAdapter mDummyWebApi =  new DummyWebApiClient();
-        private Blue10WebApiClient apiClient;
+        private Blue10Desk apiClient;
         
         [SetUp]
         public void Setup()
         {
-            apiClient  = new Blue10WebApiClient(mDummyWebApi);
+            apiClient  = new Blue10Desk(mDummyWebApi);
         }
 
         [TestCase("TestProject")]
@@ -29,15 +29,6 @@ namespace Tests
             var stash = (mDummyWebApi as DummyWebApiClient).Stash;
             
             Assert.IsTrue(stash["projects"] == testProject);
-        }
-        
-        
-        [TestCase(null)]
-        [TestCase("-1")]
-        public void ProjectThrows(string ProjectName)
-        {
-            //Todo Somekind of exception
-            Assert.That(() => ProjectTestHappy(ProjectName), Throws.TypeOf<ArgumentException>());
         }
     }
 }
