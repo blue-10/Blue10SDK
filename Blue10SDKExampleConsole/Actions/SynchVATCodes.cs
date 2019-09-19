@@ -11,10 +11,10 @@ namespace Blue10SDKExampleConsole
     public class SynchVATCodes
     {
         private string mFileName { get; }
-        private Desk mDesk { get; }
-        public SynchVATCodes(Desk pDesk, string pFileName)
+        private IBlue10Desk MBlue10Desk { get; }
+        public SynchVATCodes(IBlue10Desk pBlue10Desk, string pFileName)
         {
-            mDesk = pDesk;
+            MBlue10Desk = pBlue10Desk;
             mFileName = pFileName;           
         }
 
@@ -25,9 +25,9 @@ namespace Blue10SDKExampleConsole
                 Console.WriteLine($"File not found {mFileName}");
                 return;
             }
-            var fDataTable = csvHelper.ConvertCSVtoDataTable(mFileName, ';');
+            var fDataTable = CsvHelper.ConvertCSVtoDataTable(mFileName, ';');
             var fVatCodes = GetVatCodessFromInput(fDataTable, pCompanyCode);
-            var fVatCodessB10 = mDesk.GetVatCodes(pCompanyCode);
+            var fVatCodessB10 = MBlue10Desk.GetVatCodes(pCompanyCode);
             Synch(fVatCodes, fVatCodessB10);
         }
 
@@ -39,7 +39,7 @@ namespace Blue10SDKExampleConsole
                 var fVatCodeB10 = pVatCodesB10.FirstOrDefault(x => x.administration_code == fVatCode.administration_code && x.id_company == fVatCode.id_company);
                 if(fVatCodeB10 == null)
                 {
-                    var fAdded = mDesk.AddVatCode(fVatCode);
+                    var fAdded = MBlue10Desk.AddVatCode(fVatCode);
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Blue10SDKExampleConsole
             var fToDelete = pVatCodesB10.Where(p => !fHandled.Contains(p));
             foreach(var fDelItem in fToDelete)
             {
-                mDesk.DeleteVatCode(fDelItem);
+                MBlue10Desk.DeleteVatCode(fDelItem);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Blue10SDKExampleConsole
         {
             if (pVatCode.name == pVatCodeB10.name) return;           
             pVatCodeB10.name = pVatCode.name;
-            mDesk.EditVatCode(pVatCodeB10);
+            MBlue10Desk.EditVatCode(pVatCodeB10);
         }
 
         private  List<VatCode> GetVatCodessFromInput(DataTable pTable, string pCompanyCode)

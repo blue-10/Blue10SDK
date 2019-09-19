@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+
+   <LangVersion>preview</LangVersion>
+<!--    <Nullable>enable</Nullable>-->
+<!--    <WarningsAsErrors>NU1605;CS8618;CS8600;CS8602</WarningsAsErrors>-->
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blue10SDK
 {
-    public class JsonDataResult<T>
+    public abstract class JsonDataResult<T>
     {
         public string status { get; set; }
         public T data { get; set; }

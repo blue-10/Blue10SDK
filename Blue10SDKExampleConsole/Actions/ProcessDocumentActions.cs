@@ -6,13 +6,14 @@ using System.Xml.Linq;
 
 namespace Blue10SDKExampleConsole
 {
+    
     public class ProcessDocumentActions
     {
         private string mExportPath { get; }
-        private Desk mDesk { get; }
-        public ProcessDocumentActions(Desk pDesk, string pExportPath)
+        private IBlue10Desk MBlue10Desk { get; }
+        public ProcessDocumentActions(IBlue10Desk pBlue10Desk, string pExportPath)
         {
-            mDesk = pDesk;
+            MBlue10Desk = pBlue10Desk;
             mExportPath = pExportPath;
         }
 
@@ -22,28 +23,28 @@ namespace Blue10SDKExampleConsole
             {
                 Directory.CreateDirectory(mExportPath);
             }
-            var fDocumentActions = mDesk.GetDocumentActions();
+            var fDocumentActions = MBlue10Desk.GetDocumentActions();
             foreach (var fDocumentAction in fDocumentActions)
             {
                 switch (fDocumentAction.action)
                 {
-                    case "create_purchase_invoice":
+                    case EDocumentAction.create_purchase_invoice:
                         break;
-                    case "get_payment_due_date":
+                    case EDocumentAction.get_payment_due_date:
                         break;
-                    case "post_block_purchase_invoice":
-                    case "post_purchase_invoice":
+                    case EDocumentAction.post_block_purchase_invoice:
+                    case EDocumentAction.post_purchase_invoice:
                         PostPurchaseInvoice(fDocumentAction);
                         break;
-                    case "get_purchase_invoice_lines":
+                    case EDocumentAction.get_purchase_invoice_lines:
                         // TODO: Get invoice lines from invoice in Erp
                         ActionNotImplemented(fDocumentAction);
                         break;
-                    case "block_purchase_invoice_for_payment":
+                    case EDocumentAction.block_purchase_invoice_for_payment:
                         break;
-                    case "unblock_purchase_invoice_for_payment":
+                    case EDocumentAction.unblock_purchase_invoice_for_payment:
                         break;
-                    case "match_purchase_order":
+                    case EDocumentAction.match_purchase_order:
                         break;
                 }
             }
@@ -54,7 +55,7 @@ namespace Blue10SDKExampleConsole
         {
             try
             {
-                var fDocumentOriginal = mDesk.GetPurchaseInvoiceOriginal(pDocumentAction.purchase_invoice.id);
+                var fDocumentOriginal = MBlue10Desk.GetPurchaseInvoiceOriginal(pDocumentAction.purchase_invoice.id);
                 var fDocumentFolder = string.Empty;
                 var fDocumentId = string.Empty;
                 var fExportCompanyPath = Path.Combine(mExportPath, pDocumentAction.purchase_invoice.id_company);
@@ -110,7 +111,7 @@ namespace Blue10SDKExampleConsole
                         payment_due_date = pDocumentAction.purchase_invoice.invoice_date.AddDays(30)
                     }
                 };
-                mDesk.EditDocumentAction(fDocumentActionReturn);
+                MBlue10Desk.EditDocumentAction(fDocumentActionReturn);
             } 
             catch(Exception ex)
             {
@@ -122,7 +123,7 @@ namespace Blue10SDKExampleConsole
                     message = ex.Message,
                     
                 };
-                mDesk.EditDocumentAction(fDocumentActionReturn);
+                MBlue10Desk.EditDocumentAction(fDocumentActionReturn);
             }
         }
 
@@ -133,7 +134,7 @@ namespace Blue10SDKExampleConsole
                 id = pDocumentAction.id,
                 status = "done"                
             };
-            mDesk.EditDocumentAction(fDocumentActionReturn);
+            MBlue10Desk.EditDocumentAction(fDocumentActionReturn);
         }
     }
 }

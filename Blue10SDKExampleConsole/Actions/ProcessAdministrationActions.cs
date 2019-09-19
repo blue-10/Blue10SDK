@@ -7,31 +7,31 @@ namespace Blue10SDKExampleConsole
 {
     public class ProcessAdministrationActions
     {
-        private Desk mDesk { get; }
+        private IBlue10Desk MBlue10Desk { get; }
 
-        public ProcessAdministrationActions(Desk pDesk)
+        public ProcessAdministrationActions(IBlue10Desk pBlue10Desk)
         {
-            mDesk = pDesk;
+            MBlue10Desk = pBlue10Desk;
         }
 
-        public void Process()
+        public void Process(string pFilePath)
         {
-            var fAdministrationActions = mDesk.GetAdministrationActions();
+            var fAdministrationActions = MBlue10Desk.GetAdministrationActions();
             foreach(var fAdministrationAction in fAdministrationActions)
             {
                 switch (fAdministrationAction.action)
                 {
-                    case "update_all_master_data":
+                    case EAdministrationAction.update_all_master_data:
                         // Update here 
                         break;
-                    case "update_vendors":
+                    case EAdministrationAction.update_vendors:
                         // Update all vendors here
-                        var fSynchVendors = new SynchVendors(mDesk, "C:\\FileToVendors.csv");
+                        var fSynchVendors = new SynchVendors(MBlue10Desk, pFilePath);
                         fSynchVendors.Synch(fAdministrationAction.id_company);
                         break;
                 }
 
-                mDesk.FinishAdministrationAction(fAdministrationAction);
+                MBlue10Desk.FinishAdministrationAction(fAdministrationAction);
             }
         }
     }

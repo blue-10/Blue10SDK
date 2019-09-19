@@ -1,89 +1,95 @@
 ﻿using Blue10SDK;
 using System;
 using System.Configuration;
-using System.Net.Http;
+using System.IO;
+using CommandLine;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Blue10SDKExampleConsole
 {
     class Program
     {
-        private static string mAction = string.Empty;
-        private static string mFile = string.Empty;
-        private static string mCompanyCode = string.Empty;
-
-        static void Main(string[] args)
+        private class Options
         {
-            if (args.Length > 0)
-            {
-                var fIndex = 0;
-                foreach (var fArg in args)
+            [Option('a', "action", Required = true, HelpText = "Action that need to be executed by the console")]
+            public string Action { get; set; }
+            [Option('f', "file", Required = false, HelpText = "Filename required by the selected operation")]
+            public string FileName { get; set; }
+            [Option('c', "company", Required = false, HelpText = "Company Targeting the operation")]
+            public string Company { get; set; }
+        }
+
+
+        private static ServiceProvider BuildServices(IConfigurationRoot pConf) => new ServiceCollection()
+                    //Add Basic Console logging
+                    .AddLogging(builder => builder.AddConsole())
+                    //Reserve a special HTTPClient used for IBlu10Desk services
+                    //Configured with baseURL and apikey
+                    .AddHttpClient<Blue10Desk>(client =>
+                        {
+                            client.BaseAddress = new Uri(pConf["ApiUrl"]);
+                            client.Timeout = TimeSpan.FromMinutes(3);
+                            client.DefaultRequestHeaders.Add("Authorization", $"access_token {pConf["ApiKey"]}");
+                            client.DefaultRequestHeaders.Add("content-type", "application/json");
+                        }).Services
+                    //Added Blue10 desk itself
+                    .AddSingleton<IBlue10Desk, Blue10Desk>()
+                    .BuildServiceProvider();
+       
+        private static IConfigurationRoot BuildConfiguration() =>
+            new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+            .Build();
+        
+    
+        public static void Main(string[] args)
+        {
+            var configuration = BuildConfiguration();
+            var services  = BuildServices(configuration);
+            var logger = services.GetService<ILoggerFactory>().CreateLogger<Program>();
+            logger.LogWarning("Starting application");
+            
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed<Options>(o =>
                 {
-                    fIndex++;
-                    switch (fArg.ToLower())
+                    switch (o.Action)
                     {
-                        case "-a":
-                            mAction = args[fIndex];
+                        case "SyncVendors":
+                            var fSyncVendors = new SynchVendors(services.GetService<IBlue10Desk>(), o.FileName);
+                            fSyncVendors.Synch(o.Company);
                             break;
-                        case "-f":
-                            mFile = args[fIndex];
+                        case "SyncGLAccounts":
+                            var fSyncGLAccounts = new SynchGLAccounts(services.GetService<IBlue10Desk>(), o.FileName);
+                            fSyncGLAccounts.Synch(o.Company);
                             break;
-                        case "-c":
-                            mCompanyCode = args[fIndex];
+                        case "SyncCostCenters":
+                            var fSynchCostCenters = new SynchCostCenters(services.GetService<IBlue10Desk>(), o.FileName);
+                            fSynchCostCenters.Synch(o.Company);
+                            break;
+                        case "SyncVatCodes":
+                            var fSynchVATCodes = new SynchVATCodes(services.GetService<IBlue10Desk>(), o.FileName);
+                            fSynchVATCodes.Synch(o.Company);
+                            break;
+                        case "GetCompanies":
+                            var fGetCompanies = new GetCompanies(services.GetService<IBlue10Desk>());
+                            Console.WriteLine(JsonConvert.SerializeObject(fGetCompanies.GetAll()));
+                            break;
+                        case "ProcessDocumentActions":
+                            var fProcessDocumentActions = new ProcessDocumentActions(services.GetService<IBlue10Desk>(), o.FileName);
+                            fProcessDocumentActions.Process();
+                            break;
+                        case "ProcessAdministrationActions":
+                            var fProcessAdministrationActions = new ProcessAdministrationActions(services.GetService<IBlue10Desk>());
+                            fProcessAdministrationActions.Process("C:\\FileToVendors.csv");
                             break;
                     }
-                }
-
-                Console.WriteLine($"Action: {mAction} / Value: {mFile}");
-                if (string.IsNullOrEmpty(mAction))
-                {
-                    Console.WriteLine("No action in arguments");
-                    var fKey = Console.ReadKey();
-                    return;
-                }
-                ProcessAction();
-            }
+                });
+            logger.LogDebug("Ended successfully");
         }
-
-        private static void ProcessAction()
-        {
-            var fHttpClientHelper = new httpClientHelper();
-
-            var fDesk = new Desk(fHttpClientHelper);
-            switch (mAction)
-            {
-                case "SyncVendors":
-                    var fSyncVendors = new SynchVendors(fDesk, mFile);
-                    fSyncVendors.Synch(mCompanyCode);
-                    break;
-                case "SyncGLAccounts":
-                    var fSyncGLAccounts = new SynchGLAccounts(fDesk, mFile);
-                    fSyncGLAccounts.Synch(mCompanyCode);
-                    break;
-                case "SyncCostCenters":
-                    var fSynchCostCenters = new SynchCostCenters(fDesk, mFile);
-                    fSynchCostCenters.Synch(mCompanyCode);
-                    break;
-                case "SyncVatCodes":
-                    var fSynchVATCodes = new SynchVATCodes(fDesk, mFile);
-                    fSynchVATCodes.Synch(mCompanyCode);
-                    break;
-                case "GetCompanies":
-                    var fGetCompanies = new GetCompanies(fDesk);
-                    fGetCompanies.GetAll();
-                    break;
-                case "ProcessDocumentActions":
-                    var fProcessDocumentActions = new ProcessDocumentActions(fDesk, mFile);
-                    fProcessDocumentActions.Process();
-                    break;
-                case "ProcessAdministrationActions":
-                    var fProcessAdministrationActions = new ProcessAdministrationActions(fDesk);
-                    fProcessAdministrationActions.Process();
-                    break;
-            }
-        }
-
-        
-
-
     }
 }

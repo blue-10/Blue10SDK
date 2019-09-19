@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Blue10SDK
 {
-    public class Desk
+    public class Blue10Desk : IBlue10Desk
     {
         IHttpClientFactory mHttpClientFactory;
 
-        public Desk(IHttpClientFactory pHttpClientFactory)
+        public Blue10Desk(IHttpClientFactory pHttpClientFactory)
         {
             mHttpClientFactory = pHttpClientFactory;
 
@@ -32,9 +32,9 @@ namespace Blue10SDK
         {
             using (var fClient = mHttpClientFactory.CreateClient())
             {
-                var fUrl = $"{fClient.BaseAddress}{B10Endpoint.me}";
-                fClient.BaseAddress = new Uri(fUrl);
-                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<Me>(fClient, fUrl));
+                
+                
+                var fRet = SyncHelper.RunAsyncAsSync(() => GetItems<Me>(fClient, B10Endpoint.me));
                 return fRet.environment_name;
             }
         }

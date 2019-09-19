@@ -11,10 +11,10 @@ namespace Blue10SDKExampleConsole
     public class SynchGLAccounts
     {
         private string mFileName { get; }
-        private Desk mDesk { get; }
-        public SynchGLAccounts(Desk pDesk, string pFileName)
+        private IBlue10Desk MBlue10Desk { get; }
+        public SynchGLAccounts(IBlue10Desk pBlue10Desk, string pFileName)
         {
-            mDesk = pDesk;
+            MBlue10Desk = pBlue10Desk;
             mFileName = pFileName;           
         }
 
@@ -25,9 +25,9 @@ namespace Blue10SDKExampleConsole
                 Console.WriteLine($"File not found {mFileName}");
                 return;
             }
-            var fDataTable = csvHelper.ConvertCSVtoDataTable(mFileName, ';');
+            var fDataTable = CsvHelper.ConvertCSVtoDataTable(mFileName, ';');
             var fGLAccounts = GetGLAccountsFromInput(fDataTable, pCompanyCode);
-            var fGLAccountsB10 = mDesk.GetGLAccounts(pCompanyCode);
+            var fGLAccountsB10 = MBlue10Desk.GetGLAccounts(pCompanyCode);
             Synch(fGLAccounts, fGLAccountsB10);
         }
 
@@ -39,7 +39,7 @@ namespace Blue10SDKExampleConsole
                 var fGLAccountB10 = pGLAccountsB10.FirstOrDefault(x => x.administration_code == fGLAccount.administration_code && x.id_company == fGLAccount.id_company);
                 if(fGLAccountB10 == null)
                 {
-                    var fAdded = mDesk.AddGLAccount(fGLAccount);
+                    var fAdded = MBlue10Desk.AddGLAccount(fGLAccount);
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Blue10SDKExampleConsole
             var fToDelete = pGLAccountsB10.Where(p => !fHandled.Contains(p));
             foreach(var fDelItem in fToDelete)
             {
-                mDesk.DeleteGLAccount(fDelItem);
+                MBlue10Desk.DeleteGLAccount(fDelItem);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Blue10SDKExampleConsole
             if (pGLAccount.name == pGLAccountB10.name) return;
             
             pGLAccountB10.name = pGLAccount.name;
-            mDesk.EditGLAccount(pGLAccountB10);
+            MBlue10Desk.EditGLAccount(pGLAccountB10);
         }
 
         private  List<GLAccount> GetGLAccountsFromInput(DataTable pTable, string pCompanyCode)
