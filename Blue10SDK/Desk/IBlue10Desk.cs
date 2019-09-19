@@ -224,10 +224,5 @@ namespace Blue10SDK
         /// </summary>
         bool DeleteVendor(Vendor pVendor);
 
-        Task<T> GetItems<T>(HttpClient pClient, string pUrl);
-        Task<T> AddItem<T>(HttpClient pClient, T pItem, string pUrl);
-        Task<T> EditAndReturnItem<T>(HttpClient pClient, T pItem, string pUrl);
-        Task<string> EditItem<T>(HttpClient pClient, T pItem, string pUrl);
-        Task<bool> DeleteItem(HttpClient pClient, string pUrl);
     }
 }

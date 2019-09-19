@@ -33,7 +33,7 @@ namespace Blue10SDKExampleConsole
                             client.BaseAddress = new Uri(pConf["ApiUrl"]);
                             client.Timeout = TimeSpan.FromMinutes(3);
                             client.DefaultRequestHeaders.Add("Authorization", $"access_token {pConf["ApiKey"]}");
-                            client.DefaultRequestHeaders.Add("content-type", "application/json");
+                            //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                         }).Services
                     //Added Blue10 desk itself
                     .AddSingleton<IBlue10Desk, Blue10Desk>()
@@ -41,9 +41,8 @@ namespace Blue10SDKExampleConsole
        
         private static IConfigurationRoot BuildConfiguration() =>
             new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
             .Build();
         
     
