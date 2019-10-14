@@ -406,7 +406,7 @@ namespace Blue10SDK
         private const string  PURCHASEORDERS = "purchaseorders";
         private const string  VATCODES = "vatcodes";
         private const string  VATSCENARIOS = "vatscenarios";
-        private const string  VENDORS = "vendor";
+        private const string  VENDORS = "vendors";
         #endregion
     }
 }
