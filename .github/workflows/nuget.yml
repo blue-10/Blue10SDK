@@ -8,12 +8,9 @@ jobs:
     runs-on: windows-latest
     
     steps:
-
-    - name: Hello world
-    run: echo Hello world $FIRST_NAME $middle_name $Last_Name!
-    env:
+    - env:
       VERSION: 0.1.1-prerelease
-
+      
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
