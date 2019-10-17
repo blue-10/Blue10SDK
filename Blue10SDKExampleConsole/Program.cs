@@ -1,7 +1,5 @@
 ﻿using Blue10SDK;
 using System;
-using System.Configuration;
-using System.IO;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
