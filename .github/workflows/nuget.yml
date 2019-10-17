@@ -8,6 +8,12 @@ jobs:
     runs-on: windows-latest
     
     steps:
+
+    - name: Hello world
+    run: echo Hello world $FIRST_NAME $middle_name $Last_Name!
+    env:
+      VERSION: 0.1.1-prerelease
+
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -17,7 +23,7 @@ jobs:
       run: dotnet build --configuration Release
       
     - name: Pack with dotnet
-      run: dotnet pack Blue10SDK --configuration Release
+      run: dotnet pack Blue10SDK --configuration Release /p:Version=$VERSION
 
     - name: Pack with dotnet
-      run: dotnet nuget push Blue10SDK\bin\Release\Blue10SDK.0.1.0.nupkg  -s https://www.nuget.org/ -k ${{ secrets.NUGET_KEY }}
+      run: dotnet nuget push Blue10SDK\bin\Release\Blue10SDK.$VERSION.nupkg  -s https://www.nuget.org/ -k ${{ secrets.NUGET_KEY }}
