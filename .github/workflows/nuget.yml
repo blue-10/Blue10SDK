@@ -1,4 +1,4 @@
-name: NugetCI
+name: Build
 
 on: [push]
 
