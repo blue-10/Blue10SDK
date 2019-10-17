@@ -4,7 +4,7 @@
     <Title>Blue10SDK</Title>
     <Description>Blue10 .NET CORE SDK</Description>
     <Summary>Blue10 .NET CORE SDK</Summary>
-    <VersionPrefix>0.1.2</VersionPrefix>
+    <VersionPrefix>0.1.3</VersionPrefix>
     <PackageId>Blue10SDK</PackageId>
     <PackageIcon>b10icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
