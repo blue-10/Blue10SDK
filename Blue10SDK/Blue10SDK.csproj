@@ -4,13 +4,12 @@
     <Title>Blue10SDK</Title>
     <Description>Blue10 .NET CORE SDK</Description>
     <Summary>Blue10 .NET CORE SDK</Summary>
-
+    <VersionPrefix>0.1.3</VersionPrefix>
     <PackageId>Blue10SDK</PackageId>
     <PackageIcon>b10icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/b10-ydinkov/Blue10SDK</PackageProjectUrl>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance> 
-    
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>   
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TargetFramework>netcoreapp2.2</TargetFramework>

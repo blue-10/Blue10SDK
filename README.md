@@ -1,3 +1,7 @@
+![Nuget](https://img.shields.io/nuget/v/blue10sdk?label=Nuget&logo=nuget)
+
+[![Actions Status](https://github.com/b10-ydinkov/Blue10SDK/workflows/Build/badge.svg)](https://github.com/b10-ydinkov/Blue10SDK/actions)
+
 ![alt text](https://login.blue10.com/Content/images/Blue10-Logo-RGB-156.png "Logo Title Text 1")
 # Blue10 SDK
 
@@ -37,6 +41,10 @@ namespace GettingStartedWithBlue10
     }
 }
  ```
+
+2. WebHost()
+
+ 3. ### create a desk
 
 
 
