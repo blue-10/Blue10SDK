@@ -9,8 +9,7 @@
     <PackageIcon>b10icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/b10-ydinkov/Blue10SDK</PackageProjectUrl>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance> 
-    
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>   
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TargetFramework>netcoreapp2.2</TargetFramework>
