@@ -8,8 +8,7 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - env:
-      VERSION: 0.1.1-prerelease
+    - 
       
     - uses: actions/checkout@v1
     - name: Setup .NET Core
@@ -21,6 +20,8 @@ jobs:
       
     - name: Pack with dotnet
       run: dotnet pack Blue10SDK --configuration Release /p:Version=$VERSION
+      env:
+      VERSION: 0.1.1-prerelease
 
     - name: Pack with dotnet
       run: dotnet nuget push Blue10SDK\bin\Release\Blue10SDK.$VERSION.nupkg  -s https://www.nuget.org/ -k ${{ secrets.NUGET_KEY }}
