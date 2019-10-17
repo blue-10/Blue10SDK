@@ -6,10 +6,10 @@
     <Summary>Blue10 .NET CORE SDK</Summary>
 
     <PackageId>Blue10SDK</PackageId>
-    <PackageIconUrl>b10icon.png</PackageIconUrl>
+    <PackageIcon>b10icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/b10-ydinkov/Blue10SDK</PackageProjectUrl>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>   
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance> 
     
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -25,7 +25,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <None Include="..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
     <None Include="..\b10icon.png" Pack="true" PackagePath="$(PackageIconFile)"/>
-
   </ItemGroup>
 
 </Project>
