@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/{owner}/{repo}/workflows/{workflow_name}/badge.svg)](https://github.com/{owner}/{repo}/actions)
+
 ![alt text](https://login.blue10.com/Content/images/Blue10-Logo-RGB-156.png "Logo Title Text 1")
 # Blue10 SDK
 
@@ -37,6 +39,10 @@ namespace GettingStartedWithBlue10
     }
 }
  ```
+
+2. WebHost()
+
+ 3. ### create a desk
 
 
 
