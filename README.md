@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/b10-ydinkov/Blue10SDK/workflows/NugetCI/badge.svg)](https://github.com/b10-ydinkov/Blue10SDK/actions)
+![Nuget](https://img.shields.io/nuget/v/blue10sdk?label=Nuget&logo=nuget)
 
 ![alt text](https://login.blue10.com/Content/images/Blue10-Logo-RGB-156.png "Logo Title Text 1")
 # Blue10 SDK
