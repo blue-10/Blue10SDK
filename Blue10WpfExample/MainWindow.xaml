@@ -1,0 +1,34 @@
+﻿<Window x:Class="Blue10SDK.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl x:Name="tabControl">
+            <TabItem Header="Config">
+                <Grid Margin="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="48" />
+                        <RowDefinition Height="48" />
+                        <RowDefinition Height="48" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Margin="8">API key :</Label>
+                    <TextBox Grid.Column="1" Grid.Row="0" Margin="8" x:Name="ApiKey" TextWrapping="Wrap" />
+                    <Label Grid.Column="0" Grid.Row="1" Margin="8">API url :</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" Margin="8" x:Name="ApiUrl" Text="http://localhost:52476" />
+                    <Button Grid.Column="1" Grid.Row="2" Margin="8" x:Name="button" Content="Test connection" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Companies">
+                <TextBlock Margin="8">List of companies</TextBlock>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
