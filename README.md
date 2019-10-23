@@ -10,7 +10,7 @@ This is the Blue 10 .net core SDK.
 
 ## Request an environment at Blue10
 
-1. To start useing Blue10 you first need to create and environment.
+1. To start using Blue10 you first need to create and environment.
 [Contact Blue 10](https://www.blue10.com/contact/).
 1. After an environment has been created Request an API Key.
 During the API key creation process our staff will assess which features your application requires and will attatch that feature set to your personal environment's API Key.
