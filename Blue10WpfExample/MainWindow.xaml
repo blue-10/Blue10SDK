@@ -12,7 +12,7 @@
                 <Grid Background="#FFE5E5E5">
                     <TextBlock Padding="5">
                         <Label Margin="0,0,0,0" >Apikey : </Label>
-                     <TextBox x:Name="ApiKey" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" Text="PYjIuwfgGFJbiRcX8U9bmioPyehJ7JPtWc4F3PCT5sFH4TbtlaEtPxQtSLysZ4Bs" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
+                     <TextBox x:Name="ApiKey" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" Text="&ltMyApiKey&gt" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
                     </TextBlock>
                     <TextBlock Padding="5">
                         <Label Margin="0,0,0,0" >Api url : </Label>
