@@ -271,6 +271,25 @@ namespace Blue10SDK
 
         #endregion
 
+        #region VatScenarios
+
+        public List<VatScenario> GetVatScenarios(string pIdCompany) =>
+            SyncHelper.RunAsyncAsSync(() => GetItems<List<VatScenario>>(
+                $"{VATSCENARIOS}/{pIdCompany}"));
+
+        public VatScenario AddVatScenario(VatScenario pVatScenario) =>
+                SyncHelper.RunAsyncAsSync(() => AddItem(pVatScenario, VATSCENARIOS));
+
+        public VatScenario EditVatScenario(VatScenario pVatScenario) =>
+                SyncHelper.RunAsyncAsSync(() =>
+                    EditAndReturnItem(pVatScenario, $"{VATSCENARIOS}/{pVatScenario.Id}"));
+
+        public bool DeleteVatScenario(VatScenario pVatScenario) =>
+            SyncHelper.RunAsyncAsSync(() =>
+                    DeleteItem($"{VATSCENARIOS}/{pVatScenario.Id}"));
+
+        #endregion
+
         #region Vendors
 
         public List<Vendor> GetVendors(string pIdCompany) =>
