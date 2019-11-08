@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Blue10SDK.Models;
 
 namespace Blue10SDK
@@ -31,6 +30,7 @@ namespace Blue10SDK
         #region Fields
 
         private readonly IWebApiAdapter _mB10WebWebApi;
+        private readonly IBlue10AsyncClient mBlue10Async;
 
         #endregion
 
@@ -39,275 +39,170 @@ namespace Blue10SDK
         public Blue10Desk(IWebApiAdapter pB10WebWebApi)
         {
             _mB10WebWebApi = pB10WebWebApi;
+            mBlue10Async = new Blue10AsyncDesk(pB10WebWebApi);
         }
 
         #endregion
 
         #region Me
 
-        public string GetMe() =>
-            SyncHelper.RunAsyncAsSync(() => GetItems<Me>(ME)).EnvironmentName;
-
-
+        public string GetMe() => mBlue10Async.GetMe().Sync().EnvironmentName;
         #endregion
 
         #region AdministrationActions
-
-        public List<AdministrationAction> GetAdministrationActions() =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    GetItems<List<AdministrationAction>>(ADMINISTRATIONACTIONS));
+        public List<AdministrationAction> GetAdministrationActions() => mBlue10Async.GetAdministrationActions().Sync();
 
         public bool FinishAdministrationAction(AdministrationAction pAdministrationAction) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                    DeleteItem($"{ADMINISTRATIONACTIONS}/{pAdministrationAction.Id}"));
+            mBlue10Async.FinishAdministrationAction(pAdministrationAction).Sync();
 
         #endregion
 
         #region Companies
 
-        public List<Company> GetCompanies() =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<Company>>(COMPANIES));
+        public List<Company> GetCompanies() => mBlue10Async.GetCompanies().Sync();
 
-        public Company UpdateCompany(Company pCompany)
-        {
-            throw new NotImplementedException();
-        }
+        public Company UpdateCompany(Company pCompany) => mBlue10Async.UpdateCompany(pCompany).Sync();
 
+        public Company EditCompany(Company pCompany) => mBlue10Async.EditCompany(pCompany).Sync();
+               
 
-        public Company EditCompany(Company pCompany) =>
-           SyncHelper.RunAsyncAsSync(() =>
-                EditAndReturnItem(pCompany, $"{COMPANIES}/{pCompany.Id}"));
 
         #endregion
 
         #region CostUnits
+        public List<CostUnit> GetCostUnits(string pIdCompany) => mBlue10Async.GetCostUnits(pIdCompany).Sync();
 
-        public List<CostUnit> GetCostUnits(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<CostUnit>>($"{COSTUNITS}/{pIdCompany}"));
+        public CostUnit AddCostUnit(CostUnit pCostUnit) => mBlue10Async.AddCostUnit(pCostUnit).Sync();
 
-        public CostUnit AddCostUnit(CostUnit pCostUnit) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                AddItem(pCostUnit, COSTUNITS));
+        public CostUnit EditCostUnit(CostUnit pCostUnit) => mBlue10Async.EditCostUnit(pCostUnit).Sync();
 
-        public CostUnit EditCostUnit(CostUnit pCostUnit) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                EditAndReturnItem(pCostUnit, $"{COSTUNITS}/{pCostUnit.Id}"));
-
-
-        public bool DeleteCostUnit(CostUnit pCostUnit) =>
-            SyncHelper.RunAsyncAsSync(() =>
-               DeleteItem($"{COSTUNITS}/{pCostUnit.Id}"));
+        public bool DeleteCostUnit(CostUnit pCostUnit) => mBlue10Async.DeleteCostUnit(pCostUnit).Sync();
 
         #endregion 
 
         #region CostCenters
 
-        public List<CostCenter> GetCostCenters(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<CostCenter>>($"{COSTCENTERS}/{pIdCompany}"));
+        public List<CostCenter> GetCostCenters(string pIdCompany) => mBlue10Async.GetCostCenters(pIdCompany).Sync();
 
-        public CostCenter AddCostCenter(CostCenter pCostCenter) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                AddItem(pCostCenter, COSTCENTERS));
+        public CostCenter AddCostCenter(CostCenter pCostCenter) => mBlue10Async.AddCostCenter(pCostCenter).Sync();
 
-        public CostCenter EditCostCenter(CostCenter pCostCenter) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                EditAndReturnItem(pCostCenter, $"{COSTCENTERS}/{pCostCenter.Id}"));
+        public CostCenter EditCostCenter(CostCenter pCostCenter) => mBlue10Async.EditCostCenter(pCostCenter).Sync();
 
-        public bool DeleteCostCenter(CostCenter pCostCenter) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                DeleteItem($"{COSTCENTERS}/{pCostCenter.Id}"));
+        public bool DeleteCostCenter(CostCenter pCostCenter) => mBlue10Async.DeleteCostCenter(pCostCenter).Sync();
 
         #endregion
 
         #region DocumentActions
-
-        public List<DocumentAction> GetDocumentActions() =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    GetItems<List<DocumentAction>>(DOCUMENTACTIONS));
+        public List<DocumentAction> GetDocumentActions() =>  mBlue10Async.GetDocumentActions().Sync();
 
         public string EditDocumentAction(DocumentAction pDocumentAction) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    EditItem(pDocumentAction, $"{DOCUMENTACTIONS}/{pDocumentAction.Id}"));
+            mBlue10Async.EditDocumentAction(pDocumentAction).Sync();
 
 
         #endregion
 
         #region GLAccounts
 
-
-        public List<GLAccount> GetGLAccounts(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() => GetItems<List<GLAccount>>($"{GLACCOUNTS}/{pIdCompany}"));
+        public List<GLAccount> GetGLAccounts(string pIdCompany) => mBlue10Async.GetGLAccounts(pIdCompany).Sync();
 
 
-        public GLAccount AddGLAccount(GLAccount pGLAccount) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                AddItem(pGLAccount, GLACCOUNTS));
+        public GLAccount AddGLAccount(GLAccount pGLAccount) => mBlue10Async.AddGLAccount(pGLAccount).Sync();
 
 
-        public GLAccount EditGLAccount(GLAccount pGLAccount) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                EditAndReturnItem(pGLAccount, $"{GLACCOUNTS}/{pGLAccount.Id}"));
+        public GLAccount EditGLAccount(GLAccount pGLAccount) => mBlue10Async.EditGLAccount(pGLAccount).Sync();
 
 
-        public bool DeleteGLAccount(GLAccount pGLAccount) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                DeleteItem($"{GLACCOUNTS}/{pGLAccount.Id}"));
-
+        public bool DeleteGLAccount(GLAccount pGLAccount) => mBlue10Async.DeleteGLAccount(pGLAccount).Sync();
+        
         #endregion 
 
         #region DocumentActions
 
         public List<LogisticsDocumentAction> GetLogisticsDocumentActions() =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<LogisticsDocumentAction>>(LOGISTICSDOCUMENTACTIONS));
+            mBlue10Async.GetLogisticsDocumentActions().Sync();
 
         public string EditLogisticsDocumentAction(LogisticsDocumentAction pLogisticsDocumentAction) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                EditItem(pLogisticsDocumentAction, $"{LOGISTICSDOCUMENTACTIONS}/{pLogisticsDocumentAction.Id}"));
+            mBlue10Async.EditLogisticsDocumentAction(pLogisticsDocumentAction).Sync();
 
         #endregion
 
         #region PaymentTerms
 
- 
-        public List<PaymentTerm> GetPaymentTerms(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<PaymentTerm>>($"{PAYMENTTERMS}/{pIdCompany}"));
 
-        public PaymentTerm AddPaymentTerm(PaymentTerm pPaymentTerm) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                AddItem(pPaymentTerm, PAYMENTTERMS));
+        public List<PaymentTerm> GetPaymentTerms(string pIdCompany) =>
+            mBlue10Async.GetPaymentTerms(pIdCompany).Sync();
+
+        public PaymentTerm AddPaymentTerm(PaymentTerm pPaymentTerm) => mBlue10Async.AddPaymentTerm(pPaymentTerm).Sync();
 
         public PaymentTerm EditPaymentTerm(PaymentTerm pPaymentTerm) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                EditAndReturnItem(pPaymentTerm, $"{PAYMENTTERMS}/{pPaymentTerm.Id}"));
+            mBlue10Async.EditPaymentTerm(pPaymentTerm).Sync();
 
 
-        public bool DeletePaymentTerm(PaymentTerm pPaymentTerm) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                DeleteItem($"{PAYMENTTERMS}/{pPaymentTerm.Id}"));
+        public bool DeletePaymentTerm(PaymentTerm pPaymentTerm) => mBlue10Async.DeletePaymentTerm(pPaymentTerm).Sync();
 
         #endregion 
 
         #region Projects
 
-        public List<Project> GetProjects(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<Project>>($"{PROJECTS}/{pIdCompany}"));
+        public List<Project> GetProjects(string pIdCompany) => mBlue10Async.GetProjects(pIdCompany).Sync();
 
-        public Project AddProject(Project pProject) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                AddItem(pProject, PROJECTS));
+        public Project AddProject(Project pProject) => mBlue10Async.AddProject(pProject).Sync();
 
-        public Project EditProject(Project pProject) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    EditAndReturnItem(pProject, $"{PROJECTS}/{pProject.Id}"));
-
-        public bool DeleteProject(Project pProject) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                DeleteItem($"{PROJECTS}/{pProject.Id}"));
+        public Project EditProject(Project pProject) => mBlue10Async.EditProject(pProject).Sync();
+        public bool DeleteProject(Project pProject) => mBlue10Async.DeleteProject(pProject).Sync();
 
         #endregion
 
         #region PurchaseInvoice
 
-        public PurchaseInvoice GetPurchaseInvoice(Guid pId) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    GetItems<PurchaseInvoice>($"{PURCHASEINVOICES}/{pId}"));
+        public PurchaseInvoice GetPurchaseInvoice(Guid pId) => mBlue10Async.GetPurchaseInvoice(pId).Sync();
 
-        public byte[] GetPurchaseInvoiceOriginal(Guid pId)
-        {
-            var fRet = SyncHelper.RunAsyncAsSync(() =>
-                GetItems<DocumentOriginal>($"{PURCHASEINVOICES}/{pId}/documentoriginal"));
-            return Base64Helper.GetBytesFromJsonResult(fRet.Content);
-        }
+        public byte[] GetPurchaseInvoiceOriginal(Guid pId) => mBlue10Async.GetPurchaseInvoiceOriginal(pId).Sync();
 
         public List<PurchaseInvoice> GetPurchaseInvoiceWithoutPaymentDate(string pIdCompany) =>
-             SyncHelper.RunAsyncAsSync(() =>
-                 GetItems<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}"));
+            mBlue10Async.GetPurchaseInvoiceWithoutPaymentDate(pIdCompany).Sync();
 
         #endregion
 
         #region PurchaseOrder
 
         public List<PurchaseOrder> GetPurchaseOrders(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                GetItems<List<PurchaseOrder>>($"{PURCHASEORDERS}/{pIdCompany}"));
+            mBlue10Async.GetPurchaseOrders(pIdCompany).Sync();
 
         public PurchaseOrder AddPurchaseOrder(PurchaseOrder pPurchaseOrder) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    AddItem(pPurchaseOrder, PURCHASEORDERS));
+            mBlue10Async.AddPurchaseOrder(pPurchaseOrder).Sync();
 
         public PurchaseOrder EditPurchaseOrder(PurchaseOrder pPurchaseOrder) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    EditAndReturnItem(pPurchaseOrder, $"{PURCHASEORDERS}/{pPurchaseOrder.Id}"));
-
+            mBlue10Async.EditPurchaseOrder(pPurchaseOrder).Sync();
 
         public bool DeletePurchaseOrder(PurchaseOrder pPurchaseOrder) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    DeleteItem($"{PURCHASEORDERS}/{pPurchaseOrder.Id}"));
+            mBlue10Async.DeletePurchaseOrder(pPurchaseOrder).Sync();
 
         #endregion
 
         #region VatCodes
 
         public List<VatCode> GetVatCodes(string pIdCompany) =>
-            SyncHelper.RunAsyncAsSync(() => GetItems<List<VatCode>>(
-                $"{VATCODES}/{pIdCompany}"));
+            mBlue10Async.GetVatCodes(pIdCompany).Sync();
 
         public VatCode AddVatCode(VatCode pVatCode) =>
-                SyncHelper.RunAsyncAsSync(() => AddItem(pVatCode, VATCODES));
+            mBlue10Async.AddVatCode(pVatCode).Sync();
 
-        public VatCode EditVatCode(VatCode pVatCode) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    EditAndReturnItem(pVatCode, $"{VATCODES}/{pVatCode.Id}"));
+        public VatCode EditVatCode(VatCode pVatCode) => mBlue10Async.EditVatCode(pVatCode).Sync();
 
-        public bool DeleteVatCode(VatCode pVatCode) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                    DeleteItem($"{VATCODES}/{pVatCode.Id}"));
+        public bool DeleteVatCode(VatCode pVatCode) => mBlue10Async.DeleteVatCode(pVatCode).Sync();
 
         #endregion
 
         #region Vendors
 
-        public List<Vendor> GetVendors(string pIdCompany) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    GetItems<List<Vendor>>($"{VENDORS}/{pIdCompany}"));
+        public List<Vendor> GetVendors(string pIdCompany) => mBlue10Async.GetVendors(pIdCompany).Sync();
 
-        public Vendor AddVendor(Vendor pVendor) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    AddItem(pVendor, VENDORS));
+        public Vendor AddVendor(Vendor pVendor) => mBlue10Async.AddVendor(pVendor).Sync();
 
-        public Vendor EditVendor(Vendor pVendor) =>
-            SyncHelper.RunAsyncAsSync(() =>
-                EditAndReturnItem(pVendor, $"{VENDORS}/{pVendor.Id}"));
+        public Vendor EditVendor(Vendor pVendor) => mBlue10Async.EditVendor(pVendor).Sync();
 
-        public bool DeleteVendor(Vendor pVendor) =>
-                SyncHelper.RunAsyncAsSync(() =>
-                    DeleteItem($"{VENDORS}/{pVendor.Id}"));
-
-        #endregion
-        
-        #region Private methods
-
-        private async Task<T> GetItems<T>(string pPath) =>
-            await _mB10WebWebApi.GetAsync<T>(pPath);
-
-        private async Task<T> AddItem<T>(T pItem, string path) =>
-            await _mB10WebWebApi.PostAsync(pItem, path);
-
-        private async Task<T> EditAndReturnItem<T>(T pItem, string pUrl) =>
-            await _mB10WebWebApi.PutAndReturnAsync(pItem, pUrl);
-
-        private async Task<string> EditItem<T>(T pItem, string pUrl) =>
-            await _mB10WebWebApi.PutAsync(pItem, pUrl);
-
-        private async Task<bool> DeleteItem(string pUrl) =>
-            await _mB10WebWebApi.DeleteAsync(pUrl);
-
+        public bool DeleteVendor(Vendor pVendor) => mBlue10Async.DeleteVendor(pVendor).Sync();
 
         #endregion
     }
