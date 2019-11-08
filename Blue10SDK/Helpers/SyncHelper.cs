@@ -7,7 +7,7 @@ namespace Blue10SDK
 {
     public static class SyncHelper
     {
-        public static TResult RunAsyncAsSync<TResult>(Func<Task<TResult>> pFunc)
+        private static TResult RunAsyncAsSync<TResult>(Func<Task<TResult>> pFunc)
         {
             var fCultureUi = CultureInfo.CurrentUICulture;
             var fCulture = CultureInfo.CurrentCulture;
@@ -18,5 +18,7 @@ namespace Blue10SDK
                 return pFunc();
             }).GetAwaiter().GetResult();
         }
+
+        public static TResult Sync<TResult>(this Task<TResult> pTask) => RunAsyncAsSync(()=>pTask);
     }
 }

@@ -2,6 +2,7 @@
 using System.Text.Json;
 
 using Blue10SDK;
+using Blue10SDK.Utils;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,23 +22,12 @@ namespace Blue10SDKExampleConsole
             public string Company { get; set; }
         }
 
-
+/*
         private static ServiceProvider BuildServices(IConfigurationRoot pConf) => new ServiceCollection()
-                    //Add Basic Console logging
+                    //Add a console Log
                     .AddLogging(builder => builder.AddConsole())
-                    //Reserve a special HTTPClient used for IBlu10Desk services
-                    //Configured with baseURL and apikey
-                    //ToDo Make this into a service extension
-                    .AddHttpClient<B10WebApiAdapter>(client =>
-                        {
-                            client.BaseAddress = new Uri(pConf["ApiUrl"]);
-                            client.Timeout = TimeSpan.FromMinutes(3);
-                            client.DefaultRequestHeaders.Add("Authorization", $"access_token {pConf["ApiKey"]}");
-                            //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                        }).Services
-                    //Added Blue10 desk itself
-                    .AddSingleton<IWebApiAdapter, B10WebApiAdapter>()
-                    .AddSingleton<IBlue10Client, Blue10Desk>()
+                    //Add Bluet10 client with a api key and OPTIONAL Url
+                    .AddBlue10(pConf["ApiKey"],pConf["ApiUrl"])
                     .BuildServiceProvider();
 
         private static IConfigurationRoot BuildConfiguration() =>
@@ -46,49 +36,50 @@ namespace Blue10SDKExampleConsole
             .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
             .Build();
 
+*/
 
         public static void Main(string[] args)
         {
-            var configuration = BuildConfiguration();
-            var services = BuildServices(configuration);
-            var logger = services.GetService<ILoggerFactory>().CreateLogger<Program>();
-            logger.LogWarning("Starting application");
+            var client = Blue10.CreateClient("key", "url ");
+          
+            Console.WriteLine("Starting application");
+            
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(o =>
                 {
                     switch (o.Action)
                     {
                         case "SyncVendors":
-                            var fSyncVendors = new SynchVendors(services.GetService<IBlue10Client>(), o.FileName);
+                            var fSyncVendors = new SynchVendors(client, o.FileName);
                             fSyncVendors.Synch(o.Company);
                             break;
                         case "SyncGLAccounts":
-                            var fSyncGLAccounts = new SynchGLAccounts(services.GetService<IBlue10Client>(), o.FileName);
+                            var fSyncGLAccounts = new SynchGLAccounts(client, o.FileName);
                             fSyncGLAccounts.Synch(o.Company);
                             break;
                         case "SyncCostCenters":
-                            var fSynchCostCenters = new SynchCostCenters(services.GetService<IBlue10Client>(), o.FileName);
+                            var fSynchCostCenters = new SynchCostCenters(client, o.FileName);
                             fSynchCostCenters.Synch(o.Company);
                             break;
                         case "SyncVatCodes":
-                            var fSynchVATCodes = new SynchVATCodes(services.GetService<IBlue10Client>(), o.FileName);
+                            var fSynchVATCodes = new SynchVATCodes(client, o.FileName);
                             fSynchVATCodes.Synch(o.Company);
                             break;
                         case "GetCompanies":
-                            var fGetCompanies = new GetCompanies(services.GetService<IBlue10Client>());
+                            var fGetCompanies = new GetCompanies(client);
                             Console.WriteLine(JsonSerializer.Serialize(fGetCompanies.GetAll()));
                             break;
                         case "ProcessDocumentActions":
-                            var fProcessDocumentActions = new ProcessDocumentActions(services.GetService<IBlue10Client>(), o.FileName);
+                            var fProcessDocumentActions = new ProcessDocumentActions(client, o.FileName);
                             fProcessDocumentActions.Process();
                             break;
                         case "ProcessAdministrationActions":
-                            var fProcessAdministrationActions = new ProcessAdministrationActions(services.GetService<IBlue10Client>());
+                            var fProcessAdministrationActions = new ProcessAdministrationActions(client);
                             fProcessAdministrationActions.Process("C:\\FileToVendors.csv");
                             break;
                     }
                 });
-            logger.LogDebug("Ended successfully");
+            Console.WriteLine("Ended successfully");
         }
     }
 }
