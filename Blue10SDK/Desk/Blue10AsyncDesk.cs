@@ -45,75 +45,70 @@ namespace Blue10SDK
 
         #region Me
 
-        public Task<Me> GetMe() =>
+        public Task<Me> GetMeAsync() =>
                 GetItems<Me>(ME);
 
-        public Task<List<AdministrationAction>> GetAdministrationActions() => 
+        public Task<List<AdministrationAction>> GetAdministrationActionsAsync() => 
                 GetItems<List<AdministrationAction>>(ADMINISTRATIONACTIONS);
 
         #endregion
 
         #region AdministrationActions
 
-        public Task<List<AdministrationAction>> GetAdministrationActionsAsync() => 
-            GetItems<List<AdministrationAction>>(ADMINISTRATIONACTIONS);
+       
 
-        public Task<bool> FinishAdministrationAction(AdministrationAction pAdministrationAction) =>
+        public Task<bool> FinishAdministrationActionAsync(AdministrationAction pAdministrationAction) =>
                     DeleteItem($"{ADMINISTRATIONACTIONS}/{pAdministrationAction.Id}");
 
         #endregion
 
         #region Companies
 
-        public Task<List<Company>> GetCompanies() =>
+        public Task<List<Company>> GetCompaniesAsync() =>
                 GetItems<List<Company>>(COMPANIES);
 
-        public Task<Company> UpdateCompany(Company pCompany)
-        {
-                throw new NotImplementedException();
-        }
 
         #endregion
 
         #region CostUnits
 
-        public Task<List<CostUnit>> GetCostUnits(string pIdCompany) =>
+        public Task<List<CostUnit>> GetCostUnitsAsync(string pIdCompany) =>
                 GetItems<List<CostUnit>>($"{COSTUNITS}/{pIdCompany}");
 
-        public Task<CostUnit> AddCostUnit(CostUnit pCostUnit) =>
+        public Task<CostUnit> AddCostUnitAsync(CostUnit pCostUnit) =>
                 AddItem(pCostUnit, COSTUNITS);
 
-        public Task<CostUnit> EditCostUnit(CostUnit pCostUnit) =>
+        public Task<CostUnit> EditCostUnitAsync(CostUnit pCostUnit) =>
                 EditAndReturnItem(pCostUnit, $"{COSTUNITS}/{pCostUnit.Id}");
 
 
-        public Task<bool> DeleteCostUnit(CostUnit pCostUnit) =>
+        public Task<bool> DeleteCostUnitAsync(CostUnit pCostUnit) =>
                DeleteItem($"{COSTUNITS}/{pCostUnit.Id}");
 
         #endregion 
 
         #region CostCenters
 
-        public Task<List<CostCenter>> GetCostCenters(string pIdCompany) =>
+        public Task<List<CostCenter>> GetCostCentersAsync(string pIdCompany) =>
                 GetItems<List<CostCenter>>($"{COSTCENTERS}/{pIdCompany}");
 
-        public Task<CostCenter> AddCostCenter(CostCenter pCostCenter) =>
+        public Task<CostCenter> AddCostCenterAsync(CostCenter pCostCenter) =>
                 AddItem(pCostCenter, COSTCENTERS);
 
-        public Task<CostCenter> EditCostCenter(CostCenter pCostCenter) =>
+        public Task<CostCenter> EditCostCenterAsync(CostCenter pCostCenter) =>
                 EditAndReturnItem(pCostCenter, $"{COSTCENTERS}/{pCostCenter.Id}");
 
-        public Task<bool> DeleteCostCenter(CostCenter pCostCenter) =>
+        public Task<bool> DeleteCostCenterAsync(CostCenter pCostCenter) =>
                 DeleteItem($"{COSTCENTERS}/{pCostCenter.Id}");
 
         #endregion
 
         #region DocumentActions
 
-        public Task<List<DocumentAction>> GetDocumentActions() =>
+        public Task<List<DocumentAction>> GetDocumentActionsAsync() =>
                     GetItems<List<DocumentAction>>(DOCUMENTACTIONS);
 
-        public Task<string> EditDocumentAction(DocumentAction pDocumentAction) =>
+        public Task<string> EditDocumentActionAsync(DocumentAction pDocumentAction) =>
                     EditItem(pDocumentAction, $"{DOCUMENTACTIONS}/{pDocumentAction.Id}");
 
 
@@ -122,19 +117,19 @@ namespace Blue10SDK
         #region GLAccounts
 
 
-        public Task<List<GLAccount>> GetGLAccounts(string pIdCompany) =>
+        public Task<List<GLAccount>> GetGLAccountsAsync(string pIdCompany) =>
              GetItems<List<GLAccount>>($"{GLACCOUNTS}/{pIdCompany}");
 
 
-        public Task<GLAccount> AddGLAccount(GLAccount pGLAccount) =>
+        public Task<GLAccount> AddGLAccountAsync(GLAccount pGLAccount) =>
                 AddItem(pGLAccount, GLACCOUNTS);
 
 
-        public Task<GLAccount> EditGLAccount(GLAccount pGLAccount) =>
+        public Task<GLAccount> EditGLAccountAsync(GLAccount pGLAccount) =>
                 EditAndReturnItem(pGLAccount, $"{GLACCOUNTS}/{pGLAccount.Id}");
 
 
-        public Task<bool> DeleteGLAccount(GLAccount pGLAccount) =>
+        public Task<bool> DeleteGLAccountAsync(GLAccount pGLAccount) =>
                 DeleteItem($"{GLACCOUNTS}/{pGLAccount.Id}");
         
         
@@ -143,10 +138,10 @@ namespace Blue10SDK
 
         #region DocumentActions
 
-        public Task<List<LogisticsDocumentAction>> GetLogisticsDocumentActions() =>
+        public Task<List<LogisticsDocumentAction>> GetLogisticsDocumentActionsAsync() =>
                 GetItems<List<LogisticsDocumentAction>>(LOGISTICSDOCUMENTACTIONS);
 
-        public Task<string> EditLogisticsDocumentAction(LogisticsDocumentAction pLogisticsDocumentAction) =>
+        public Task<string> EditLogisticsDocumentActionAsync(LogisticsDocumentAction pLogisticsDocumentAction) =>
                 EditItem(pLogisticsDocumentAction, $"{LOGISTICSDOCUMENTACTIONS}/{pLogisticsDocumentAction.Id}");
 
         #endregion
@@ -154,101 +149,101 @@ namespace Blue10SDK
         #region PaymentTerms
 
  
-        public Task<List<PaymentTerm>> GetPaymentTerms(string pIdCompany) =>
+        public Task<List<PaymentTerm>> GetPaymentTermsAsync(string pIdCompany) =>
                 GetItems<List<PaymentTerm>>($"{PAYMENTTERMS}/{pIdCompany}");
 
-        public Task<PaymentTerm> AddPaymentTerm(PaymentTerm pPaymentTerm) =>
+        public Task<PaymentTerm> AddPaymentTermAsync(PaymentTerm pPaymentTerm) =>
                 AddItem(pPaymentTerm, PAYMENTTERMS);
 
-        public Task<PaymentTerm> EditPaymentTerm(PaymentTerm pPaymentTerm) =>
+        public Task<PaymentTerm> EditPaymentTermAsync(PaymentTerm pPaymentTerm) =>
                 EditAndReturnItem(pPaymentTerm, $"{PAYMENTTERMS}/{pPaymentTerm.Id}");
 
 
-        public Task<bool> DeletePaymentTerm(PaymentTerm pPaymentTerm) =>
+        public Task<bool> DeletePaymentTermAsync(PaymentTerm pPaymentTerm) =>
                 DeleteItem($"{PAYMENTTERMS}/{pPaymentTerm.Id}");
 
         #endregion 
 
         #region Projects
 
-        public Task<List<Project>> GetProjects(string pIdCompany) =>
+        public Task<List<Project>> GetProjectsAsync(string pIdCompany) =>
                 GetItems<List<Project>>($"{PROJECTS}/{pIdCompany}");
 
-        public Task<Project> AddProject(Project pProject) =>
+        public Task<Project> AddProjectAsync(Project pProject) =>
                 AddItem(pProject, PROJECTS);
 
-        public Task<Project> EditProject(Project pProject) =>
+        public Task<Project> EditProjectAsync(Project pProject) =>
                     EditAndReturnItem(pProject, $"{PROJECTS}/{pProject.Id}");
 
-        public Task<bool> DeleteProject(Project pProject) =>
+        public Task<bool> DeleteProjectAsync(Project pProject) =>
                 DeleteItem($"{PROJECTS}/{pProject.Id}");
         
         #endregion
 
         #region PurchaseInvoice
 
-        public Task<PurchaseInvoice> GetPurchaseInvoice(Guid pId) =>
+        public Task<PurchaseInvoice> GetPurchaseInvoiceAsync(Guid pId) =>
                     GetItems<PurchaseInvoice>($"{PURCHASEINVOICES}/{pId}");
 
-        public async Task<byte[]> GetPurchaseInvoiceOriginal(Guid pId)
+        public async Task<byte[]> GetPurchaseInvoiceOriginalAsync(Guid pId)
         {
             var fRet = await GetItems<DocumentOriginal>($"{PURCHASEINVOICES}/{pId}/documentoriginal");
             return Base64Helper.GetBytesFromJsonResult(fRet.Content);
         }
 
-        public Task<List<PurchaseInvoice>> GetPurchaseInvoiceWithoutPaymentDate(string pIdCompany) =>
+        public Task<List<PurchaseInvoice>> GetPurchaseInvoiceWithoutPaymentDateAsync(string pIdCompany) =>
                  GetItems<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}");
 
         #endregion
 
         #region PurchaseOrder
 
-        public Task<List<PurchaseOrder>> GetPurchaseOrders(string pIdCompany) =>
+        public Task<List<PurchaseOrder>> GetPurchaseOrdersAsync(string pIdCompany) =>
                 GetItems<List<PurchaseOrder>>($"{PURCHASEORDERS}/{pIdCompany}");
 
-        public Task<PurchaseOrder> AddPurchaseOrder(PurchaseOrder pPurchaseOrder) =>
+        public Task<PurchaseOrder> AddPurchaseOrderAsync(PurchaseOrder pPurchaseOrder) =>
                     AddItem(pPurchaseOrder, PURCHASEORDERS);
 
-        public Task<PurchaseOrder> EditPurchaseOrder(PurchaseOrder pPurchaseOrder) =>
+        public Task<PurchaseOrder> EditPurchaseOrderAsync(PurchaseOrder pPurchaseOrder) =>
                     EditAndReturnItem(pPurchaseOrder, $"{PURCHASEORDERS}/{pPurchaseOrder.Id}");
 
 
-        public Task<bool> DeletePurchaseOrder(PurchaseOrder pPurchaseOrder) =>
+        public Task<bool> DeletePurchaseOrderAsync(PurchaseOrder pPurchaseOrder) =>
                     DeleteItem($"{PURCHASEORDERS}/{pPurchaseOrder.Id}");
 
         #endregion
 
         #region VatCodes
 
-        public Task<List<VatCode>> GetVatCodes(string pIdCompany) =>
+        public Task<List<VatCode>> GetVatCodesAsync(string pIdCompany) =>
              GetItems<List<VatCode>>($"{VATCODES}/{pIdCompany}");
 
-        public Task<VatCode> AddVatCode(VatCode pVatCode) =>
+        public Task<VatCode> AddVatCodeAsync(VatCode pVatCode) =>
                  AddItem(pVatCode, VATCODES);
 
-        public Task<VatCode> EditVatCode(VatCode pVatCode) =>
+        public Task<VatCode> EditVatCodeAsync(VatCode pVatCode) =>
                     EditAndReturnItem(pVatCode, $"{VATCODES}/{pVatCode.Id}");
 
-        public Task<bool> DeleteVatCode(VatCode pVatCode) =>
+        public Task<bool> DeleteVatCodeAsync(VatCode pVatCode) =>
                 DeleteItem($"{VATCODES}/{pVatCode.Id}");
 
         #endregion
 
         #region Vendors
 
-        public Task<List<Vendor>> GetVendors(string pIdCompany) =>
+        public Task<List<Vendor>> GetVendorsAsync(string pIdCompany) =>
                     GetItems<List<Vendor>>($"{VENDORS}/{pIdCompany}");
         
-        public Task<Vendor> AddVendor(Vendor pVendor) =>
+        public Task<Vendor> AddVendorAsync(Vendor pVendor) =>
                     AddItem(pVendor, VENDORS);
 
-        public Task<Vendor> EditVendor(Vendor pVendor) =>
+        public Task<Vendor> EditVendorAsync(Vendor pVendor) =>
                 EditAndReturnItem(pVendor, $"{VENDORS}/{pVendor.Id}");
 
-        public Task<bool> DeleteVendor(Vendor pVendor) =>
+        public Task<bool> DeleteVendorAsync(Vendor pVendor) =>
                 DeleteItem($"{VENDORS}/{pVendor.Id}");
 
-        public Task<Company> EditCompany(Company pCompany) =>
+        public Task<Company> UpdateCompanyAsync(Company pCompany) =>
                 EditAndReturnItem(pCompany, $"{COMPANIES}/{pCompany.Id}");
 
         #endregion
