@@ -1,6 +1,6 @@
 # Blue10 SDK
 
-![Nuget](https://img.shields.io/nuget/v/blue10sdk?label=Nuget&logo=nuget)  
+[![Nuget](https://img.shields.io/nuget/v/blue10sdk?label=Nuget&logo=nuget)](https://www.nuget.org/packages/Blue10SDK/)
 
 ![alt text](https://login.blue10.com/Content/images/Blue10-Logo-RGB-156.png "blue10 logo")
 
@@ -39,7 +39,7 @@ namespace GettingStartedWithBlue10
 ### 2. Get the Blue10 Package from nuget
 
 ```bat
-dotnet add package Blue10SDK --version 0.1.2
+dotnet add package Blue10SDK --version 0.1.5
 ```
 
 ### 3. Create a desk
@@ -55,11 +55,14 @@ class Program
     {
         //Build our blue10 client service
         var b10client = Blue10.CreateClient("<Your personal API Key>");
+
+        //or the simple async alternative
+        var b10AsyncClient = Blue10.CreateAsyncClient("<Your personal API Key>");
     }
 }
  ```
 
-### OR
+### -__OR__-
 
 #### Add a desk to `Microsoft.Extensions.DependencyInjection`'s IServiceCollection
 
@@ -76,9 +79,9 @@ public void ConfigureServices(IServiceCollection services)
 // And then use the client through dependency injection:
 public class MyClass
 {
-    readonly IBlue10Client client;
+    readonly IBlue10AsyncClient client;
 
-    public MyClass(IBlue10Client _blue10Client)
+    public MyClass(IBlue10AsyncClient _blue10Client)
     {
         client = _blue10Client;
     }
@@ -97,7 +100,7 @@ namespace GettingStartedWithBlue10
         static void Main(string[] args)
         {
             //Build our blue10 client service
-            var b10client = Blue10.CreateClient("");
+            var b10client = Blue10.CreateClient("<Your personal API Key>");
 
             //retreive your company 
             var myCompanyId = b10client
