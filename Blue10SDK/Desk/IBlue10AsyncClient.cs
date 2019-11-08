@@ -254,5 +254,11 @@ namespace Blue10SDK
         /// </summary>
         Task<bool> DeleteVendorAsync(Vendor pVendor);
 
+
+        Task<List<VatScenario>> GetVatScenariosAsync(string pIdCompany);
+        Task<VatScenario> AddVatScenarioAsync(VatScenario pVatScenario);
+        Task<VatScenario> EditVatScenarioAsync(VatScenario pVatScenario);
+        Task<bool> DeleteVatScenarioAsync(VatScenario pVatScenario);
+
     }
 }

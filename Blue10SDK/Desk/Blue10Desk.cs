@@ -161,6 +161,15 @@ namespace Blue10SDK
 
         public bool DeleteVatCode(VatCode pVatCode) => mBlue10Async.DeleteVatCodeAsync(pVatCode).Sync();
 
+        public List<VatScenario> GetVatScenarios(string pIdCompany) => mBlue10Async.GetVatScenariosAsync(pIdCompany).Sync();
+
+        public VatScenario AddVatScenario(VatScenario pVatScenario) => mBlue10Async.AddVatScenarioAsync(pVatScenario).Sync();
+
+        public VatScenario EditVatScenario(VatScenario pVatScenario) => mBlue10Async.EditVatScenarioAsync(pVatScenario).Sync();
+
+        public bool DeleteVatScenario(VatScenario pVatScenario) => mBlue10Async.DeleteVatScenarioAsync(pVatScenario).Sync();
+        
+
         #endregion
 
         #region Vendors

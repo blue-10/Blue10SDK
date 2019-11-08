@@ -223,13 +223,33 @@ namespace Blue10SDK
         VatCode EditVatCode(VatCode pVatCode);
 
         /// <summary>
-        /// Delete GLAccount from blue10, returns true if successful
+        /// Delete VatCode from blue10, returns true if successful
         /// </summary>
         bool DeleteVatCode(VatCode pVatCode);
+        /// <summary>
+        /// Returns all VatScenarios for company. Input is id from company
+        /// </summary>
+        List<VatScenario> GetVatScenarios(string pIdCompany);
 
+        /// <summary>
+        /// Add VatScenario and returns VatScenario as saved in blue10
+        /// </summary>
+        VatScenario AddVatScenario(VatScenario pVatScenario);
+
+        /// <summary>
+        /// Updates VatScenario information and returns VatScenario as saved in blue10
+        /// </summary>
+        VatScenario EditVatScenario(VatScenario pVatScenario);
+
+        /// <summary>
+        /// Delete VatScenario from blue10, returns true if successful
+        /// </summary>
+        bool DeleteVatScenario(VatScenario pVatScenario);
+  
         /// <summary>
         /// Returns all Vendors for company. Input is id from company
         /// </summary>
+        /// 
         List<Vendor> GetVendors(string pIdCompany);
 
         /// <summary>
