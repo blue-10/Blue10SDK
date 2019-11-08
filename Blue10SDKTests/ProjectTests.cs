@@ -18,7 +18,7 @@ namespace Blue10SDKTests
 
         public ProjectTests()
         {
-            mApiClient = new Blue10Desk(mDummyWebApi);
+            mApiClient = new Blue10Desk(new Blue10AsyncDesk(mDummyWebApi));
         }
 
         #endregion
