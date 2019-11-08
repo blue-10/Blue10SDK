@@ -248,6 +248,22 @@ namespace Blue10SDK
 
         #endregion
         
+        #region VatScenarios
+
+        public Task<List<VatScenario>> GetVatScenariosAsync(string pIdCompany) =>
+                GetItems<List<VatScenario>>($"{VATSCENARIOS}/{pIdCompany}");
+
+        public Task<VatScenario> AddVatScenarioAsync(VatScenario pVatScenario) =>
+                AddItem(pVatScenario, VATSCENARIOS);
+
+        public Task<VatScenario> EditVatScenarioAsync(VatScenario pVatScenario) =>
+                EditAndReturnItem(pVatScenario, $"{VATSCENARIOS}/{pVatScenario.Id}");
+
+        public Task<bool> DeleteVatScenarioAsync(VatScenario pVatScenario) =>
+                        DeleteItem($"{VATSCENARIOS}/{pVatScenario.Id}");
+
+        #endregion
+        
         #region Private methods
 
         private Task<T> GetItems<T>(string pPath) =>
