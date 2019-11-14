@@ -266,20 +266,20 @@ namespace Blue10SDK
         
         #region Private methods
 
-        private Task<T> GetItems<T>(string pPath) =>
-            _mB10WebWebApi.GetAsync<T>(pPath);
+        private async Task<T> GetItems<T>(string pPath) =>
+            await _mB10WebWebApi.GetAsync<T>(pPath);
 
-        private Task<T> AddItem<T>(T pItem, string path) =>
-            _mB10WebWebApi.PostAsync(pItem, path);
+        private async Task<T> AddItem<T>(T pItem, string path) =>
+            await _mB10WebWebApi.PostAsync(pItem, path);
 
-        private Task<T> EditAndReturnItem<T>(T pItem, string pUrl) =>
-            _mB10WebWebApi.PutAndReturnAsync(pItem, pUrl);
+        private async Task<T> EditAndReturnItem<T>(T pItem, string pUrl) =>
+            await _mB10WebWebApi.PutAndReturnAsync(pItem, pUrl);
 
-        private Task<string> EditItem<T>(T pItem, string pUrl) =>
-            _mB10WebWebApi.PutAsync(pItem, pUrl);
+        private async Task<string> EditItem<T>(T pItem, string pUrl) =>
+            await _mB10WebWebApi.PutAsync(pItem, pUrl);
 
-        private Task<bool> DeleteItem(string pUrl) =>
-            _mB10WebWebApi.DeleteAsync(pUrl);
+        private async Task<bool> DeleteItem(string pUrl) =>
+            await _mB10WebWebApi.DeleteAsync(pUrl);
 
         #endregion
     }

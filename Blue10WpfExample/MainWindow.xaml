@@ -11,7 +11,7 @@
                 <Grid Background="#FFE5E5E5">
                     <TextBlock Padding="5">
                         <Label Margin="0,0,0,0" >Apikey : </Label>
-                     <TextBox x:Name="ApiKey" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
+                     <TextBox x:Name="ApiKey" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="475"/>
                     </TextBlock>
                     <TextBlock Padding="5">
                         <Label Margin="0,0,0,0" >Api url : </Label>
@@ -55,7 +55,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode}" />
                             <DataGridComboBoxColumn Header="Login status" x:Name="companyLoginStatusList" SelectedValueBinding="{Binding LoginStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
-                            <DataGridTextColumn Header="Vat registration number" Binding="{Binding Path=AdministrationVatNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Vat registration number" Binding="{Binding Path=AdministrationVatNumber}" />
                             <DataGridComboBoxColumn Header="Currency" x:Name="companyCurrencyList" SelectedValueBinding="{Binding AdministrationCurrencyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
@@ -269,7 +269,7 @@
                             <DataGridCheckBoxColumn Header="Blocked" IsThreeState="True"  Binding="{Binding Path=Blocked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridComboBoxColumn Header="Default ledger" x:Name="vendorGLAccountList" SelectedValueBinding="{Binding DefaultLedgerCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Default VAT code" x:Name="vendorVatCodeList" SelectedValueBinding="{Binding DefaultVatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridComboBoxColumn Header="Default VAT code" x:Name="vendorPaymenttermList" SelectedValueBinding="{Binding DefaultPaymentTermCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Default Payment term" x:Name="vendorPaymenttermList" SelectedValueBinding="{Binding DefaultPaymentTermCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
