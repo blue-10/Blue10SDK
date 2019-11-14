@@ -387,7 +387,7 @@ namespace Blue10SdkWpfExample
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"List ErpActions failed ({ex.Message}");
+                MessageBox.Show($"Save GL Account failed ({ex.Message}");
             }
             ListGLAccounts(sender, e);
         }

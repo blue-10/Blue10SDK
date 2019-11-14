@@ -201,9 +201,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridComboBoxColumn Header="Default VAT code" x:Name="glaccountVatCodeList" SelectedValueBinding="{Binding default_vat_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridComboBoxColumn Header="Default Cost center" x:Name="glaccountCostCenterList" SelectedValueBinding="{Binding default_cost_center_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"   />
-                            <DataGridComboBoxColumn Header="Default Cost unit" x:Name="glaccountCostUnitList" SelectedValueBinding="{Binding default_cost_unit_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Default VAT code"  x:Name="glaccountVatCodeList" SelectedValueBinding="{Binding Path=DefaultVatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Default Cost center" x:Name="glaccountCostCenterList" SelectedValueBinding="{Binding Path=DefaultCostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"   />
+                            <DataGridComboBoxColumn Header="Default Cost unit" x:Name="glaccountCostUnitList" SelectedValueBinding="{Binding Path=DefaultCostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
