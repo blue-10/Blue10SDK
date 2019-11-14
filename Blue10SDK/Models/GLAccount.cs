@@ -6,7 +6,7 @@
 
         public string DefaultVatCode { get; set; }
 
-        public string DefaultCostCentercode { get; set; }
+        public string DefaultCostCenterCode { get; set; }
 
         public string DefaultCostUnitCode { get; set; }
     }
