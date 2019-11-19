@@ -358,11 +358,14 @@ namespace Blue10SdkWpfExample
                 var fGLAccounts = await mB10DH.GetGLAccounts(fSelectCompany);
                 mCurrentGLAccounts = Extensions.Clone<List<GLAccount>>(fGLAccounts);
                 glAccountGrid.ItemsSource = fGLAccounts;
-                var fVatCodes = await mB10DH.GetVatCodes(fSelectCompany);
+                var fVatCodes = new List<VatCode>() { new VatCode() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fVatCodes.AddRange(await mB10DH.GetVatCodes(fSelectCompany));
                 glaccountVatCodeList.ItemsSource = fVatCodes.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
-                var fCostCenters = await mB10DH.GetCostCenters(fSelectCompany);
+                var fCostCenters = new List<CostCenter>() { new CostCenter() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fCostCenters.AddRange(await mB10DH.GetCostCenters(fSelectCompany));
                 glaccountCostCenterList.ItemsSource = fCostCenters.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
-                var fCostUnits = await mB10DH.GetCostUnits(fSelectCompany);
+                var fCostUnits = new List<CostUnit>() { new CostUnit() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fCostUnits.AddRange(await mB10DH.GetCostUnits(fSelectCompany));
                 glaccountCostUnitList.ItemsSource = fCostUnits.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             }
             catch (Exception ex)
@@ -472,12 +475,15 @@ namespace Blue10SdkWpfExample
                 var fVendors = await mB10DH.GetVendors(fSelectCompany);
                 mCurrentVendors = Extensions.Clone<List<Vendor>>(fVendors);
                 vendorGrid.ItemsSource = fVendors;
-                vendorCurrencyList.ItemsSource = new List<string>() { "EUR", "USD", "GBP" };
-                var fVatCodes = await mB10DH.GetVatCodes(fSelectCompany);
+                vendorCurrencyList.ItemsSource = new List<string>() { "", "EUR", "USD", "GBP" };
+                var fVatCodes = new List<VatCode>() { new VatCode() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fVatCodes.AddRange(await mB10DH.GetVatCodes(fSelectCompany));
                 vendorVatCodeList.ItemsSource = fVatCodes.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
-                var fGLAccounts = await mB10DH.GetGLAccounts(fSelectCompany);
+                var fGLAccounts = new List<GLAccount>() { new GLAccount() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fGLAccounts.AddRange(await mB10DH.GetGLAccounts(fSelectCompany));
                 vendorGLAccountList.ItemsSource = fGLAccounts.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
-                var fPaymentTerms = await mB10DH.GetPaymentTerms(fSelectCompany);
+                var fPaymentTerms = new List<PaymentTerm>() { new PaymentTerm() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fPaymentTerms.AddRange(await mB10DH.GetPaymentTerms(fSelectCompany));
                 vendorPaymenttermList.ItemsSource = fPaymentTerms.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             }
             catch (Exception ex)
