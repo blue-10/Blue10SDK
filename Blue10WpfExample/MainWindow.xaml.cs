@@ -60,6 +60,7 @@ namespace Blue10SdkWpfExample
         {
             var fValue = (mShowMenu) ? Visibility.Visible : Visibility.Hidden;
             CompanyTab.Visibility = fValue;
+            DocumentActionTab.Visibility = fValue;
             VatCodeTab.Visibility = fValue;
             VatScenarioTab.Visibility = fValue;
             GLAccountTab.Visibility = fValue;
@@ -96,6 +97,28 @@ namespace Blue10SdkWpfExample
             }
             ListErpActions(sender, e);
         }
+        #endregion
+
+        #region DocumentAction
+
+        private async void ListDocumentActions(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDocumentActions = new List<DocumentAction>() { new DocumentAction() { Action = EDocumentAction.post_purchase_invoice, Status = "New", CreationTime = new DateTime(2019,11,11) } };
+                documentactionGrid.ItemsSource = fDocumentActions;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"List DocumentActions failed ({ex.Message}");
+            }
+        }
+
+        private async void OpenDocumentAction(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region Companies
@@ -466,15 +489,16 @@ namespace Blue10SdkWpfExample
         #endregion
 
         #region Vendors
-        private List<Vendor> mCurrentVendors { get; set; }
+        private List<VendorWpf> mCurrentVendors { get; set; }
         private async void ListVendors(object sender, RoutedEventArgs e)
         {
             try
             {
                 var fSelectCompany = (string)vendorCompanyList.SelectedItem;
-                var fVendors = await mB10DH.GetVendors(fSelectCompany);
-                mCurrentVendors = Extensions.Clone<List<Vendor>>(fVendors);
-                vendorGrid.ItemsSource = fVendors;
+                var fVendors =  await mB10DH.GetVendors(fSelectCompany);
+                var fVendorsWpf = VendorWpf.GetFromVendors(fVendors);
+                mCurrentVendors = Extensions.Clone<List<VendorWpf>>(fVendorsWpf);
+                vendorGrid.ItemsSource = fVendorsWpf;
                 vendorCurrencyList.ItemsSource = new List<string>() { "", "EUR", "USD", "GBP" };
                 var fVatCodes = new List<VatCode>() { new VatCode() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
                 fVatCodes.AddRange(await mB10DH.GetVatCodes(fSelectCompany));
