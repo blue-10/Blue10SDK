@@ -30,6 +30,11 @@ namespace Blue10SdkWpfExample
             await mAsyncCLient.FinishAdministrationActionAsync(pAdministrationAction);
             return true;
         }
+
+        public async Task<List<DocumentAction>> GetDocumentActions()
+        {
+            return await mAsyncCLient.GetDocumentActionsAsync();
+        }
         public async Task<List<Company>> GetCompanies()
         {
             return await mAsyncCLient.GetCompaniesAsync();

@@ -14,8 +14,6 @@ namespace Blue10SdkWpfExample
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IBlue10Client mBlue10Client;
-
         private B10DeskHelper mB10DH = new B10DeskHelper();
         
         private readonly ILogger<MainWindow> mlogger;
@@ -41,7 +39,6 @@ namespace Blue10SdkWpfExample
             catch (Exception ex)
             {
                 connectionStatus.Content = $"Connection failed ({ex.Message})";
-                mBlue10Client = null;
             }
             // get companies to fill in
             var fCompanies = await mB10DH.GetCompanies();
@@ -105,7 +102,7 @@ namespace Blue10SdkWpfExample
         {
             try
             {
-                var fDocumentActions = new List<DocumentAction>() { new DocumentAction() { Action = EDocumentAction.post_purchase_invoice, Status = "New", CreationTime = new DateTime(2019,11,11) } };
+                var fDocumentActions = await mB10DH.GetDocumentActions();
                 documentactionGrid.ItemsSource = fDocumentActions;
             }
             catch(Exception ex)
@@ -114,9 +111,11 @@ namespace Blue10SdkWpfExample
             }
         }
 
-        private async void OpenDocumentAction(object sender, RoutedEventArgs e)
+        private void OpenDocumentAction(object sender, RoutedEventArgs e)
         {
-
+            var fDocumentAction = ((Button)sender).DataContext as DocumentAction;
+            var fDocumentActionWindow = new DocumentActionWindow(mB10DH, fDocumentAction);
+            fDocumentActionWindow.Show();
         }
 
         #endregion
