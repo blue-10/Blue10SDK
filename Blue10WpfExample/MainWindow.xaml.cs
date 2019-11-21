@@ -39,6 +39,7 @@ namespace Blue10SdkWpfExample
             catch (Exception ex)
             {
                 connectionStatus.Content = $"Connection failed ({ex.Message})";
+                return;
             }
             // get companies to fill in
             var fCompanies = await mB10DH.GetCompanies();
@@ -519,7 +520,8 @@ namespace Blue10SdkWpfExample
         {
             try
             {
-                var fVendor = ((Button)sender).DataContext as Vendor;
+                var fVendorWpf = ((Button)sender).DataContext as VendorWpf;
+                var fVendor = fVendorWpf as Vendor;
                 var fCurrent = mCurrentVendors.FirstOrDefault(x => x.Id == fVendor.Id);
                 if (fCurrent != null && fCurrent.AdministrationCode != fVendor.AdministrationCode)
                 {
