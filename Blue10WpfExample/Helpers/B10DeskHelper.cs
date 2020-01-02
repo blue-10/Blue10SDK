@@ -35,6 +35,12 @@ namespace Blue10SdkWpfExample
         {
             return await mAsyncCLient.GetDocumentActionsAsync();
         }
+
+        public async Task<string> SaveDocumentAction(DocumentAction pDocumentAction)
+        {
+            return await mAsyncCLient.EditDocumentActionAsync(pDocumentAction);
+        }
+
         public async Task<List<Company>> GetCompanies()
         {
             return await mAsyncCLient.GetCompaniesAsync();
@@ -75,6 +81,22 @@ namespace Blue10SdkWpfExample
         public async Task<bool> DeleteCostUnit(CostUnit pCostUnit)
         {
             return await mAsyncCLient.DeleteCostUnitAsync(pCostUnit);
+        }
+
+        public async Task<List<Project>> GetProjects(string pIdCompany)
+        {
+            return await mAsyncCLient.GetProjectsAsync(pIdCompany);
+        }
+
+        public async Task<Project> SaveProject(Project pProject)
+        {
+            if (pProject.Id == Guid.Empty) return await mAsyncCLient.AddProjectAsync(pProject);
+            return await mAsyncCLient.EditProjectAsync(pProject);
+        }
+
+        public async Task<bool> DeleteProject(Project pProject)
+        {
+            return await mAsyncCLient.DeleteProjectAsync(pProject);
         }
 
         public async Task<List<GLAccount>> GetGLAccounts(string pIdCompany)

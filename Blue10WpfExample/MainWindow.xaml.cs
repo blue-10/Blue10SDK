@@ -115,6 +115,8 @@ namespace Blue10SdkWpfExample
         private void OpenDocumentAction(object sender, RoutedEventArgs e)
         {
             var fDocumentAction = ((Button)sender).DataContext as DocumentAction;
+            var fDocList = (List<DocumentAction>) documentactionGrid.ItemsSource;
+            documentactionGrid.ItemsSource = fDocList.Except(new List<DocumentAction> { fDocumentAction }).ToList();
             var fDocumentActionWindow = new DocumentActionWindow(mB10DH, fDocumentAction);
             fDocumentActionWindow.Show();
         }
