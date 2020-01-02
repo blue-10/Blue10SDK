@@ -8,5 +8,29 @@
         Title="Document Action" Height="450" Width="800">
     <Grid>
         <Button x:Name="CloseButton" Content="Close without save" Click="CloseNoSave" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <TabControl x:Name="tabControl" Margin="0,30,0,0">
+            <TabItem Header="Get purchase invoice lines" Name="PurchaseInvoiceLineTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1280*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="FinishPurchaseInvoiceLineInvoice" Content="Complete action"  Margin="5,5,0,0" Click="FinishPurchaseInvoiceLine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                    <TextBlock x:Name="PurchaseInvoiceLineInvoiceText" Margin="5,28,0,0">
+                    </TextBlock>
+                    <DataGrid  Margin="5,50,0,0" x:Name="PurchaseInvoiceLineGrid" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=PurchaseInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="GL Account" x:Name="PurchaseInvoiceLineGLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridTextColumn Header="Net amount" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Path=VendorCustomerCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridComboBoxColumn Header="VAT code" x:Name="PurchaseInvoiceLineVatCodeList" SelectedValueBinding="{Binding VatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridCheckBoxColumn Header="VAT shifted" IsThreeState="True"  Binding="{Binding Path=VatReverseCharged, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridComboBoxColumn Header="Cost center" x:Name="PurchaseInvoiceLineCostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                   
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
