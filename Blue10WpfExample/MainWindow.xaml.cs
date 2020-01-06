@@ -50,6 +50,7 @@ namespace Blue10SdkWpfExample
             costcenterCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             costunitCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             paymenttermCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            projectCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             ShowMenu();
         }
 
@@ -67,6 +68,7 @@ namespace Blue10SdkWpfExample
             CostUnitTab.Visibility = fValue;
             ErpActionTab.Visibility = fValue;
             PaymenttermTab.Visibility = fValue;
+            ProjectTab.Visibility = fValue;
         }
         #region ErpAction
         private async void ListErpActions(object sender, RoutedEventArgs e)
@@ -556,6 +558,57 @@ namespace Blue10SdkWpfExample
 
         #endregion
 
+        #region Projects
+        private List<Project> mCurrentProjects { get; set; }
+        private async void ListProjects(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fSelectCompany = (string)projectCompanyList.SelectedItem;
+                var fProjects = await mB10DH.GetProjects(fSelectCompany);
+                mCurrentProjects = Extensions.Clone<List<Project>>(fProjects);
+                projectGrid.ItemsSource = fProjects;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve Projects ({ex.Message}");
+            }
+        }
 
+        private async void SaveProject(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fProject = ((Button)sender).DataContext as Project;
+                var fCurrent = mCurrentProjects.FirstOrDefault(x => x.Id == fProject.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fProject.AdministrationCode)
+                {
+                    fProject.Id = Guid.Empty;
+                    await mB10DH.DeleteProject(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fProject.IdCompany)) fProject.IdCompany = (string)projectCompanyList.SelectedItem;
+                fProject = await mB10DH.SaveProject(fProject);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save project failed ({ex.Message}");
+            }
+            ListProjects(sender, e);
+        }
+
+        private async void DeleteProject(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fProject = ((Button)sender).DataContext as Project;
+                await mB10DH.DeleteProject(fProject);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete project failed ({ex.Message}");
+            }
+            ListProjects(sender, e);
+        }
+        #endregion
     }
 }
