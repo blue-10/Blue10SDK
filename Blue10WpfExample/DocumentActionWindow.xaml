@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Document Action" Height="450" Width="1000">
     <Grid>
-        <Button x:Name="WaitButton" Content="Set wait" Click="CloseWait" HorizontalAlignment="Left" Margin="670,10,0,0" VerticalAlignment="Top" Width="120"/><Button x:Name="CloseButton" Content="Close without save" Click="CloseNoSave" HorizontalAlignment="Left" Margin="800,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="WaitButton" Content="Set wait" Click="CloseWait" HorizontalAlignment="Left" Margin="670,5,0,0" VerticalAlignment="Top" Width="120"/><Button x:Name="CloseButton" Content="Close without save" Click="CloseNoSave" HorizontalAlignment="Left" Margin="800,5,0,0" VerticalAlignment="Top" Width="120"/>
         <TabControl x:Name="tabControl" Margin="0,30,0,0">
             <TabItem Header="Create purchase invoice" Name="CreatePurchaseInvoiceTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
@@ -88,6 +88,23 @@
                         <DatePicker Name="GetPurchaseInvoiceDueDate" SelectedDate="{Binding Path=PurchaseInvoiceDueDate,StringFormat='dd-MM-yyy'}"  HorizontalAlignment="Left" Height="23" Margin="10,0,0,0" />
                         <LineBreak/>
                         <Button x:Name="FinishGetPurchaseInvoiceDueDateButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishPurchaseInvoiceDueDate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                    </TextBlock>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="(Un)block invoice" Name="UnblockInvoiceTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1280*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="UnblockInvoiceHeaderText" Margin="5,28,0,0">
+                    </TextBlock>
+                    <TextBlock Margin="5,40,0,0">
+                        <Label Margin="0,0,0,0" >Remark (optional) : </Label> 
+                        <TextBox x:Name="UnblockInvoiceText" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                        <LineBreak/>
+                        <Button x:Name="FinishUnblockInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishUnblockInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     </TextBlock>
 
                 </Grid>

@@ -43,6 +43,11 @@ namespace Blue10SdkWpfExample
                 case EDocumentAction.get_payment_due_date:                   
                     FillGetPurchaseInvoiceDueDateTab();
                     break;
+                case EDocumentAction.unblock_purchase_invoice_for_payment:
+                case EDocumentAction.block_purchase_invoice_for_payment:
+                    FillUnblockInvoiceTab();
+                    break;
+
             }
         }
 
@@ -143,7 +148,32 @@ namespace Blue10SdkWpfExample
             this.Close();
         }
 
-        private async void CloseWait(object sender, RoutedEventArgs e)
+        private void FillUnblockInvoiceTab()
+        {
+            UnblockInvoiceTab.Visibility = Visibility.Visible;
+            UnblockInvoiceTab.IsSelected = true;
+            var fInvoice = DocAction.PurchaseInvoice;
+            var fBlockUnBlock = (DocAction.Action == EDocumentAction.block_purchase_invoice_for_payment) ? "Block" : "Unblock";
+            UnblockInvoiceHeaderText.Text = $"{fBlockUnBlock} Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
+        }
+
+        private async void FinishUnblockInvoice(object sender, RoutedEventArgs e)
+        {
+            DocAction.Status = "done";
+            if (!string.IsNullOrEmpty(UnblockInvoiceText.Text))
+            {
+                DocAction.Message = UnblockInvoiceText.Text;
+                DocAction.Result = "success_warning";
+            }
+            else
+            {
+                DocAction.Result = "success";
+            }
+            await B10DH.SaveDocumentAction(DocAction);
+            this.Close();
+    }
+
+    private async void CloseWait(object sender, RoutedEventArgs e)
         {
             DocAction.Status = "waiting_for_administration";
             await B10DH.SaveDocumentAction(DocAction);
