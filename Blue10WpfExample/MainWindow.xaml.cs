@@ -610,5 +610,58 @@ namespace Blue10SdkWpfExample
             ListProjects(sender, e);
         }
         #endregion
+
+        #region Warehouses
+        private List<Warehouse> mCurrentWarehouses { get; set; }
+        private async void ListWarehouses(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fSelectCompany = (string)warehouseCompanyList.SelectedItem;
+                var fWarehouses = await mB10DH.GetWarehouses(fSelectCompany);
+                mCurrentWarehouses = Extensions.Clone<List<Warehouse>>(fWarehouses);
+                projectGrid.ItemsSource = fWarehouses;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve Warehouses ({ex.Message}");
+            }
+        }
+
+        private async void SaveWarehouse(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fWarehouse = ((Button)sender).DataContext as Warehouse;
+                var fCurrent = mCurrentWarehouses.FirstOrDefault(x => x.Id == fWarehouse.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fWarehouse.AdministrationCode)
+                {
+                    fWarehouse.Id = Guid.Empty;
+                    await mB10DH.DeleteWarehouse(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fWarehouse.IdCompany)) fWarehouse.IdCompany = (string)projectCompanyList.SelectedItem;
+                fWarehouse = await mB10DH.SaveWarehouse(fWarehouse);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save warehouse failed ({ex.Message}");
+            }
+            ListWarehouses(sender, e);
+        }
+
+        private async void DeleteWarehouse(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fWarehouse = ((Button)sender).DataContext as Warehouse;
+                await mB10DH.DeleteWarehouse(fWarehouse);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete warehouse failed ({ex.Message}");
+            }
+            ListWarehouses(sender, e);
+        }
+        #endregion
     }
 }
