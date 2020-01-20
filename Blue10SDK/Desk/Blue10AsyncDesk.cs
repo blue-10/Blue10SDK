@@ -25,6 +25,7 @@ namespace Blue10SDK
         private const string VATCODES = "vatcodes";
         private const string VATSCENARIOS = "vatscenarios";
         private const string VENDORS = "vendors";
+        private const string WAREHOUSES = "warehouses";
 
         #endregion
 
@@ -263,7 +264,23 @@ namespace Blue10SDK
                         DeleteItem($"{VATSCENARIOS}/{pVatScenario.Id}");
 
         #endregion
-        
+
+        #region Warehouses
+
+        public Task<List<Warehouse>> GetWarehousesAsync(string pIdCompany) =>
+                GetItems<List<Warehouse>>($"{WAREHOUSES}/{pIdCompany}");
+
+        public Task<Warehouse> AddWarehouseAsync(Warehouse pWarehouse) =>
+                AddItem(pWarehouse, WAREHOUSES);
+
+        public Task<Warehouse> EditWarehouseAsync(Warehouse pWarehouse) =>
+                EditAndReturnItem(pWarehouse, $"{WAREHOUSES}/{pWarehouse.Id}");
+
+        public Task<bool> DeleteWarehouseAsync(Warehouse pWarehouse) =>
+               DeleteItem($"{WAREHOUSES}/{pWarehouse.Id}");
+
+        #endregion
+
         #region Private methods
 
         private async Task<T> GetItems<T>(string pPath) =>
