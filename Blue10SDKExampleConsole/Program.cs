@@ -40,8 +40,8 @@ namespace Blue10SDKExampleConsole
 
         public static void Main(string[] args)
         {
-            var client = Blue10.CreateClient("key", "url ");
-          
+            var client = Blue10.CreateClient("wXCgUWhKJ98kkLAKsi601GPjZXNOdeqKUsBHcNy4mespy31I1uCYkJ0LL55Ji1zp", "https://b10imdevapi.azurewebsites.net/vnext/");
+
             Console.WriteLine("Starting application");
             
             Parser.Default.ParseArguments<Options>(args)

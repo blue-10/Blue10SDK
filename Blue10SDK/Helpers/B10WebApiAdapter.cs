@@ -78,7 +78,7 @@ namespace Blue10SDK
             using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
             var fResponseHttp = await pHttpClient.DeleteAsync(pUrl);
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<bool>>(fJson, DefaultJsonSerializerOptions.Options);
+            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<string>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
             if (fResponsObject.code == 200 && fResponsObject.status == "success") return true;
             throw new Blue10ApiException(fResponsObject.message);

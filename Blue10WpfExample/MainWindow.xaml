@@ -1,34 +1,348 @@
-﻿<Window x:Class="Blue10SDK.MainWindow"
+<Window x:Class="Blue10SdkWpfExample.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Blue10 SDK Example" Height="800" Width="1600">
     <Grid>
         <TabControl x:Name="tabControl">
             <TabItem Header="Config">
-                <Grid Margin="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="48" />
-                        <RowDefinition Height="48" />
-                        <RowDefinition Height="48" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Margin="8">API key :</Label>
-                    <TextBox Grid.Column="1" Grid.Row="0" Margin="8" x:Name="ApiKey" TextWrapping="Wrap" />
-                    <Label Grid.Column="0" Grid.Row="1" Margin="8">API url :</Label>
-                    <TextBox Grid.Column="1" Grid.Row="1" Margin="8" x:Name="ApiUrl" Text="http://localhost:52476" />
-                    <Button Grid.Column="1" Grid.Row="2" Margin="8" x:Name="button" Content="Test connection" />
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock Padding="5">
+                        <Label Margin="0,0,0,0" >Apikey : </Label>
+                     <TextBox x:Name="ApiKey" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="475"/>
+                    </TextBlock>
+                    <TextBlock Padding="5">
+                        <Label Margin="0,0,0,0" >Api url : </Label>
+                     <TextBox x:Name="ApiUrl" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                    </TextBlock>
+                    <Button x:Name="ConnectButton" Content="Connect" Click="ConnectToApi" HorizontalAlignment="Left" Margin="70,95,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="connectionStatus" Content="" HorizontalAlignment="Left" Margin="70,135,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Companies">
-                <TextBlock Margin="8">List of companies</TextBlock>
+            <TabItem Header="Administration actions" Name="ErpActionTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="showErpActions" Content="Get administration actions" Click="ListErpActions" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" Width="160" Grid.ColumnSpan="2"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="erpactionGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=erpactionGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Company" Binding="{Binding Path=IdCompany}" />
+                            <DataGridTextColumn Header="Action" Binding="{Binding Path=Action}" />
+                            <DataGridTextColumn Header="Created" Binding="{Binding Path=CreationTime}" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="FinishErpAction">Finish action</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Document actions" Name="DocumentActionTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="showDocumentActions" Content="Get document actions" Click="ListDocumentActions" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" Width="160" Grid.ColumnSpan="2"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="documentactionGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=documentactionGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Company" Binding="{Binding Path=Action}" />
+                            <DataGridTextColumn Header="Action" Binding="{Binding Path=Status}" />
+                            <DataGridTextColumn Header="Created" Binding="{Binding Path=CreationTime}" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="OpenDocumentAction">Open</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Companies" Name="CompanyTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="showCompanies" Content="Get companies" Click="ListCompanies" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="companyGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=companyGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode}" />
+                            <DataGridComboBoxColumn Header="Login status" x:Name="companyLoginStatusList" SelectedValueBinding="{Binding LoginStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                            <DataGridTextColumn Header="Vat registration number" Binding="{Binding Path=AdministrationVatNumber}" />
+                            <DataGridComboBoxColumn Header="Currency" x:Name="companyCurrencyList" SelectedValueBinding="{Binding AdministrationCurrencyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveCompany">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="VAT Codes" Name="VatCodeTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="vatcodeCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListVatCodes" Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="vatCodesGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=vatCodesGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridCheckBoxColumn Header="Inclusive" IsThreeState="True" Binding="{Binding Path=Inclusive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridCheckBoxColumn Header="Reverse charge" IsThreeState="True" Binding="{Binding Path=ReverseCharge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveVatCode">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteVatCode">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                     </DataGrid>
+                    
+                </Grid>
+            </TabItem>
+            <TabItem Header="VAT Scenarios" Name="VatScenarioTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="vatscenarioCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListVatScenarios" Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="vatscenariosGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=vatCodesGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridCheckBoxColumn Header="Reverse charge" IsThreeState="True" Binding="{Binding Path=ReverseCharge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveVatScenario">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteVatScenario">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Cost centers" Name="CostCenterTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="costcenterCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListCostCenters" Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="costcenterGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=costcenterGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveCostCenter">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteCostCenter">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Cost units" Name="CostUnitTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="costunitCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListCostUnits" Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="costunitGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=costunitGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveCostUnit">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteCostUnit">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="GL Accounts" Name="GLAccountTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="glaccountCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListGLAccounts"  Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="glAccountGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=glAccountGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridComboBoxColumn Header="Default VAT code"  x:Name="glaccountVatCodeList" SelectedValueBinding="{Binding Path=DefaultVatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Default Cost center" x:Name="glaccountCostCenterList" SelectedValueBinding="{Binding Path=DefaultCostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"   />
+                            <DataGridComboBoxColumn Header="Default Cost unit" x:Name="glaccountCostUnitList" SelectedValueBinding="{Binding Path=DefaultCostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveGLAccount">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteGLAccount">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Paymentterms" Name="PaymenttermTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="paymenttermCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListPaymentTerms" Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="paymenttermGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=paymenttermGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SavePaymentTerm">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeletePaymentTerm">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Vendors" Name="VendorTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="vendorCompanyList" Grid.Column="1" HorizontalAlignment="Left" Margin="-35,15,0,0" SelectionChanged="ListVendors" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="vendorGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=vendorGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="VAT reg number" Binding="{Binding Path=VatNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="IBAN" Binding="{Binding Path=Ibans, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Customer number" Binding="{Binding Path=VendorCustomerCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridComboBoxColumn Header="Currency" x:Name="vendorCurrencyList" SelectedValueBinding="{Binding CurrencyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                            <DataGridCheckBoxColumn Header="Blocked" IsThreeState="True"  Binding="{Binding Path=Blocked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridComboBoxColumn Header="Default ledger" x:Name="vendorGLAccountList" SelectedValueBinding="{Binding DefaultLedgerCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Default VAT code" x:Name="vendorVatCodeList" SelectedValueBinding="{Binding DefaultVatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Default Payment term" x:Name="vendorPaymenttermList" SelectedValueBinding="{Binding DefaultPaymentTermCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveVendor">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteVendor">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Projects" Name="ProjectTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="projectCompanyList" Grid.Column="1" HorizontalAlignment="Left" SelectionChanged="ListProjects" Margin="-35,15,0,0" VerticalAlignment="Top" Width="120"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="projectGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=projectGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="SaveProject">Save</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="DeleteProject">Delete</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
             </TabItem>
         </TabControl>
+
     </Grid>
 </Window>
