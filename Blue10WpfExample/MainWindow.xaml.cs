@@ -51,6 +51,7 @@ namespace Blue10SdkWpfExample
             costunitCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             paymenttermCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             projectCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            warehouseCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             ShowMenu();
         }
 
@@ -69,6 +70,7 @@ namespace Blue10SdkWpfExample
             ErpActionTab.Visibility = fValue;
             PaymenttermTab.Visibility = fValue;
             ProjectTab.Visibility = fValue;
+            WarehouseTab.Visibility = fValue;
         }
         #region ErpAction
         private async void ListErpActions(object sender, RoutedEventArgs e)
@@ -620,7 +622,7 @@ namespace Blue10SdkWpfExample
                 var fSelectCompany = (string)warehouseCompanyList.SelectedItem;
                 var fWarehouses = await mB10DH.GetWarehouses(fSelectCompany);
                 mCurrentWarehouses = Extensions.Clone<List<Warehouse>>(fWarehouses);
-                projectGrid.ItemsSource = fWarehouses;
+                warehouseGrid.ItemsSource = fWarehouses;
             }
             catch (Exception ex)
             {
