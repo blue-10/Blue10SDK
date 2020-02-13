@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Blue10SDK.Exceptions;
@@ -23,7 +24,7 @@ namespace Blue10SDK
 
         #endregion
 
-        public async Task<TResult> GetAsync<TResult>(string pUrl)
+        public async Task<TResult> GetAsync<TResult>(string pUrl) 
         {
             using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
             var fResponseHttp = await pHttpClient.GetAsync(pUrl);
@@ -32,6 +33,28 @@ namespace Blue10SDK
             if (fResponsObject == null) return default;
             if (fResponsObject.code == 200) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
+        }
+
+        public async Task<TResult> GetAsyncList<TResult>(string pUrl) where TResult : List<TResult> 
+        {
+            using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
+            var fResponseHttp = await pHttpClient.GetAsync(pUrl);
+            var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TResult>>(fJson, DefaultJsonSerializerOptions.Options);
+            if (fResponsObject == null) return default;
+            if (fResponsObject.code != 200) throw new Blue10ApiException(fResponsObject.message);
+            TResult fRet = fResponsObject.data;
+            while (!string.IsNullOrWhiteSpace(fResponsObject.next))
+            {
+                fResponseHttp = await pHttpClient.GetAsync(fResponsObject.next);
+                fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
+                fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TResult>>(fJson, DefaultJsonSerializerOptions.Options);
+                if (fResponsObject == null) return default;
+                if (fResponsObject.code != 200) throw new Blue10ApiException(fResponsObject.message);
+                fRet.AddRange(fResponsObject.data);
+            }
+            return fRet;
+
         }
 
         public async Task<TObject> PostAsync<TObject>(TObject pObject, string pUrl)

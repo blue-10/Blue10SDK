@@ -48,7 +48,7 @@ namespace Blue10SDK
         #region Me
 
         public Task<Me> GetMeAsync() =>
-                GetItems<Me>(ME);
+                GetItem<Me>(ME);
 
         public Task<List<AdministrationAction>> GetAdministrationActionsAsync() => 
                 GetItems<List<AdministrationAction>>(ADMINISTRATIONACTIONS);
@@ -300,8 +300,15 @@ namespace Blue10SDK
 
         #region Private methods
 
-        private async Task<T> GetItems<T>(string pPath) =>
-            await _mB10WebWebApi.GetAsync<T>(pPath);
+        private async Task<T> GetItems<T>(string pPath) where T : List<T>
+        {
+           return await _mB10WebWebApi.GetAsyncList<T>(pPath);
+        }
+
+        private async Task<T> GetItem<T>(string pPath)
+        {
+            return await _mB10WebWebApi.GetAsync<T>(pPath);
+        }
 
         private async Task<T> AddItem<T>(T pItem, string path) =>
             await _mB10WebWebApi.PostAsync(pItem, path);
