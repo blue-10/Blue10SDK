@@ -52,6 +52,7 @@ namespace Blue10SdkWpfExample
             paymenttermCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             projectCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             warehouseCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            articleCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             ShowMenu();
         }
 
@@ -71,6 +72,7 @@ namespace Blue10SdkWpfExample
             PaymenttermTab.Visibility = fValue;
             ProjectTab.Visibility = fValue;
             WarehouseTab.Visibility = fValue;
+            ArticleTab.Visibility = fValue;
         }
         #region ErpAction
         private async void ListErpActions(object sender, RoutedEventArgs e)
@@ -641,7 +643,7 @@ namespace Blue10SdkWpfExample
                     fWarehouse.Id = Guid.Empty;
                     await mB10DH.DeleteWarehouse(fCurrent);
                 }
-                if (string.IsNullOrEmpty(fWarehouse.IdCompany)) fWarehouse.IdCompany = (string)projectCompanyList.SelectedItem;
+                if (string.IsNullOrEmpty(fWarehouse.IdCompany)) fWarehouse.IdCompany = (string)warehouseCompanyList.SelectedItem;
                 fWarehouse = await mB10DH.SaveWarehouse(fWarehouse);
             }
             catch (Exception ex)
@@ -663,6 +665,66 @@ namespace Blue10SdkWpfExample
                 MessageBox.Show($"Delete warehouse failed ({ex.Message}");
             }
             ListWarehouses(sender, e);
+        }
+        #endregion
+
+        #region Articles
+        private List<Article> mCurrentArticles { get; set; }
+        private async void ListArticles(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                articleGrid.ItemsSource = null;
+                var fSelectCompany = (string)articleCompanyList.SelectedItem;
+                var fArticles = await mB10DH.GetArticles(fSelectCompany);
+                mCurrentArticles = Extensions.Clone<List<Article>>(fArticles);
+                articleGrid.ItemsSource = fArticles;
+                var fGLAccounts = new List<GLAccount>() { new GLAccount() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fGLAccounts.AddRange(await mB10DH.GetGLAccounts(fSelectCompany));
+                articleGLAccountList.ItemsSource = fGLAccounts.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+                var fWarehouses = new List<Warehouse>() { new Warehouse() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+                fWarehouses.AddRange(await mB10DH.GetWarehouses(fSelectCompany));
+                articleWarehouseList.ItemsSource = fWarehouses.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve Articles ({ex.Message}");
+            }
+        }
+
+        private async void SaveArticle(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fArticle = ((Button)sender).DataContext as Article;
+                var fCurrent = mCurrentArticles.FirstOrDefault(x => x.Id == fArticle.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fArticle.AdministrationCode)
+                {
+                    fArticle.Id = Guid.Empty;
+                    await mB10DH.DeleteArticle(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fArticle.IdCompany)) fArticle.IdCompany = (string)articleCompanyList.SelectedItem;
+                fArticle = await mB10DH.SaveArticle(fArticle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save article failed ({ex.Message}");
+            }
+            ListArticles(sender, e);
+        }
+
+        private async void DeleteArticle(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fArticle = ((Button)sender).DataContext as Article;
+                await mB10DH.DeleteArticle(fArticle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete article failed ({ex.Message}");
+            }
+            ListArticles(sender, e);
         }
         #endregion
     }

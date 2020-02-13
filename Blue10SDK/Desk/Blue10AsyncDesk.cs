@@ -10,6 +10,7 @@ namespace Blue10SDK
         #region Constants
 
         private const string ADMINISTRATIONACTIONS = "administrationactions";
+        private const string ARTICLES = "articles";
         private const string COMPANIES = "companies";
         private const string COSTCENTERS = "costcenters";
         private const string COSTUNITS = "costunits";
@@ -60,6 +61,22 @@ namespace Blue10SDK
 
         public Task<bool> FinishAdministrationActionAsync(AdministrationAction pAdministrationAction) =>
                     DeleteItem($"{ADMINISTRATIONACTIONS}/{pAdministrationAction.Id}");
+
+        #endregion
+
+        #region Articles
+
+        public Task<List<Article>> GetArticlesAsync(string pIdCompany) =>
+             GetItems<List<Article>>($"{ARTICLES}/{pIdCompany}");
+
+        public Task<Article> AddArticleAsync(Article pArticle) =>
+                AddItem(pArticle, ARTICLES);
+
+        public Task<Article> EditArticleAsync(Article pArticle) =>
+                EditAndReturnItem(pArticle, $"{ARTICLES}/{pArticle.Id}");
+
+        public Task<bool> DeleteArticleAsync(Article pArticle) =>
+                DeleteItem($"{ARTICLES}/{pArticle.Id}");
 
         #endregion
 

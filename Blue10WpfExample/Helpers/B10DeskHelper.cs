@@ -31,6 +31,22 @@ namespace Blue10SdkWpfExample
             return true;
         }
 
+        public async Task<List<Article>> GetArticles(string pIdCompany)
+        {
+            return await mAsyncCLient.GetArticlesAsync(pIdCompany);
+        }
+
+        public async Task<Article> SaveArticle(Article pArticle)
+        {
+            if (pArticle.Id == Guid.Empty) return await mAsyncCLient.AddArticleAsync(pArticle);
+            return await mAsyncCLient.EditArticleAsync(pArticle);
+        }
+
+        public async Task<bool> DeleteArticle(Article pArticle)
+        {
+            return await mAsyncCLient.DeleteArticleAsync(pArticle);
+        }
+
         public async Task<List<DocumentAction>> GetDocumentActions()
         {
             return await mAsyncCLient.GetDocumentActionsAsync();
