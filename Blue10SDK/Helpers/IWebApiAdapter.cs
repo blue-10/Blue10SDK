@@ -7,7 +7,7 @@ namespace Blue10SDK
     {
         Task<TResult> GetAsync<TResult>(string pUrl);
 
-        Task<TResult> GetAsyncList<TResult>(string pUrl) where TResult : List<TResult>;
+        Task<List<TResult>> GetAsyncList<TResult>(string pUrl);
 
         Task<TObject> PostAsync<TObject>(TObject pObject, string pUrl);
 

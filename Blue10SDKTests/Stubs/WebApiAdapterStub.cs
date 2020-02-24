@@ -14,6 +14,12 @@ namespace Blue10SDKTests.Stubs
             return null;
         }
 
+        public Task<List<TResult>> GetAsyncList<TResult>(string pUrl)
+        {
+            //Todo get shour return something from the stash
+            return null;
+        }
+
         public Task<TObject> PostAsync<TObject>(TObject pObject, string pUrl)
         {
             Stash[pUrl] = pObject;
@@ -39,9 +45,6 @@ namespace Blue10SDKTests.Stubs
             return Task.FromResult(true);
         }
 
-        public Task<TResult> GetAsyncList<TResult>(string pUrl) where TResult : List<TResult>
-        {
-            throw new System.NotImplementedException();
-        }
+        
     }
 }

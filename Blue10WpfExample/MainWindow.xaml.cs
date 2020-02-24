@@ -53,6 +53,7 @@ namespace Blue10SdkWpfExample
             projectCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             warehouseCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             articleCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            purchaseorderCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             ShowMenu();
         }
 
@@ -73,6 +74,7 @@ namespace Blue10SdkWpfExample
             ProjectTab.Visibility = fValue;
             WarehouseTab.Visibility = fValue;
             ArticleTab.Visibility = fValue;
+            PurchaseOrderTab.Visibility = fValue;
         }
         #region ErpAction
         private async void ListErpActions(object sender, RoutedEventArgs e)
@@ -666,6 +668,60 @@ namespace Blue10SdkWpfExample
             }
             ListWarehouses(sender, e);
         }
+        #endregion
+
+        #region PurchaseOrders
+        private List<PurchaseOrder> mCurrentPurchaseOrder { get; set; }
+        private async void ListPurchaseOrders(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                purchaseorderGrid.ItemsSource = null;
+                var fSelectCompany = (string)purchaseorderCompanyList.SelectedItem;
+                var fPurchaseOrders = await mB10DH.GetPurchaseOrders(fSelectCompany);
+                mCurrentPurchaseOrder = Extensions.Clone<List<PurchaseOrder>>(fPurchaseOrders);
+                purchaseorderGrid.ItemsSource = fPurchaseOrders;                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve PurchaseOrders ({ex.Message}");
+            }
+        }
+
+        private async void SavePurchaseOrder(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //var fArticle = ((Button)sender).DataContext as Article;
+                //var fCurrent = mCurrentArticles.FirstOrDefault(x => x.Id == fArticle.Id);
+                //if (fCurrent != null && fCurrent.AdministrationCode != fArticle.AdministrationCode)
+                //{
+                //    fArticle.Id = Guid.Empty;
+                //    await mB10DH.DeleteArticle(fCurrent);
+                //}
+                //if (string.IsNullOrEmpty(fArticle.IdCompany)) fArticle.IdCompany = (string)articleCompanyList.SelectedItem;
+                //fArticle = await mB10DH.SaveArticle(fArticle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save purchaseorder failed ({ex.Message}");
+            }
+            ListPurchaseOrders(sender, e);
+        }
+
+        //private async void DeleteArticle(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var fArticle = ((Button)sender).DataContext as Article;
+        //        await mB10DH.DeleteArticle(fArticle);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Delete article failed ({ex.Message}");
+        //    }
+        //    ListArticles(sender, e);
+        //}
         #endregion
 
         #region Articles

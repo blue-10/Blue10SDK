@@ -216,8 +216,13 @@ namespace Blue10SDK
 
         #region PurchaseOrder
 
-        public Task<List<PurchaseOrder>> GetPurchaseOrdersAsync(string pIdCompany) =>
-                GetItem<List<PurchaseOrder>>($"{PURCHASEORDERS}/{pIdCompany}");
+        public Task<List<PurchaseOrder>> GetPurchaseOrdersAsync(string pIdCompany)
+        {
+            var fList = GetItemsList<PurchaseOrder>($"{PURCHASEORDERS}/{pIdCompany}");
+
+            return fList;
+
+        }
 
         public Task<PurchaseOrder> AddPurchaseOrderAsync(PurchaseOrder pPurchaseOrder) =>
                     AddItem(pPurchaseOrder, PURCHASEORDERS);
@@ -300,10 +305,14 @@ namespace Blue10SDK
 
         #region Private methods
 
+        private async Task<List<T>> GetItemsList<T>(string pPath) 
+        {
+            return await _mB10WebWebApi.GetAsyncList<T>(pPath);
+        }
+
         private async Task<T> GetItems<T>(string pPath) 
         {
-            return await _mB10WebWebApi.GetAsync<T>(pPath);
-            //return await _mB10WebWebApi.GetAsyncList<T>(pPath);
+            return await _mB10WebWebApi.GetAsync<T>(pPath);           
         }
 
         private async Task<T> GetItem<T>(string pPath)

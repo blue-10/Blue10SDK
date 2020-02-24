@@ -35,20 +35,20 @@ namespace Blue10SDK
             throw new Blue10ApiException(fResponsObject.message);
         }
 
-        public async Task<TResult> GetAsyncList<TResult>(string pUrl) where TResult : List<TResult> 
+        public async Task<List<TResult>> GetAsyncList<TResult>(string pUrl) 
         {
             using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
             var fResponseHttp = await pHttpClient.GetAsync(pUrl);
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TResult>>(fJson, DefaultJsonSerializerOptions.Options);
+            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<List<TResult>>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
             if (fResponsObject.code != 200) throw new Blue10ApiException(fResponsObject.message);
-            TResult fRet = fResponsObject.data;
+            List<TResult> fRet = fResponsObject.data;
             while (!string.IsNullOrWhiteSpace(fResponsObject.next))
             {
                 fResponseHttp = await pHttpClient.GetAsync(fResponsObject.next);
                 fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TResult>>(fJson, DefaultJsonSerializerOptions.Options);
+                fResponsObject = JsonSerializer.Deserialize<JsonDataResult<List<TResult>>>(fJson, DefaultJsonSerializerOptions.Options);
                 if (fResponsObject == null) return default;
                 if (fResponsObject.code != 200) throw new Blue10ApiException(fResponsObject.message);
                 fRet.AddRange(fResponsObject.data);

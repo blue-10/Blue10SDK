@@ -211,6 +211,10 @@ namespace Blue10SdkWpfExample
             return await mAsyncCLient.DeleteWarehouseAsync(pWarehouse);
         }
 
+        public async Task<List<PurchaseOrder>> GetPurchaseOrders(string pIdCompany)
+        {
+            return await mAsyncCLient.GetPurchaseOrdersAsync(pIdCompany);
+        }
 
 
     }
