@@ -38,5 +38,10 @@ namespace Blue10SDKTests.Stubs
             Stash.Remove(pUrl);
             return Task.FromResult(true);
         }
+
+        public Task<TResult> GetAsyncList<TResult>(string pUrl) where TResult : List<TResult>
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

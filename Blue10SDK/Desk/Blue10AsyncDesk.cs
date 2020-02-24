@@ -201,23 +201,23 @@ namespace Blue10SDK
         #region PurchaseInvoice
 
         public Task<PurchaseInvoice> GetPurchaseInvoiceAsync(Guid pId) =>
-                    GetItems<PurchaseInvoice>($"{PURCHASEINVOICES}/{pId}");
+                    GetItem<PurchaseInvoice>($"{PURCHASEINVOICES}/{pId}");
 
         public async Task<byte[]> GetPurchaseInvoiceOriginalAsync(Guid pId)
         {
-            var fRet = await GetItems<DocumentOriginal>($"{PURCHASEINVOICES}/{pId}/documentoriginal");
+            var fRet = await GetItem<DocumentOriginal>($"{PURCHASEINVOICES}/{pId}/documentoriginal");
             return Base64Helper.GetBytesFromJsonResult(fRet.Content);
         }
 
         public Task<List<PurchaseInvoice>> GetPurchaseInvoiceWithoutPaymentDateAsync(string pIdCompany) =>
-                 GetItems<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}");
+                 GetItem<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}");
 
         #endregion
 
         #region PurchaseOrder
 
         public Task<List<PurchaseOrder>> GetPurchaseOrdersAsync(string pIdCompany) =>
-                GetItems<List<PurchaseOrder>>($"{PURCHASEORDERS}/{pIdCompany}");
+                GetItem<List<PurchaseOrder>>($"{PURCHASEORDERS}/{pIdCompany}");
 
         public Task<PurchaseOrder> AddPurchaseOrderAsync(PurchaseOrder pPurchaseOrder) =>
                     AddItem(pPurchaseOrder, PURCHASEORDERS);
@@ -300,9 +300,10 @@ namespace Blue10SDK
 
         #region Private methods
 
-        private async Task<T> GetItems<T>(string pPath) where T : List<T>
+        private async Task<T> GetItems<T>(string pPath) 
         {
-           return await _mB10WebWebApi.GetAsyncList<T>(pPath);
+            return await _mB10WebWebApi.GetAsync<T>(pPath);
+            //return await _mB10WebWebApi.GetAsyncList<T>(pPath);
         }
 
         private async Task<T> GetItem<T>(string pPath)
