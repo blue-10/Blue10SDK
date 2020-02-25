@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Blue10SDK;
 using Blue10SDK.Models;
+using System.Threading.Tasks;
 
 namespace Blue10SdkWpfExample
 {
@@ -499,15 +500,16 @@ namespace Blue10SdkWpfExample
         #endregion
 
         #region Vendors
-        private List<VendorWpf> mCurrentVendors { get; set; }
+        private Dictionary<string, List<VendorWpf>> mCurrentVendors { get; set; } = new Dictionary<string, List<VendorWpf>>();
         private async void ListVendors(object sender, RoutedEventArgs e)
         {
             try
             {
                 var fSelectCompany = (string)vendorCompanyList.SelectedItem;
+                if (!mCurrentVendors.ContainsKey(fSelectCompany)) mCurrentVendors.Add(fSelectCompany, null);
                 var fVendors =  await mB10DH.GetVendors(fSelectCompany);
                 var fVendorsWpf = VendorWpf.GetFromVendors(fVendors);
-                mCurrentVendors = Extensions.Clone<List<VendorWpf>>(fVendorsWpf);
+                mCurrentVendors[fSelectCompany] = Extensions.Clone<List<VendorWpf>>(fVendorsWpf);
                 vendorGrid.ItemsSource = fVendorsWpf;
                 vendorCurrencyList.ItemsSource = new List<string>() { "", "EUR", "USD", "GBP" };
                 var fVatCodes = new List<VatCode>() { new VatCode() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
@@ -526,13 +528,23 @@ namespace Blue10SdkWpfExample
             }
         }
 
+        private async Task<List<VendorWpf>> GetVendors(string pCompanyCode) {
+            if (!mCurrentVendors.ContainsKey(pCompanyCode))
+            {
+                var fVendors = await mB10DH.GetVendors(pCompanyCode);
+                var fVendorsWpf = VendorWpf.GetFromVendors(fVendors);
+                mCurrentVendors[pCompanyCode] = fVendorsWpf;
+            }
+            return mCurrentVendors[pCompanyCode];
+        }
+
         private async void SaveVendor(object sender, RoutedEventArgs e)
         {
             try
             {
                 var fVendorWpf = ((Button)sender).DataContext as VendorWpf;
                 var fVendor = fVendorWpf as Vendor;
-                var fCurrent = mCurrentVendors.FirstOrDefault(x => x.Id == fVendor.Id);
+                var fCurrent = mCurrentVendors[fVendor.IdCompany].FirstOrDefault(x => x.Id == fVendor.Id);
                 if (fCurrent != null && fCurrent.AdministrationCode != fVendor.AdministrationCode)
                 {
                     fVendor.Id = Guid.Empty;
@@ -671,7 +683,7 @@ namespace Blue10SdkWpfExample
         #endregion
 
         #region PurchaseOrders
-        private List<PurchaseOrder> mCurrentPurchaseOrder { get; set; }
+        private List<PurchaseOrder> mCurrentPurchaseOrders { get; set; }
         private async void ListPurchaseOrders(object sender, RoutedEventArgs e)
         {
             try
@@ -679,7 +691,9 @@ namespace Blue10SdkWpfExample
                 purchaseorderGrid.ItemsSource = null;
                 var fSelectCompany = (string)purchaseorderCompanyList.SelectedItem;
                 var fPurchaseOrders = await mB10DH.GetPurchaseOrders(fSelectCompany);
-                mCurrentPurchaseOrder = Extensions.Clone<List<PurchaseOrder>>(fPurchaseOrders);
+                mCurrentPurchaseOrders = Extensions.Clone<List<PurchaseOrder>>(fPurchaseOrders);
+                var fVendors = await GetVendors(fSelectCompany);
+                poVendorList.ItemsSource = fVendors.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
                 purchaseorderGrid.ItemsSource = fPurchaseOrders;                
             }
             catch (Exception ex)
@@ -692,15 +706,15 @@ namespace Blue10SdkWpfExample
         {
             try
             {
-                //var fArticle = ((Button)sender).DataContext as Article;
-                //var fCurrent = mCurrentArticles.FirstOrDefault(x => x.Id == fArticle.Id);
-                //if (fCurrent != null && fCurrent.AdministrationCode != fArticle.AdministrationCode)
-                //{
-                //    fArticle.Id = Guid.Empty;
-                //    await mB10DH.DeleteArticle(fCurrent);
-                //}
-                //if (string.IsNullOrEmpty(fArticle.IdCompany)) fArticle.IdCompany = (string)articleCompanyList.SelectedItem;
-                //fArticle = await mB10DH.SaveArticle(fArticle);
+                var fPurchaseOrder = ((Button)sender).DataContext as PurchaseOrder;
+                var fCurrent = mCurrentPurchaseOrders.FirstOrDefault(x => x.Id == fPurchaseOrder.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fPurchaseOrder.AdministrationCode)
+                {
+                    fPurchaseOrder.Id = Guid.Empty;
+                    await mB10DH.DeletePurchaseOrder(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fPurchaseOrder.IdCompany)) fPurchaseOrder.IdCompany = (string)purchaseorderCompanyList.SelectedItem;
+                fPurchaseOrder = await mB10DH.SavePurchaseOrder(fPurchaseOrder);
             }
             catch (Exception ex)
             {

@@ -216,6 +216,16 @@ namespace Blue10SdkWpfExample
             return await mAsyncCLient.GetPurchaseOrdersAsync(pIdCompany);
         }
 
+        public async Task<bool> DeletePurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            return await mAsyncCLient.DeletePurchaseOrderAsync(pPurchaseOrder);
+        }
+        public async Task<PurchaseOrder> SavePurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            if (pPurchaseOrder.Id == Guid.Empty) return await mAsyncCLient.AddPurchaseOrderAsync(pPurchaseOrder);
+            return await mAsyncCLient.EditPurchaseOrderAsync(pPurchaseOrder);
+        }
+
 
     }
 }
