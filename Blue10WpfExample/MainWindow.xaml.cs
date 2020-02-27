@@ -544,7 +544,7 @@ namespace Blue10SdkWpfExample
             {
                 var fVendorWpf = ((Button)sender).DataContext as VendorWpf;
                 var fVendor = fVendorWpf as Vendor;
-                var fCurrent = mCurrentVendors[fVendor.IdCompany].FirstOrDefault(x => x.Id == fVendor.Id);
+                var fCurrent = (fVendor.Id != Guid.Empty) ? mCurrentVendors[fVendor.IdCompany].FirstOrDefault(x => x.Id == fVendor.Id) : null;
                 if (fCurrent != null && fCurrent.AdministrationCode != fVendor.AdministrationCode)
                 {
                     fVendor.Id = Guid.Empty;
@@ -721,6 +721,14 @@ namespace Blue10SdkWpfExample
                 MessageBox.Show($"Save purchaseorder failed ({ex.Message}");
             }
             ListPurchaseOrders(sender, e);
+        }
+
+        private async void PurchaseOrderDetails(object sender, RoutedEventArgs e)
+        {
+            var fPurchaseOrder = ((Button)sender).DataContext as PurchaseOrder;
+            var fVendors = await GetVendors(fPurchaseOrder.IdCompany);
+            var fPurchaseOrderWindow = new PurchaseOrderWindow(mB10DH, fPurchaseOrder, fVendors);
+            fPurchaseOrderWindow.Show();
         }
 
         //private async void DeleteArticle(object sender, RoutedEventArgs e)

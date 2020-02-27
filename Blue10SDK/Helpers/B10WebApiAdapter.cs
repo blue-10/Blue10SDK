@@ -66,7 +66,7 @@ namespace Blue10SDK
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TObject>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
-            if (fResponsObject.code == 200) return fResponsObject.data;
+            if (fResponsObject.code == 201) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
         }
 
