@@ -20,26 +20,22 @@
                         <LineBreak/>
                         <Label Margin="0,0,0,0" >Description : </Label> 
                          <TextBox x:Name="PODescription" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Margin="0,0,0,0" Width="250" />
-                        <LineBreak/>
-                        
                     </TextBlock>
-                    
-                    <DataGrid  Margin="5,100,0,0" x:Name="PurchaseInvoiceLineGrid" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=PurchaseInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid  Margin="5,100,0,0" x:Name="purchaseOrderLineGrid" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="GL Account" x:Name="PurchaseInvoiceLineGLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="GL Account" x:Name="GLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />
                             <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
                             <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridComboBoxColumn Header="VAT code" x:Name="PurchaseInvoiceLineVatCodeList" SelectedValueBinding="{Binding VatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridCheckBoxColumn Header="VAT shifted" IsThreeState="True"  Binding="{Binding Path=VatReverseCharged, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridComboBoxColumn Header="Cost center" x:Name="PurchaseInvoiceLineCostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridComboBoxColumn Header="Cost unit" x:Name="PurchaseInvoiceLineCostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridComboBoxColumn Header="Project" x:Name="PurchaseInvoiceLineProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridTextColumn Header="Free field 1" Binding="{Binding Path=FreeField1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridTextColumn Header="Free field 2" Binding="{Binding Path=FreeField2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridComboBoxColumn Header="Article" x:Name="ArticleList" SelectedValueBinding="{Binding ArticleCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Warehouse" x:Name="WarehouseList" SelectedValueBinding="{Binding WarehouseCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Project" x:Name="ProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="VAT code" x:Name="VatCodeList" SelectedValueBinding="{Binding VatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Cost center" x:Name="CostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Cost unit" x:Name="CostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                         </DataGrid.Columns>
-                    </DataGrid>
 
+                    </DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>
