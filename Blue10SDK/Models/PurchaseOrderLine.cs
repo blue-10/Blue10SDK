@@ -20,5 +20,7 @@ namespace Blue10SDK.Models
         public string ProjectCode { get; set; }
         public string VatCode { get; set; }
         public string WarehouseCode { get; set; }
+        public string VendorArticleCode { get; set; }
+        public DateTime? DateReceived { get; set; }
     }
 }

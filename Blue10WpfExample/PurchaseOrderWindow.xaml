@@ -12,7 +12,7 @@
             <TabItem Header="Purchase order lines" Name="PurchaseOrderLineTab" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5" x:Name="PurchaseOrderGrid"  >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1280*"/>
+                        <ColumnDefinition Width="1680*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Margin="5,10,0,0">
                         <Label Margin="0,0,0,0" >Vendor : </Label>
@@ -23,6 +23,7 @@
                     </TextBlock>
                     <DataGrid  Margin="5,100,0,0" x:Name="purchaseOrderLineGrid" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Administration code" Binding="{Binding Path=AdministrationCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />
                             <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
@@ -37,6 +38,8 @@
                             <DataGridComboBoxColumn Header="VAT code" x:Name="VatCodeList" SelectedValueBinding="{Binding VatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Cost center" x:Name="CostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Cost unit" x:Name="CostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridTextColumn Header="Code at vendor" Binding="{Binding Path=VendorArticleCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Date received" Binding="{Binding Path=DateReceived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:yyyy-MM-dd\}}" />
                         </DataGrid.Columns>
 
                     </DataGrid>
