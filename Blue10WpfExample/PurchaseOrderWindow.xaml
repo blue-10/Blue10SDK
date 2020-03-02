@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blue10SdkWpfExample"
         mc:Ignorable="d"
-        Title="Purchase Order" Height="450" Width="1000">
+        Title="Purchase Order" Height="450" Width="1200">
     <Grid>
         <Button x:Name="SaveButton" Content="Save purchase order" Click="Save" HorizontalAlignment="Left" Margin="670,5,0,0" VerticalAlignment="Top" Width="120"/><Button x:Name="CloseButton" Content="Close without save" Click="CloseNoSave" HorizontalAlignment="Left" Margin="800,5,0,0" VerticalAlignment="Top" Width="120"/>
         <TabControl x:Name="tabControl" Margin="0,30,0,0">
@@ -23,10 +23,14 @@
                     </TextBlock>
                     <DataGrid  Margin="5,100,0,0" x:Name="purchaseOrderLineGrid" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="GL Account" x:Name="GLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />
                             <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
-                            <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
+                            <DataGridTextColumn Header="Quantity received" Binding="{Binding Path=QuantityReceived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
+                            <DataGridTextColumn Header="Quantity invoiced" Binding="{Binding Path=QuantityInvoiced, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
+                            <DataGridTextColumn Header="Unit price" Binding="{Binding Path=UnitPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
+                            <DataGridComboBoxColumn Header="GL Account" x:Name="GLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Article" x:Name="ArticleList" SelectedValueBinding="{Binding ArticleCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Warehouse" x:Name="WarehouseList" SelectedValueBinding="{Binding WarehouseCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Project" x:Name="ProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
