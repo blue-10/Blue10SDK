@@ -72,7 +72,24 @@
                         <LineBreak/>
                         <Button x:Name="FinishPostPurchaseInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishPostPurchaseInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     </TextBlock>
+                    <DataGrid Margin="5,150,0,0" x:Name="purchaseInvoiceLineGrid" AutoGenerateColumns="False" IsReadOnly="True" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Line" Binding="{Binding Path=LineNo}" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" />
+                            <DataGridTextColumn Header="GL Account" Binding="{Binding Path=GlAccountCode}" />
+                            <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, StringFormat=\{0:0.00\} }" />
+                            <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatAmount, StringFormat=\{0:0.00\} }" />
+                            <DataGridTextColumn Header="Vat code" Binding="{Binding Path=VatCode}" />
+                            <DataGridTextColumn Header="Cost Center" Binding="{Binding Path=CostCenterCode}" />
+                            <DataGridTextColumn Header="Cost Unit" Binding="{Binding Path=CostUnitCode}" />
+                            <DataGridTextColumn Header="Project" Binding="{Binding Path=ProjectCode}" />
+                            <DataGridTextColumn Header="Article" Binding="{Binding Path=ArticleCode}" />
+                            <DataGridTextColumn Header="Warehouse" Binding="{Binding Path=WarehouseCode}" />
+                            <DataGridTextColumn Header="PO code" Binding="{Binding Path=PurchaseOrderCode}" />
+                            <DataGridTextColumn Header="PO line code" Binding="{Binding Path=PurchaseOrderLineCode}" />
+                        </DataGrid.Columns>
 
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Get purchase invoice due date" Name="GetPurchaseInvoiceDueDateTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
