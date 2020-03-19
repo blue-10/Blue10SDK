@@ -5,7 +5,7 @@ namespace Blue10SDK.Utils
 {
     public static class Blue10
     {
-        const string BLUE10_API_URL = "https://api.blue10.com/v2";
+        const string BLUE10_API_URL = "https://api.blue10.com/v2/";
 
         public static IBlue10Client CreateClient(string blue10ApiKey, string url = BLUE10_API_URL) =>
              new Blue10Desk(CreateAsyncClient(blue10ApiKey,url));

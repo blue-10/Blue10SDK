@@ -34,7 +34,20 @@ namespace Blue10SDKExampleConsole
                 Console.ReadKey();
                 return;
             }
-            var client = Blue10.CreateClient(configuration["ApiKey"], configuration["ApiUrl"]);
+            var apiUrl = configuration["ApiUrl"];
+            if (string.IsNullOrEmpty(apiUrl)) apiUrl = "https://api.blue10.com/v2/";
+            if (!apiUrl.EndsWith('/')) apiUrl += "/";
+
+            var client = Blue10.CreateClient(apiKey, apiUrl);
+            var loginCheck = new LoginCheck(client);
+
+            if (!loginCheck.GetCheckLogin())
+            {
+                Console.WriteLine($"Couldn't login with given ApiKey / ApiUrl. Please enter a valid ApiKey/ApiUrl value in the appsettings.json file.");
+                Console.ReadKey();
+                return;
+            }
+
 
             Console.WriteLine("Starting application");
             
