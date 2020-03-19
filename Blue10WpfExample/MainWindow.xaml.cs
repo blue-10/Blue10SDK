@@ -817,13 +817,20 @@ namespace Blue10SdkWpfExample
             var fPurchaseOrder = ((Button)sender).DataContext as PurchaseOrder;
             if(string.IsNullOrEmpty(fPurchaseOrder.IdCompany)) fPurchaseOrder.IdCompany = (string)purchaseorderCompanyList.SelectedItem;
             var fVendors = await GetVendors(fPurchaseOrder.IdCompany);
-            var fWarehouses = await GetWarehouses(fPurchaseOrder.IdCompany);
-            var fGLAccounts = await GetGLAccounts(fPurchaseOrder.IdCompany);
-            var fArticles = await GetArticles(fPurchaseOrder.IdCompany);
-            var fVatCodes = await GetVatCodes(fPurchaseOrder.IdCompany);
-            var fProjects = await GetProjects(fPurchaseOrder.IdCompany);
-            var fCostCenters = await GetCostCenters(fPurchaseOrder.IdCompany);
-            var fCostUnits = await GetCostUnits(fPurchaseOrder.IdCompany);
+            var fWarehouses = new List<Warehouse>() { new Warehouse() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fWarehouses.AddRange(await GetWarehouses(fPurchaseOrder.IdCompany));
+            var fGLAccounts = new List<GLAccount>() { new GLAccount() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fGLAccounts.AddRange(await GetGLAccounts(fPurchaseOrder.IdCompany));
+            var fArticles = new List<Article>() { new Article() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fArticles.AddRange(await GetArticles(fPurchaseOrder.IdCompany));
+            var fVatCodes = new List<VatCode>() { new VatCode() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fVatCodes.AddRange(await GetVatCodes(fPurchaseOrder.IdCompany));
+            var fProjects = new List<Project>() { new Project() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fProjects.AddRange(await GetProjects(fPurchaseOrder.IdCompany));
+            var fCostCenters = new List<CostCenter>() { new CostCenter() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fCostCenters.AddRange(await GetCostCenters(fPurchaseOrder.IdCompany));
+            var fCostUnits = new List<CostUnit>() { new CostUnit() { AdministrationCode = string.Empty, Id = Guid.Empty, Name = "None" } };
+            fCostUnits.AddRange(await GetCostUnits(fPurchaseOrder.IdCompany));
             var fPurchaseOrderWindow = new PurchaseOrderWindow(mB10DH, fPurchaseOrder, fVendors, fArticles, fWarehouses, fGLAccounts, fVatCodes, fProjects, fCostCenters, fCostUnits);
             fPurchaseOrderWindow.Show();
         }
