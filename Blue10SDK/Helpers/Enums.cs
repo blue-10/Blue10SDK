@@ -20,7 +20,8 @@ namespace Blue10SDK
         purchaseorders,
         vatcodes,
         vatscenarios,
-        vendors
+        vendors,
+        warehouses
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]

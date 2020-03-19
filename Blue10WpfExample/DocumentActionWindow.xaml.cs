@@ -82,6 +82,7 @@ namespace Blue10SdkWpfExample
             PostPurchaseInvoiceTab.IsSelected = true;
             var fInvoice = DocAction.PurchaseInvoice;
             PostPurchaseInvoiceText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
+            purchaseInvoiceLineGrid.ItemsSource = fInvoice.InvoiceLines;
         }
 
         private async void FinishPostPurchaseInvoice(object sender, RoutedEventArgs e)
