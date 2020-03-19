@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text.Json;
 
 using Blue10SDK;
@@ -22,25 +23,18 @@ namespace Blue10SDKExampleConsole
             public string Company { get; set; }
         }
 
-/*
-        private static ServiceProvider BuildServices(IConfigurationRoot pConf) => new ServiceCollection()
-                    //Add a console Log
-                    .AddLogging(builder => builder.AddConsole())
-                    //Add Bluet10 client with a api key and OPTIONAL Url
-                    .AddBlue10(pConf["ApiKey"],pConf["ApiUrl"])
-                    .BuildServiceProvider();
-
-        private static IConfigurationRoot BuildConfiguration() =>
-            new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
-            .Build();
-
-*/
-
         public static void Main(string[] args)
         {
-            var client = Blue10.CreateClient("wXCgUWhKJ98kkLAKsi601GPjZXNOdeqKUsBHcNy4mespy31I1uCYkJ0LL55Ji1zp", "https://b10imdevapi.azurewebsites.net/vnext/");
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var configuration = builder.Build();
+            var apiKey = configuration["ApiKey"];
+            if(apiKey == "API-KEY")
+            {
+                Console.WriteLine("Please enter a valid ApiKey value in the appsettings.json file.");
+                Console.ReadKey();
+                return;
+            }
+            var client = Blue10.CreateClient(configuration["ApiKey"], configuration["ApiUrl"]);
 
             Console.WriteLine("Starting application");
             
