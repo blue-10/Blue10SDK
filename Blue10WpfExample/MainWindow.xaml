@@ -77,8 +77,11 @@
                     <DataGrid  Margin="5,55,0,0" x:Name="companyGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=companyGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode}" />
+                            <DataGridTextColumn Header="Display name" Binding="{Binding Path=DisplayName}" />
                             <DataGridComboBoxColumn Header="Login status" x:Name="companyLoginStatusList" SelectedValueBinding="{Binding LoginStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
-                            <DataGridTextColumn Header="Vat registration number" Binding="{Binding Path=AdministrationVatNumber}" />
+                            <DataGridTextColumn Header="Vat registration number" Binding="{Binding Path=AdministrationVatNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="IBAN" Binding="{Binding Path=AdministrationIban, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Chamber of Commerce number" Binding="{Binding Path=ChamberOfCommerce, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridComboBoxColumn Header="Currency" x:Name="companyCurrencyList" SelectedValueBinding="{Binding AdministrationCurrencyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
