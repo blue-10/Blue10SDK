@@ -30,6 +30,31 @@ namespace Blue10SDK
         bool FinishAdministrationAction(AdministrationAction pAdministrationAction);
 
         /// <summary>
+        /// Get all <see cref="Article"/>s for the specified company
+        /// </summary>
+        /// <param name="pIdCompany">Id of the <see cref="Company"/> to get <see cref="Article"/>s for.</param>
+        /// <returns>
+        /// A <see cref="List{Article}"/> containing all <see cref="Article"/>s for the
+        /// <see cref="Company"/> with id <paramref name="pIdCompany"/>.
+        /// </returns>
+        List<Article> GetArticles(string pIdCompany);
+
+        /// <summary>
+        /// Add Article and returns Article as saved in blue10
+        /// </summary>
+        Article AddArticle(Article pArticle);
+
+        /// <summary>
+        /// Updates Article information and returns Article as saved in blue10
+        /// </summary>
+        Article EditArticle(Article pArticle);
+
+        /// <summary>
+        /// Delete Article from blue10, returns true if successful
+        /// </summary>
+        bool DeleteArticle(Article pArticle);
+
+        /// <summary>
         /// Returns all Blue10 Companies with ErpAdapter API
         /// </summary>
         List<Company> GetCompanies();

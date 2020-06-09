@@ -25,6 +25,17 @@ namespace Blue10SDK
 
         #endregion
 
+        #region Articles
+        public List<Article> GetArticles(string pIdCompany) => mBlue10Async.GetArticlesAsync(pIdCompany).Sync();
+
+        public Article AddArticle(Article pArticle) => mBlue10Async.AddArticleAsync(pArticle).Sync();
+
+        public Article EditArticle(Article pArticle) => mBlue10Async.EditArticleAsync(pArticle).Sync();
+
+        public bool DeleteArticle(Article pArticle) => mBlue10Async.DeleteArticleAsync(pArticle).Sync();
+
+        #endregion 
+
         #region Companies
 
         public List<Company> GetCompanies() => mBlue10Async.GetCompaniesAsync().Sync();

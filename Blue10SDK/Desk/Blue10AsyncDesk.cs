@@ -10,6 +10,7 @@ namespace Blue10SDK
         #region Constants
 
         private const string ADMINISTRATIONACTIONS = "administrationactions";
+        private const string ARTICLES = "articles";
         private const string COMPANIES = "companies";
         private const string COSTCENTERS = "costcenters";
         private const string COSTUNITS = "costunits";
@@ -25,6 +26,7 @@ namespace Blue10SDK
         private const string VATCODES = "vatcodes";
         private const string VATSCENARIOS = "vatscenarios";
         private const string VENDORS = "vendors";
+        private const string WAREHOUSES = "warehouses";
 
         #endregion
 
@@ -46,7 +48,7 @@ namespace Blue10SDK
         #region Me
 
         public Task<Me> GetMeAsync() =>
-                GetItems<Me>(ME);
+                GetItem<Me>(ME);
 
         public Task<List<AdministrationAction>> GetAdministrationActionsAsync() => 
                 GetItems<List<AdministrationAction>>(ADMINISTRATIONACTIONS);
@@ -59,6 +61,22 @@ namespace Blue10SDK
 
         public Task<bool> FinishAdministrationActionAsync(AdministrationAction pAdministrationAction) =>
                     DeleteItem($"{ADMINISTRATIONACTIONS}/{pAdministrationAction.Id}");
+
+        #endregion
+
+        #region Articles
+
+        public Task<List<Article>> GetArticlesAsync(string pIdCompany) =>
+             GetItems<List<Article>>($"{ARTICLES}/{pIdCompany}");
+
+        public Task<Article> AddArticleAsync(Article pArticle) =>
+                AddItem(pArticle, ARTICLES);
+
+        public Task<Article> EditArticleAsync(Article pArticle) =>
+                EditAndReturnItem(pArticle, $"{ARTICLES}/{pArticle.Id}");
+
+        public Task<bool> DeleteArticleAsync(Article pArticle) =>
+                DeleteItem($"{ARTICLES}/{pArticle.Id}");
 
         #endregion
 
@@ -183,23 +201,28 @@ namespace Blue10SDK
         #region PurchaseInvoice
 
         public Task<PurchaseInvoice> GetPurchaseInvoiceAsync(Guid pId) =>
-                    GetItems<PurchaseInvoice>($"{PURCHASEINVOICES}/{pId}");
+                    GetItem<PurchaseInvoice>($"{PURCHASEINVOICES}/{pId}");
 
         public async Task<byte[]> GetPurchaseInvoiceOriginalAsync(Guid pId)
         {
-            var fRet = await GetItems<DocumentOriginal>($"{PURCHASEINVOICES}/{pId}/documentoriginal");
+            var fRet = await GetItem<DocumentOriginal>($"{PURCHASEINVOICES}/{pId}/documentoriginal");
             return Base64Helper.GetBytesFromJsonResult(fRet.Content);
         }
 
         public Task<List<PurchaseInvoice>> GetPurchaseInvoiceWithoutPaymentDateAsync(string pIdCompany) =>
-                 GetItems<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}");
+                 GetItem<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}");
 
         #endregion
 
         #region PurchaseOrder
 
-        public Task<List<PurchaseOrder>> GetPurchaseOrdersAsync(string pIdCompany) =>
-                GetItems<List<PurchaseOrder>>($"{PURCHASEORDERS}/{pIdCompany}");
+        public Task<List<PurchaseOrder>> GetPurchaseOrdersAsync(string pIdCompany)
+        {
+            var fList = GetItemsList<PurchaseOrder>($"{PURCHASEORDERS}/{pIdCompany}");
+
+            return fList;
+
+        }
 
         public Task<PurchaseOrder> AddPurchaseOrderAsync(PurchaseOrder pPurchaseOrder) =>
                     AddItem(pPurchaseOrder, PURCHASEORDERS);
@@ -263,11 +286,39 @@ namespace Blue10SDK
                         DeleteItem($"{VATSCENARIOS}/{pVatScenario.Id}");
 
         #endregion
-        
+
+        #region Warehouses
+
+        public Task<List<Warehouse>> GetWarehousesAsync(string pIdCompany) =>
+                GetItems<List<Warehouse>>($"{WAREHOUSES}/{pIdCompany}");
+
+        public Task<Warehouse> AddWarehouseAsync(Warehouse pWarehouse) =>
+                AddItem(pWarehouse, WAREHOUSES);
+
+        public Task<Warehouse> EditWarehouseAsync(Warehouse pWarehouse) =>
+                EditAndReturnItem(pWarehouse, $"{WAREHOUSES}/{pWarehouse.Id}");
+
+        public Task<bool> DeleteWarehouseAsync(Warehouse pWarehouse) =>
+               DeleteItem($"{WAREHOUSES}/{pWarehouse.Id}");
+
+        #endregion
+
         #region Private methods
 
-        private async Task<T> GetItems<T>(string pPath) =>
-            await _mB10WebWebApi.GetAsync<T>(pPath);
+        private async Task<List<T>> GetItemsList<T>(string pPath) 
+        {
+            return await _mB10WebWebApi.GetAsyncList<T>(pPath);
+        }
+
+        private async Task<T> GetItems<T>(string pPath) 
+        {
+            return await _mB10WebWebApi.GetAsync<T>(pPath);           
+        }
+
+        private async Task<T> GetItem<T>(string pPath)
+        {
+            return await _mB10WebWebApi.GetAsync<T>(pPath);
+        }
 
         private async Task<T> AddItem<T>(T pItem, string path) =>
             await _mB10WebWebApi.PostAsync(pItem, path);

@@ -9,5 +9,6 @@
         public string message { get; set; }
 
         public int code { get; set; }
+        public string next { get; set; }
     }
 }

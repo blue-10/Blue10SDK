@@ -32,6 +32,31 @@ namespace Blue10SDK
         Task<bool> FinishAdministrationActionAsync(AdministrationAction pAdministrationAction);
 
         /// <summary>
+        /// Get all <see cref="Article"/>s for the specified company
+        /// </summary>
+        /// <param name="pIdCompany">Id of the <see cref="Company"/> to get <see cref="Article"/>s for.</param>
+        /// <returns>
+        /// A <see cref="List{Article}"/> containing all <see cref="Article"/>s for the
+        /// <see cref="Company"/> with id <paramref name="pIdCompany"/>.
+        /// </returns>
+        Task<List<Article>> GetArticlesAsync(string pIdCompany);
+
+        /// <summary>
+        /// Add Article and returns Article as saved in blue10
+        /// </summary>
+        Task<Article> AddArticleAsync(Article pArticle);
+
+        /// <summary>
+        /// Updates Article information and returns Article as saved in blue10
+        /// </summary>
+        Task<Article> EditArticleAsync(Article pArticle);
+
+        /// <summary>
+        /// Delete Article from blue10, returns true if successful
+        /// </summary>
+        Task<bool> DeleteArticleAsync(Article pArticle);
+
+        /// <summary>
         /// Returns all Blue10 Companies with ErpAdapter API
         /// </summary>
         Task<List<Company>> GetCompaniesAsync();
@@ -259,6 +284,11 @@ namespace Blue10SDK
         Task<VatScenario> AddVatScenarioAsync(VatScenario pVatScenario);
         Task<VatScenario> EditVatScenarioAsync(VatScenario pVatScenario);
         Task<bool> DeleteVatScenarioAsync(VatScenario pVatScenario);
+
+        Task<List<Warehouse>> GetWarehousesAsync(string pIdCompany);
+        Task<Warehouse> AddWarehouseAsync(Warehouse pWarehouse);
+        Task<Warehouse> EditWarehouseAsync(Warehouse pWarehouse);
+        Task<bool> DeleteWarehouseAsync(Warehouse pWarehouse);
 
     }
 }

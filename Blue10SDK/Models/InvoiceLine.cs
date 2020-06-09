@@ -25,5 +25,11 @@
         public string FreeField1 { get; set; }
 
         public string FreeField2 { get; set; }
+        public string ArticleCode { get; set; }
+
+        public string WarehouseCode { get; set; }
+        public string PurchaseOrderCode { get; set; }
+
+        public string PurchaseOrderLineCode { get; set; }
     }
 }
