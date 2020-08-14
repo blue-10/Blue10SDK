@@ -48,6 +48,7 @@ namespace Blue10SDK.Models
         public string DocumentUrl { get; set; }
 
         public string PurchaseOrderNumber { get; set; }
+        public string PackingSlipNumber { get; set; }
 
         public string VatScenarioCode { get; set; }
 
