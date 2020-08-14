@@ -11,5 +11,8 @@
         public string AdministrationVatNumber { get; set; }
 
         public string AdministrationCurrencyCode { get; set; }
+        public string AdministrationIban { get; set; }
+        public string ChamberOfCommerce { get; set; }
+        public string DisplayName { get; set; }
     }
 }

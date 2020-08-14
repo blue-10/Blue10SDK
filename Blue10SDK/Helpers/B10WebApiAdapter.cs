@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Blue10SDK.Exceptions;
@@ -24,7 +23,7 @@ namespace Blue10SDK
 
         #endregion
 
-        public async Task<TResult> GetAsync<TResult>(string pUrl) 
+        public async Task<TResult> GetAsync<TResult>(string pUrl)
         {
             using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
             var fResponseHttp = await pHttpClient.GetAsync(pUrl);
@@ -33,28 +32,6 @@ namespace Blue10SDK
             if (fResponsObject == null) return default;
             if (fResponsObject.code == 200) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
-        }
-
-        public async Task<List<TResult>> GetAsyncList<TResult>(string pUrl) 
-        {
-            using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
-            var fResponseHttp = await pHttpClient.GetAsync(pUrl);
-            var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<List<TResult>>>(fJson, DefaultJsonSerializerOptions.Options);
-            if (fResponsObject == null) return default;
-            if (fResponsObject.code != 200) throw new Blue10ApiException(fResponsObject.message);
-            List<TResult> fRet = fResponsObject.data;
-            while (!string.IsNullOrWhiteSpace(fResponsObject.next))
-            {
-                fResponseHttp = await pHttpClient.GetAsync(fResponsObject.next);
-                fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
-                fResponsObject = JsonSerializer.Deserialize<JsonDataResult<List<TResult>>>(fJson, DefaultJsonSerializerOptions.Options);
-                if (fResponsObject == null) return default;
-                if (fResponsObject.code != 200) throw new Blue10ApiException(fResponsObject.message);
-                fRet.AddRange(fResponsObject.data);
-            }
-            return fRet;
-
         }
 
         public async Task<TObject> PostAsync<TObject>(TObject pObject, string pUrl)
@@ -66,7 +43,7 @@ namespace Blue10SDK
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TObject>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
-            if (fResponsObject.code == 201) return fResponsObject.data;
+            if (fResponsObject.code == 200 || fResponsObject.code == 201) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
         }
 
@@ -79,7 +56,7 @@ namespace Blue10SDK
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TObject>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
-            if (fResponsObject.code == 202) return fResponsObject.data;
+            if (fResponsObject.code == 200 || fResponsObject.code == 202) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
         }
 
@@ -92,7 +69,7 @@ namespace Blue10SDK
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<string>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
-            if (fResponsObject.code == 200) return fResponsObject.data;
+            if (fResponsObject.code == 200 || fResponsObject.code == 202) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
         }
 

@@ -140,7 +140,7 @@ namespace Blue10SdkWpfExample
                 var fCompanies = await mB10DH.GetCompanies();
                 companyGrid.ItemsSource = fCompanies;
                 companyGrid.Columns[0].IsReadOnly = true;
-                companyGrid.Columns[2].IsReadOnly = true;
+                companyGrid.Columns[1].IsReadOnly = true;
                 companyLoginStatusList.ItemsSource = new List<string>() { "login_ok", "login_failed", "unknown" };
                 companyCurrencyList.ItemsSource = new List<string>() { "EUR", "USD", "GBP" };
             }
@@ -159,7 +159,7 @@ namespace Blue10SdkWpfExample
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"List Companies failed ({ex.Message}");
+                MessageBox.Show($"Save Company failed ({ex.Message}");
             }
             ListCompanies(sender, e);
         }
