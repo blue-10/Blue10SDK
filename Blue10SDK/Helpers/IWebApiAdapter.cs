@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blue10SDK
@@ -5,6 +6,8 @@ namespace Blue10SDK
     public interface IWebApiAdapter
     {
         Task<TResult> GetAsync<TResult>(string pUrl);
+
+        Task<List<TResult>> GetAsyncList<TResult>(string pUrl);
 
         Task<TObject> PostAsync<TObject>(TObject pObject, string pUrl);
 

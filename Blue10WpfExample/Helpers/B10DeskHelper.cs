@@ -31,6 +31,22 @@ namespace Blue10SdkWpfExample
             return true;
         }
 
+        public async Task<List<Article>> GetArticles(string pIdCompany)
+        {
+            return await mAsyncCLient.GetArticlesAsync(pIdCompany);
+        }
+
+        public async Task<Article> SaveArticle(Article pArticle)
+        {
+            if (pArticle.Id == Guid.Empty) return await mAsyncCLient.AddArticleAsync(pArticle);
+            return await mAsyncCLient.EditArticleAsync(pArticle);
+        }
+
+        public async Task<bool> DeleteArticle(Article pArticle)
+        {
+            return await mAsyncCLient.DeleteArticleAsync(pArticle);
+        }
+
         public async Task<List<DocumentAction>> GetDocumentActions()
         {
             return await mAsyncCLient.GetDocumentActionsAsync();
@@ -179,6 +195,36 @@ namespace Blue10SdkWpfExample
             return await mAsyncCLient.DeleteVendorAsync(pVendor);
         }
 
+        public async Task<List<Warehouse>> GetWarehouses(string pIdCompany)
+        {
+            return await mAsyncCLient.GetWarehousesAsync(pIdCompany);
+        }
+
+        public async Task<Warehouse> SaveWarehouse(Warehouse pWarehouse)
+        {
+            if (pWarehouse.Id == Guid.Empty) return await mAsyncCLient.AddWarehouseAsync(pWarehouse);
+            return await mAsyncCLient.EditWarehouseAsync(pWarehouse);
+        }
+
+        public async Task<bool> DeleteWarehouse(Warehouse pWarehouse)
+        {
+            return await mAsyncCLient.DeleteWarehouseAsync(pWarehouse);
+        }
+
+        public async Task<List<PurchaseOrder>> GetPurchaseOrders(string pIdCompany)
+        {
+            return await mAsyncCLient.GetPurchaseOrdersAsync(pIdCompany);
+        }
+
+        public async Task<bool> DeletePurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            return await mAsyncCLient.DeletePurchaseOrderAsync(pPurchaseOrder);
+        }
+        public async Task<PurchaseOrder> SavePurchaseOrder(PurchaseOrder pPurchaseOrder)
+        {
+            if (pPurchaseOrder.Id == Guid.Empty) return await mAsyncCLient.AddPurchaseOrderAsync(pPurchaseOrder);
+            return await mAsyncCLient.EditPurchaseOrderAsync(pPurchaseOrder);
+        }
 
 
     }
