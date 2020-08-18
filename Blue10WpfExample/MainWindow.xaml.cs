@@ -811,6 +811,19 @@ namespace Blue10SdkWpfExample
             }
             ListPurchaseOrders(sender, e);
         }
+        private async void DeletePurchaseOrder(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fPurchaseOrder = ((Button)sender).DataContext as PurchaseOrder;
+                await mB10DH.DeletePurchaseOrder(fPurchaseOrder);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete purchase order failed ({ex.Message}");
+            }
+            ListPurchaseOrders(sender, e);
+        }
 
         private async void PurchaseOrderDetails(object sender, RoutedEventArgs e)
         {
