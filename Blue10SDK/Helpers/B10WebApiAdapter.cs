@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Blue10SDK.Exceptions;
@@ -29,6 +30,17 @@ namespace Blue10SDK
             var fResponseHttp = await pHttpClient.GetAsync(pUrl);
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<TResult>>(fJson, DefaultJsonSerializerOptions.Options);
+            if (fResponsObject == null) return default;
+            if (fResponsObject.code == 200) return fResponsObject.data;
+            throw new Blue10ApiException(fResponsObject.message);
+        }
+
+        public async Task<List<TResult>> GetAsyncList<TResult>(string pUrl)
+        {
+            using var pHttpClient = mHttpClientFactory.CreateClient(nameof(B10WebApiAdapter));
+            var fResponseHttp = await pHttpClient.GetAsync(pUrl);
+            var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<List<TResult>>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
             if (fResponsObject.code == 200) return fResponsObject.data;
             throw new Blue10ApiException(fResponsObject.message);
@@ -83,5 +95,7 @@ namespace Blue10SDK
             if (fResponsObject.code == 200 && fResponsObject.status == "success") return true;
             throw new Blue10ApiException(fResponsObject.message);
         }
+
+        
     }
 }
