@@ -226,6 +226,14 @@ namespace Blue10SdkWpfExample
             return await mAsyncCLient.EditPurchaseOrderAsync(pPurchaseOrder);
         }
 
+        public async Task<List<PurchaseInvoice>> GetUnpaidInvoices(string pIdCompany)
+        {
+            return await mAsyncCLient.GetPurchaseInvoiceWithoutPaymentDateAsync(pIdCompany);
+        }
+        public async Task<PurchaseInvoice> SavePurchaseInvoice(PurchaseInvoice pPurchaseInvoice)
+        {
+            return await mAsyncCLient.EditPurchaseInvoiceAsync(pPurchaseInvoice);
+        }
 
     }
 }

@@ -55,6 +55,7 @@ namespace Blue10SdkWpfExample
             warehouseCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             articleCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             purchaseorderCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            unpaidInvoicesCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             ShowMenu();
         }
 
@@ -76,6 +77,7 @@ namespace Blue10SdkWpfExample
             WarehouseTab.Visibility = fValue;
             ArticleTab.Visibility = fValue;
             PurchaseOrderTab.Visibility = fValue;
+            UnpaidInvoicesTab.Visibility = fValue;
         }
         #region ErpAction
         private async void ListErpActions(object sender, RoutedEventArgs e)
@@ -919,6 +921,40 @@ namespace Blue10SdkWpfExample
             }
             return mCurrentArticles[pCompanyCode];
         }
+        #endregion
+
+        #region PurchaseInvoices
+
+        private async void SavePurchaseInvoice(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fInvoice = ((Button)sender).DataContext as PurchaseInvoice;
+                fInvoice = await mB10DH.SavePurchaseInvoice(fInvoice);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save purchase invoice failed ({ex.Message}");
+            }
+        }
+
+        private async void ListUnpaidInvoices(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                purchaseorderGrid.ItemsSource = null;
+                var fSelectCompany = (string)unpaidInvoicesCompanyList.SelectedItem;
+                var fPurchaseInvoices = await mB10DH.GetUnpaidInvoices(fSelectCompany);
+                unpaidInvoicesGrid.ItemsSource = fPurchaseInvoices;
+                unpaidInvoicesGrid.CanUserAddRows = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve PurchaseInvoice ({ex.Message}");
+            }
+        }
+
+
         #endregion
     }
 }

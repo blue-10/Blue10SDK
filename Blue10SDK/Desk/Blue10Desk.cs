@@ -139,8 +139,8 @@ namespace Blue10SDK
         public List<PurchaseInvoice> GetPurchaseInvoiceWithoutPaymentDate(string pIdCompany) =>
             mBlue10Async.GetPurchaseInvoiceWithoutPaymentDateAsync(pIdCompany).Sync();
 
-        public List<PurchaseInvoice> GetPurchaseInvoiceWithoutPaymentDateA(string pIdCompany) =>
-            mBlue10Async.GetPurchaseInvoiceWithoutPaymentDateAsync(pIdCompany).Sync();
+        public PurchaseInvoice EditPurchaseInvoice(PurchaseInvoice pPurchaseInvoice) =>
+            mBlue10Async.EditPurchaseInvoiceAsync(pPurchaseInvoice).Sync();
 
         #endregion
 
