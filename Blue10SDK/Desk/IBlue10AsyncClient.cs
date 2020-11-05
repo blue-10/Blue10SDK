@@ -201,6 +201,10 @@ namespace Blue10SDK
         /// Returns purchase invoice with blue10 id pId
         /// </summary>
         Task<PurchaseInvoice> GetPurchaseInvoiceAsync(Guid pId);
+        /// <summary>
+        /// Updates PurchaseInvoice information and returns PurchaseInvoice as saved in blue10
+        /// </summary>
+        Task<PurchaseInvoice> EditPurchaseInvoiceAsync(PurchaseInvoice pPurchaseInvoice);
 
         /// <summary>
         /// Returns purchase invoice original (PDF) for purchase invoice with blue10 id pId

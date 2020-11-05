@@ -212,6 +212,9 @@ namespace Blue10SDK
         public Task<List<PurchaseInvoice>> GetPurchaseInvoiceWithoutPaymentDateAsync(string pIdCompany) =>
                  GetItem<List<PurchaseInvoice>>($"{PURCHASEINVOICES}/?filter[payment_date]=null&filter[id_company]={pIdCompany}");
 
+        public Task<PurchaseInvoice> EditPurchaseInvoiceAsync(PurchaseInvoice pPurchaseInvoice) =>
+            EditAndReturnItem(pPurchaseInvoice, $"{PURCHASEINVOICES}/{pPurchaseInvoice.Id}");
+
         #endregion
 
         #region PurchaseOrder
