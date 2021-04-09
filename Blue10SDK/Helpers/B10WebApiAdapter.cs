@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Blue10SDK.Exceptions;
+using Blue10SDK.Json;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Blue10SDK.Exceptions;
-using Blue10SDK.Json;
 
 namespace Blue10SDK
 {
     public class B10WebApiAdapter : IWebApiAdapter
     {
         #region Fields
-        
+
         private IHttpClientFactory mHttpClientFactory;
 
         #endregion
@@ -81,7 +81,7 @@ namespace Blue10SDK
             var fJson = await fResponseHttp.Content.ReadAsStringAsync().ConfigureAwait(false);
             var fResponsObject = JsonSerializer.Deserialize<JsonDataResult<string>>(fJson, DefaultJsonSerializerOptions.Options);
             if (fResponsObject == null) return default;
-            if (fResponsObject.code == 200 || fResponsObject.code == 202) return fResponsObject.data;
+            if (fResponsObject.code == 200 || fResponsObject.code == 202) return fResponsObject.data ?? "Success";
             throw new Blue10ApiException(fResponsObject.message);
         }
 
@@ -96,6 +96,6 @@ namespace Blue10SDK
             throw new Blue10ApiException(fResponsObject.message);
         }
 
-        
+
     }
 }
