@@ -64,6 +64,7 @@ namespace Blue10SdkWpfExample
         {
             var fValue = (mShowMenu) ? Visibility.Visible : Visibility.Hidden;
             CompanyTab.Visibility = fValue;
+            LogisticsDocumentActionTab.Visibility = fValue;
             DocumentActionTab.Visibility = fValue;
             VatCodeTab.Visibility = fValue;
             VatScenarioTab.Visibility = fValue;
@@ -123,13 +124,39 @@ namespace Blue10SdkWpfExample
             }
         }
 
-        private void OpenDocumentAction(object sender, RoutedEventArgs e)
+        private void  OpenDocumentAction(object sender, RoutedEventArgs e)
         {
             var fDocumentAction = ((Button)sender).DataContext as DocumentAction;
             var fDocList = (List<DocumentAction>) documentactionGrid.ItemsSource;
             documentactionGrid.ItemsSource = fDocList.Except(new List<DocumentAction> { fDocumentAction }).ToList();
             var fDocumentActionWindow = new DocumentActionWindow(mB10DH, fDocumentAction);
             fDocumentActionWindow.Show();
+        }
+
+        #endregion
+
+        #region LogicticsDocumentAction
+
+        private async void ListLogisticsDocumentActions(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDocumentActions = await mB10DH.GetLogisticsDocumentActions();
+                logisticsdocumentactionGrid.ItemsSource = fDocumentActions;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"List LogicticsDocumentActions failed ({ex.Message}");
+            }
+        }
+
+        private void OpenLogisticsDocumentAction(object sender, RoutedEventArgs e)
+        {
+            var fLogicticsDocumentAction = ((Button)sender).DataContext as LogisticsDocumentAction;
+            var fDocList = (List<LogisticsDocumentAction>)logisticsdocumentactionGrid.ItemsSource;
+            logisticsdocumentactionGrid.ItemsSource = fDocList.Except(new List<LogisticsDocumentAction> { fLogicticsDocumentAction }).ToList();
+            var fLogisticsDocumentActionWindow = new LogisticsDocumentActionWindow(mB10DH, fLogicticsDocumentAction);
+            fLogisticsDocumentActionWindow.Show();
         }
 
         #endregion

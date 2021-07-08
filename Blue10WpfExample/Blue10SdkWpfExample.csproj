@@ -17,4 +17,10 @@
     <ProjectReference Include="..\Blue10SDK\Blue10SDK.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="LogisticsDocumentActionWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

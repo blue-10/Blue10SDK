@@ -1,4 +1,6 @@
-﻿namespace Blue10SDK.Models
+﻿using System;
+
+namespace Blue10SDK.Models
 {
     public class InvoiceLine
     {
@@ -31,5 +33,7 @@
         public string PurchaseOrderCode { get; set; }
 
         public string PurchaseOrderLineCode { get; set; }
+        public DateTime LineDate { get; set; }
+        public DateTime ReportingDate { get; set; }
     }
 }

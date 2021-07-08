@@ -6,7 +6,7 @@ namespace Blue10SDK.Models
     {
         public Guid Id { get; set; }
 
-        public string Action { get; set; }
+        public EDocumentAction Action { get; set; }
 
         public string Status { get; set; }
 
