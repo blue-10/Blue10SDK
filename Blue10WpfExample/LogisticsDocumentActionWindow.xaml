@@ -19,7 +19,7 @@
                     </TextBlock>
                     <TextBlock Margin="5,50,0,0">
                         <Label Margin="0,0,0,0" >Add message : </Label>
-                        <TextBlock Name="message" Text="{Binding Path=message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox Name="CreatePurchaseInvoiceMessage"   Width="120"  Text="{Binding Path=message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <LineBreak/>
                         <Button x:Name="FinishCreatePurchaseInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishCreatePurchaseInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     </TextBlock>
