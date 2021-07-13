@@ -51,7 +51,15 @@
                     <Button x:Name="FinishGetMatchInvoiceButton" Content="Complete action"  Margin="5,5,0,0" Click="FinishGetMatchInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     <TextBlock x:Name="MatchPurchaseInvoiceText" Margin="5,28,0,0">
                     </TextBlock>
-                    <DataGrid  Margin="5,50,0,0" x:Name="InvoiceLineGrid" AutoGenerateColumns="True" CanUserAddRows="True" ItemsSource="{Binding Path=InvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Margin="5,50,0,0">
+                        <Label Margin="0,0,0,0" >Purchase order code : </Label>
+                     <TextBox x:Name="PurchaseInvoicePurchaseOrderNumber" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <LineBreak/>
+                        <Label Margin="0,0,0,0" >Post invoice to journal : </Label>
+                        <TextBox x:Name="PurchaseInvoiceJournal" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    </TextBlock>
+
+                    <DataGrid Margin="5,125,0,0" x:Name="PurchaseInvoiceLineGrid" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=PurchaseInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn Header="GL Account" x:Name="PurchaseInvoiceLineGLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />

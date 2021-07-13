@@ -1,6 +1,7 @@
 ﻿using Blue10SDK;
 using Blue10SDK.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace Blue10SdkWpfExample
@@ -54,23 +55,32 @@ namespace Blue10SdkWpfExample
             this.Close();
         }
 
-        private void FillMatchPurchaseOrderTab()
+        private async void FillMatchPurchaseOrderTab()
         {
             GetMatchInvoiceTab.Visibility = Visibility.Visible;
             GetMatchInvoiceTab.IsSelected = true;
             var fInvoice = DocAction.PurchaseInvoice;
+            PurchaseInvoicePurchaseOrderNumber.Text = fInvoice.PurchaseOrderNumber;
+            PurchaseInvoiceJournal.Text = fInvoice.TargetJournal;
             MatchPurchaseInvoiceText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
-            DocAction.PurchaseInvoice.InvoiceLines = new List<InvoiceLine>() { };
-            InvoiceLineGrid.ItemsSource = new List<InvoiceLine>() { new InvoiceLine() { Description = "doei" } };
+            var fGLAccounts = await B10DH.GetGLAccounts(fInvoice.IdCompany);
+            PurchaseInvoiceLineGLAccountList.ItemsSource = fGLAccounts.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fVatCodes = await B10DH.GetVatCodes(fInvoice.IdCompany);
+            PurchaseInvoiceLineVatCodeList.ItemsSource = fVatCodes.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fCostCenters = await B10DH.GetCostCenters(fInvoice.IdCompany);
+            PurchaseInvoiceLineCostCenterList.ItemsSource = fCostCenters.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fCostUnits = await B10DH.GetCostUnits(fInvoice.IdCompany);
+            PurchaseInvoiceLineCostUnitList.ItemsSource = fCostUnits.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fProjects = await B10DH.GetProjects(fInvoice.IdCompany);
+            PurchaseInvoiceLineProjectList.ItemsSource = fProjects.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            if (DocAction.PurchaseInvoice.InvoiceLines == null || DocAction.PurchaseInvoice.InvoiceLines.Count == 0) DocAction.PurchaseInvoice.InvoiceLines = new List<InvoiceLine>();
+            PurchaseInvoiceLineGrid.ItemsSource = DocAction.PurchaseInvoice.InvoiceLines;
         }
 
         private async void FinishGetMatchInvoice(object sender, RoutedEventArgs e)
         {
-            //DocAction.PurchaseInvoice.AdministrationCode = PostPurchaseInvoiceAdminitrationCode.Text;
-            //if (PostPurchaseInvoiceDueDate.SelectedDate != null)
-            //{
-            //    DocAction.PurchaseInvoice.PaymentDueDate = (DateTime)PostPurchaseInvoiceDueDate.SelectedDate;
-            //}
+            DocAction.PurchaseInvoice.PurchaseOrderNumber = PurchaseInvoicePurchaseOrderNumber.Text;
+            DocAction.PurchaseInvoice.TargetJournal = PurchaseInvoiceJournal.Text;
             DocAction.Status = "done";
             DocAction.Result = "success";
             await B10DH.SaveLogisticsDocumentAction(DocAction);
