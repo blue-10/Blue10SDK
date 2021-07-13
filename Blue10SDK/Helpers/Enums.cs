@@ -41,6 +41,11 @@ namespace Blue10SDK
         get_purchase_invoice_lines,
         block_purchase_invoice_for_payment,
         unblock_purchase_invoice_for_payment,
-        match_purchase_order
+        match_purchase_order,
+        create_logistics_purchase_invoice,
+        get_match_result,
+        export_invoice_to_logistics_adapter
     }
+
+    
 }

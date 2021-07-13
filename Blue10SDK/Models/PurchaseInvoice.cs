@@ -43,6 +43,8 @@ namespace Blue10SDK.Models
 
         public string FreeField2 { get; set; }
 
+        public string TargetJournal { get;set;}
+
         public bool BlockedForPayment { get; set; }
 
         public string DocumentUrl { get; set; }

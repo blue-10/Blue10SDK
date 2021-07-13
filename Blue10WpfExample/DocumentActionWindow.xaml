@@ -51,6 +51,30 @@
                             <DataGridComboBoxColumn Header="Project" x:Name="PurchaseInvoiceLineProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Free field 1" Binding="{Binding Path=FreeField1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Free field 2" Binding="{Binding Path=FreeField2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTemplateColumn Header="Line date">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=LineDate,StringFormat=dd-MM-yyy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding Path=LineDate, StringFormat=dd-MM-yyy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Rep. date">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=ReportingDate,StringFormat=dd-MM-yyy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding Path=ReportingDate, StringFormat=dd-MM-yyy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                    

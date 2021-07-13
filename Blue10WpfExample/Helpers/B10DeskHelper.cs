@@ -57,6 +57,16 @@ namespace Blue10SdkWpfExample
             return await mAsyncCLient.EditDocumentActionAsync(pDocumentAction);
         }
 
+        public async Task<List<LogisticsDocumentAction>> GetLogisticsDocumentActions()
+        {
+            return await mAsyncCLient.GetLogisticsDocumentActionsAsync();
+        }
+
+        public async Task<string> SaveLogisticsDocumentAction(LogisticsDocumentAction pLogisticsDocumentAction)
+        {
+            return await mAsyncCLient.EditLogisticsDocumentActionAsync(pLogisticsDocumentAction);
+        }
+
         public async Task<List<Company>> GetCompanies()
         {
             return await mAsyncCLient.GetCompaniesAsync();
