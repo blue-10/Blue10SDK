@@ -18,10 +18,13 @@
                         <Label Margin="0,0,0,0" >Vendor : </Label>
                         <ComboBox x:Name="vendorList" SelectedIndex="3" HorizontalAlignment="Left" Height="23"  Margin="25,0,0,0" VerticalAlignment="Top" Width="250"/>
                         <LineBreak/>
+                        <Label Margin="0,0,0,0" >Ordered by (email) : </Label> 
+                         <TextBox x:Name="POOrderedByEmail" Text="{Binding OrderedByEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Margin="0,0,0,0" Width="250" />
+                        <LineBreak/>
                         <Label Margin="0,0,0,0" >Description : </Label> 
                          <TextBox x:Name="PODescription" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Margin="0,0,0,0" Width="250" />
                     </TextBlock>
-                    <DataGrid  Margin="5,100,0,0" x:Name="purchaseOrderLineGrid" AutoGenerateColumns="False" >
+                    <DataGrid  Margin="5,120,0,0" x:Name="purchaseOrderLineGrid" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Administration code" Binding="{Binding Path=AdministrationCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
