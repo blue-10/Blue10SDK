@@ -14,41 +14,41 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1280*"/>
                     </Grid.ColumnDefinitions>
-
                     <TextBlock x:Name="CreatePurchaseInvoiceText" Margin="5,28,0,0">
                     </TextBlock>
                     <TextBlock Margin="5,50,0,0">
-                        <Label Margin="0,0,0,0" >Administration code : </Label>
-                     <TextBox x:Name="CreatePurchaseInvoiceAdminitrationCode" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label Margin="0,0,0,0" >Remark (optional) : </Label>
+                     <TextBox x:Name="CreatePurchaseInvoiceMessage" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                         <LineBreak/>
-                        <Label Margin="0,0,0,0" >Payment due date : </Label> 
-                        <DatePicker Name="CreatePurchaseInvoiceDueDate" SelectedDate="{Binding Path=PurchaseInvoiceDueDate,StringFormat='dd-MM-yyy'}"  HorizontalAlignment="Left" Height="23" Margin="10,0,0,0" />
-                        <LineBreak/>
-                        <Button x:Name="FinishCreatePurchaseInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishCreatePurchaseInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                        <Button x:Name="FinishCreatePurchaseInvoiceButton" Content="Complete action"  Margin="115,5,0,0" Click="FinishCreatePurchaseInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     </TextBlock>
 
                 </Grid>
             </TabItem>
             
-            <TabItem Header="Get purchase invoice lines" Name="PurchaseInvoiceLineTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+            <TabItem Header="Get match result" Name="GetMatchResultTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1280*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="FinishPurchaseInvoiceLineButton" Content="Complete action"  Margin="5,5,0,0" Click="FinishPurchaseInvoiceLine" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
-                    <TextBlock x:Name="PurchaseInvoiceLineInvoiceText" Margin="5,28,0,0">
+                    <Button x:Name="FinishMatchResultButton" Content="Complete action"  Margin="5,5,0,0" Click="FinishMatchResult" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                    <TextBlock x:Name="MatchResultText" Margin="5,28,0,0">
                     </TextBlock>
-                    <DataGrid  Margin="5,50,0,0" x:Name="PurchaseInvoiceLineGrid" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=PurchaseInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Margin="5,50,0,0">
+                        <Label Margin="0,0,0,0" >Purchase order nr : </Label>
+                        <TextBox x:Name="PurchaseOrderNumber" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+                    </TextBlock>
+                    <DataGrid  Margin="5,80,0,0" x:Name="MatchResultInvoiceLineGrid" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=MatchResultInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="GL Account" x:Name="PurchaseInvoiceLineGLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="GL Account" x:Name="MatchResultInvoiceLineGLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />
                             <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\} }" />
                             <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridComboBoxColumn Header="VAT code" x:Name="PurchaseInvoiceLineVatCodeList" SelectedValueBinding="{Binding VatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="VAT code" x:Name="MatchResultInvoiceLineVatCodeList" SelectedValueBinding="{Binding VatCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridCheckBoxColumn Header="VAT shifted" IsThreeState="True"  Binding="{Binding Path=VatReverseCharged, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridComboBoxColumn Header="Cost center" x:Name="PurchaseInvoiceLineCostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridComboBoxColumn Header="Cost unit" x:Name="PurchaseInvoiceLineCostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridComboBoxColumn Header="Project" x:Name="PurchaseInvoiceLineProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Cost center" x:Name="MatchResultInvoiceLineCostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Cost unit" x:Name="MatchResultInvoiceLineCostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Project" x:Name="MatchResultInvoiceLineProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Free field 1" Binding="{Binding Path=FreeField1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Free field 2" Binding="{Binding Path=FreeField2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                         </DataGrid.Columns>
@@ -56,72 +56,20 @@
                    
                 </Grid>
             </TabItem>
-            <TabItem Header="Post purchase invoice" Name="PostPurchaseInvoiceTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1280*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="PostPurchaseInvoiceText" Margin="5,28,0,0">
-                    </TextBlock>
-                    <TextBlock Margin="5,50,0,0">
-                        <Label Margin="0,0,0,0" >Administration code : </Label>
-                     <TextBox x:Name="PostPurchaseInvoiceAdminitrationCode" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <LineBreak/>
-                        <Label Margin="0,0,0,0" >Payment due date : </Label> 
-                        <DatePicker Name="PostPurchaseInvoiceDueDate" SelectedDate="{Binding Path=PurchaseInvoiceDueDate,StringFormat='dd-MM-yyy'}"  HorizontalAlignment="Left" Height="23" Margin="10,0,0,0" />
-                        <LineBreak/>
-                        <Button x:Name="FinishPostPurchaseInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishPostPurchaseInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
-                    </TextBlock>
-                    <DataGrid Margin="5,150,0,0" x:Name="purchaseInvoiceLineGrid" AutoGenerateColumns="False" IsReadOnly="True" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Line" Binding="{Binding Path=LineNo}" />
-                            <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" />
-                            <DataGridTextColumn Header="GL Account" Binding="{Binding Path=GlAccountCode}" />
-                            <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, StringFormat=\{0:0.00\} }" />
-                            <DataGridTextColumn Header="Vat amount" Binding="{Binding Path=VatAmount, StringFormat=\{0:0.00\} }" />
-                            <DataGridTextColumn Header="Vat code" Binding="{Binding Path=VatCode}" />
-                            <DataGridTextColumn Header="Cost Center" Binding="{Binding Path=CostCenterCode}" />
-                            <DataGridTextColumn Header="Cost Unit" Binding="{Binding Path=CostUnitCode}" />
-                            <DataGridTextColumn Header="Project" Binding="{Binding Path=ProjectCode}" />
-                            <DataGridTextColumn Header="Article" Binding="{Binding Path=ArticleCode}" />
-                            <DataGridTextColumn Header="Warehouse" Binding="{Binding Path=WarehouseCode}" />
-                            <DataGridTextColumn Header="PO code" Binding="{Binding Path=PurchaseOrderCode}" />
-                            <DataGridTextColumn Header="PO line code" Binding="{Binding Path=PurchaseOrderLineCode}" />
-                        </DataGrid.Columns>
-
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Get purchase invoice due date" Name="GetPurchaseInvoiceDueDateTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+            
+            <TabItem Header="Export purchase invoice" Name="ExportInvoiceTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1280*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock x:Name="PurchaseInvoiceDueDateText" Margin="5,28,0,0">
-                    </TextBlock>
-                    <TextBlock Margin="5,50,0,0">
-                        <Label Margin="0,0,0,0" >Payment due date : </Label>                        
-                        <DatePicker Name="GetPurchaseInvoiceDueDate" SelectedDate="{Binding Path=PurchaseInvoiceDueDate,StringFormat='dd-MM-yyy'}"  HorizontalAlignment="Left" Height="23" Margin="10,0,0,0" />
-                        <LineBreak/>
-                        <Button x:Name="FinishGetPurchaseInvoiceDueDateButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishPurchaseInvoiceDueDate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
-                    </TextBlock>
-
-                </Grid>
-            </TabItem>
-            <TabItem Header="(Un)block invoice" Name="UnblockInvoiceTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1280*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock x:Name="UnblockInvoiceHeaderText" Margin="5,28,0,0">
+                    <TextBlock x:Name="ExportInvoiceHeaderText" Margin="5,28,0,0">
                     </TextBlock>
                     <TextBlock Margin="5,40,0,0">
                         <Label Margin="0,0,0,0" >Remark (optional) : </Label> 
                         <TextBox x:Name="UnblockInvoiceText" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                         <LineBreak/>
-                        <Button x:Name="FinishUnblockInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishUnblockInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                        <Button x:Name="ExportInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishExportInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     </TextBlock>
 
                 </Grid>

@@ -152,11 +152,11 @@ namespace Blue10SdkWpfExample
 
         private void OpenLogisticAction(object sender, RoutedEventArgs e)
         {
-            var LogisticAction = ((Button)sender).DataContext as DocumentAction;
-            var fDocList = (List<DocumentAction>)documentactionGrid.ItemsSource;
-            documentactionGrid.ItemsSource = fDocList.Except(new List<DocumentAction> { LogisticAction }).ToList();
-            var fDocumentActionWindow = new DocumentActionWindow(mB10DH, LogisticAction);
-            fDocumentActionWindow.Show();
+            var LogisticAction = ((Button)sender).DataContext as LogisticsDocumentAction;
+            var fDocList = (List<LogisticsDocumentAction>)logisticactionGrid.ItemsSource;
+            logisticactionGrid.ItemsSource = fDocList.Except(new List<LogisticsDocumentAction> { LogisticAction }).ToList();
+            var fLogisticsActionWindow = new LogisticsActionWindow(mB10DH, LogisticAction);
+            fLogisticsActionWindow.Show();
         }
 
         #endregion

@@ -12,39 +12,30 @@ namespace Blue10SdkWpfExample
     /// </summary>
     public partial class LogisticsActionWindow : Window
     {
-        public LogisticsActionWindow(B10DeskHelper pB10DH, DocumentAction pDocAction)
+        public LogisticsActionWindow(B10DeskHelper pB10DH, LogisticsDocumentAction pDocAction)
         {
             InitializeComponent();
             B10DH = pB10DH;
             DocAction = pDocAction;
-            PurchaseInvoiceLineTab.Visibility = Visibility.Hidden;
             CreatePurchaseInvoiceTab.Visibility = Visibility.Hidden;
-            GetPurchaseInvoiceDueDateTab.Visibility = Visibility.Hidden;
-            PostPurchaseInvoiceTab.Visibility = Visibility.Hidden;
+            GetMatchResultTab.Visibility = Visibility.Hidden;
+            ExportInvoiceTab.Visibility = Visibility.Hidden;
             switch (DocAction.Action)
             {
-                case EDocumentAction.get_purchase_invoice_lines:                   
-                    FillPurchaseInvoiceLineTab();
-                    break;
-                case EDocumentAction.create_purchase_invoice:
+                case ELogisticsDocumentAction.create_logistics_purchase_invoice:
                     FillCreatePurchaseInvoiceTab();
                     break;
-                case EDocumentAction.post_block_purchase_invoice:
-                    FillPostPurchaseInvoiceTab();
+                case ELogisticsDocumentAction.get_match_result:
+                    FillGetMatchResultTab();
                     break;
-                case EDocumentAction.get_payment_due_date:                   
-                    FillGetPurchaseInvoiceDueDateTab();
+                case ELogisticsDocumentAction.export_logistics_purchase_invoice:
+                    FillExportInvoiceTab();
                     break;
-                case EDocumentAction.unblock_purchase_invoice_for_payment:
-                case EDocumentAction.block_purchase_invoice_for_payment:
-                    FillUnblockInvoiceTab();
-                    break;
-
             }
         }
 
         private B10DeskHelper B10DH { get; set; }
-        private DocumentAction DocAction { get; set; }
+        private LogisticsDocumentAction DocAction { get; set; }
 
 
         private void FillCreatePurchaseInvoiceTab()
@@ -52,124 +43,68 @@ namespace Blue10SdkWpfExample
             CreatePurchaseInvoiceTab.Visibility = Visibility.Visible;
             CreatePurchaseInvoiceTab.IsSelected = true;
             var fInvoice = DocAction.PurchaseInvoice;
-            CreatePurchaseInvoiceText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
+            CreatePurchaseInvoiceText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, Purchase Order: {fInvoice.PurchaseOrderNumber}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}";
         }
        
         private async void FinishCreatePurchaseInvoice(object sender, RoutedEventArgs e)
         {
-            DocAction.PurchaseInvoice.AdministrationCode = CreatePurchaseInvoiceAdminitrationCode.Text;
-            if (CreatePurchaseInvoiceDueDate.SelectedDate != null)
-            {
-                DocAction.PurchaseInvoice.PaymentDueDate = (DateTime)CreatePurchaseInvoiceDueDate.SelectedDate;
-            }
+            DocAction.Message = CreatePurchaseInvoiceMessage.Text;            
             DocAction.Status = "done";
             DocAction.Result = "success";
-            await B10DH.SaveDocumentAction(DocAction);
+            await B10DH.SaveLogisticsDocumentAction(DocAction);
             this.Close();
-        }
+        }    
 
-        private void FillPostPurchaseInvoiceTab()
+        private async void FillGetMatchResultTab()
         {
-            PostPurchaseInvoiceTab.Visibility = Visibility.Visible;
-            PostPurchaseInvoiceTab.IsSelected = true;
+            GetMatchResultTab.Visibility = Visibility.Visible;
+            GetMatchResultTab.IsSelected = true;
             var fInvoice = DocAction.PurchaseInvoice;
-            PostPurchaseInvoiceText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
-            purchaseInvoiceLineGrid.ItemsSource = fInvoice.InvoiceLines;
-        }
-
-        private async void FinishPostPurchaseInvoice(object sender, RoutedEventArgs e)
-        {
-            DocAction.PurchaseInvoice.AdministrationCode = PostPurchaseInvoiceAdminitrationCode.Text;
-            if (PostPurchaseInvoiceDueDate.SelectedDate != null)
-            {
-                DocAction.PurchaseInvoice.PaymentDueDate = (DateTime)PostPurchaseInvoiceDueDate.SelectedDate;
-            }
-            DocAction.Status = "done";
-            DocAction.Result = "success";
-            await B10DH.SaveDocumentAction(DocAction);
-            this.Close();
-        }
-
-        private void FillGetPurchaseInvoiceDueDateTab()
-        {
-            GetPurchaseInvoiceDueDateTab.Visibility = Visibility.Visible;
-            GetPurchaseInvoiceDueDateTab.IsSelected = true;
-            var fInvoice = DocAction.PurchaseInvoice;
-            PurchaseInvoiceDueDateText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, date: {fInvoice.InvoiceDate.ToString("yyyy-MM-dd")}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
-        }
-        private async void FinishPurchaseInvoiceDueDate(object sender, RoutedEventArgs e)
-        {
-            if (GetPurchaseInvoiceDueDate.SelectedDate != null)
-            {
-                DocAction.PurchaseInvoice.PaymentDueDate = (DateTime)GetPurchaseInvoiceDueDate.SelectedDate;
-                DocAction.Status = "done";
-                DocAction.Result = "success";
-                await B10DH.SaveDocumentAction(DocAction);
-            }
-            this.Close();
-        }
-
-        
-
-        private async void FillPurchaseInvoiceLineTab()
-        {
-            PurchaseInvoiceLineTab.Visibility = Visibility.Visible;
-            PurchaseInvoiceLineTab.IsSelected = true;
-            var fInvoice = DocAction.PurchaseInvoice;
-            PurchaseInvoiceLineInvoiceText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
-
+            MatchResultText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, Purchase Order: {fInvoice.PurchaseOrderNumber}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}";
+            PurchaseOrderNumber.Text = fInvoice.PurchaseOrderNumber;
             var fGLAccounts = await B10DH.GetGLAccounts(fInvoice.IdCompany);
-            PurchaseInvoiceLineGLAccountList.ItemsSource = fGLAccounts.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            MatchResultInvoiceLineGLAccountList.ItemsSource = fGLAccounts.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fVatCodes = await B10DH.GetVatCodes(fInvoice.IdCompany);
-            PurchaseInvoiceLineVatCodeList.ItemsSource = fVatCodes.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            MatchResultInvoiceLineVatCodeList.ItemsSource = fVatCodes.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fCostCenters = await B10DH.GetCostCenters(fInvoice.IdCompany);
-            PurchaseInvoiceLineCostCenterList.ItemsSource = fCostCenters.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            MatchResultInvoiceLineCostCenterList.ItemsSource = fCostCenters.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fCostUnits = await B10DH.GetCostUnits(fInvoice.IdCompany);
-            PurchaseInvoiceLineCostUnitList.ItemsSource = fCostUnits.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            MatchResultInvoiceLineCostUnitList.ItemsSource = fCostUnits.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fProjects = await B10DH.GetProjects(fInvoice.IdCompany);
-            PurchaseInvoiceLineProjectList.ItemsSource = fProjects.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
-            var fItemSource = (DocAction.PurchaseInvoice.InvoiceLines.Count == 0) ? new List<InvoiceLine>() : DocAction.PurchaseInvoice.InvoiceLines;
-            PurchaseInvoiceLineGrid.ItemsSource = DocAction.PurchaseInvoice.InvoiceLines;
+            MatchResultInvoiceLineProjectList.ItemsSource = fProjects.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fItemSource = new List<InvoiceLine>();
+            MatchResultInvoiceLineGrid.ItemsSource = DocAction.PurchaseInvoice.InvoiceLines;
         }
 
-        private async void FinishPurchaseInvoiceLine(object sender, RoutedEventArgs e)
+        private async void FinishMatchResult(object sender, RoutedEventArgs e)
         {
-            DocAction.PurchaseInvoice.InvoiceLines = PurchaseInvoiceLineGrid.ItemsSource as List<InvoiceLine>;
+            DocAction.PurchaseInvoice.InvoiceLines = MatchResultInvoiceLineGrid.ItemsSource as List<InvoiceLine>;
             DocAction.Status = "done";
             DocAction.Result = "success";
-            await B10DH.SaveDocumentAction(DocAction);
+            await B10DH.SaveLogisticsDocumentAction(DocAction);
             this.Close();
         }
 
-        private void FillUnblockInvoiceTab()
+        private void FillExportInvoiceTab()
         {
-            UnblockInvoiceTab.Visibility = Visibility.Visible;
-            UnblockInvoiceTab.IsSelected = true;
+            ExportInvoiceTab.Visibility = Visibility.Visible;
+            ExportInvoiceTab.IsSelected = true;
             var fInvoice = DocAction.PurchaseInvoice;
-            var fBlockUnBlock = (DocAction.Action == EDocumentAction.block_purchase_invoice_for_payment) ? "Block" : "Unblock";
-            UnblockInvoiceHeaderText.Text = $"{fBlockUnBlock} Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}, vat: {(fInvoice.GrossAmount - fInvoice.NetAmount)}";
+            ExportInvoiceHeaderText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, Purchase Order: {fInvoice.PurchaseOrderNumber}, net: {fInvoice.NetAmount.ToString()}, gross: {fInvoice.GrossAmount}";
         }
 
-        private async void FinishUnblockInvoice(object sender, RoutedEventArgs e)
+        private async void FinishExportInvoice(object sender, RoutedEventArgs e)
         {
             DocAction.Status = "done";
-            if (!string.IsNullOrEmpty(UnblockInvoiceText.Text))
-            {
-                DocAction.Message = UnblockInvoiceText.Text;
-                DocAction.Result = "success_warning";
-            }
-            else
-            {
-                DocAction.Result = "success";
-            }
-            await B10DH.SaveDocumentAction(DocAction);
+            DocAction.Result = "success";
+            await B10DH.SaveLogisticsDocumentAction(DocAction);
             this.Close();
     }
 
     private async void CloseWait(object sender, RoutedEventArgs e)
         {
             DocAction.Status = "waiting_for_administration";
-            await B10DH.SaveDocumentAction(DocAction);
+            await B10DH.SaveLogisticsDocumentAction(DocAction);
             this.Close();
         }
 
