@@ -10,9 +10,9 @@ namespace Blue10SdkWpfExample
     /// <summary>
     /// Interaction logic for DocumentAction.xaml
     /// </summary>
-    public partial class DocumentActionWindow : Window
+    public partial class LogisticsActionWindow : Window
     {
-        public DocumentActionWindow(B10DeskHelper pB10DH, DocumentAction pDocAction)
+        public LogisticsActionWindow(B10DeskHelper pB10DH, DocumentAction pDocAction)
         {
             InitializeComponent();
             B10DH = pB10DH;

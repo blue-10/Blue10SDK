@@ -43,4 +43,12 @@ namespace Blue10SDK
         unblock_purchase_invoice_for_payment,
         match_purchase_order
     }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum ELogisticsDocumentAction
+    {
+        create_logistics_purchase_invoice,
+        get_match_result,
+        export_logistics_purchase_invoice
+    }
 }
