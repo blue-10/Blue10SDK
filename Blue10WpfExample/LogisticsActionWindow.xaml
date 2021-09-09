@@ -38,7 +38,7 @@
                         <Label Margin="0,0,0,0" >Purchase order nr : </Label>
                         <TextBox x:Name="PurchaseOrderNumber" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
                     </TextBlock>
-                    <DataGrid  Margin="5,80,0,0" x:Name="MatchResultInvoiceLineGrid" AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=MatchResultInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid  Margin="5,80,0,0" x:Name="MatchResultInvoiceLineGrid"  AutoGenerateColumns="False" CanUserAddRows="True" ItemsSource="{Binding Path=MatchResultInvoiceLineGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn Header="GL Account" x:Name="MatchResultInvoiceLineGLAccountList" SelectedValueBinding="{Binding GlAccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Net amount" Binding="{Binding Path=NetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />
@@ -67,7 +67,7 @@
                     </TextBlock>
                     <TextBlock Margin="5,40,0,0">
                         <Label Margin="0,0,0,0" >Remark (optional) : </Label> 
-                        <TextBox x:Name="UnblockInvoiceText" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                        <TextBox x:Name="ExportInvoiceRemark" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
                         <LineBreak/>
                         <Button x:Name="ExportInvoiceButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishExportInvoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     </TextBlock>

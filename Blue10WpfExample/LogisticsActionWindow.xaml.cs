@@ -73,12 +73,13 @@ namespace Blue10SdkWpfExample
             var fProjects = await B10DH.GetProjects(fInvoice.IdCompany);
             MatchResultInvoiceLineProjectList.ItemsSource = fProjects.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fItemSource = new List<InvoiceLine>();
-            MatchResultInvoiceLineGrid.ItemsSource = DocAction.PurchaseInvoice.InvoiceLines;
+            MatchResultInvoiceLineGrid.ItemsSource = fItemSource;
         }
 
         private async void FinishMatchResult(object sender, RoutedEventArgs e)
         {
             DocAction.PurchaseInvoice.InvoiceLines = MatchResultInvoiceLineGrid.ItemsSource as List<InvoiceLine>;
+            DocAction.PurchaseInvoice.PurchaseOrderNumber = MatchResultText.Text;
             DocAction.Status = "done";
             DocAction.Result = "success";
             await B10DH.SaveLogisticsDocumentAction(DocAction);
@@ -95,6 +96,7 @@ namespace Blue10SdkWpfExample
 
         private async void FinishExportInvoice(object sender, RoutedEventArgs e)
         {
+            DocAction.Message = ExportInvoiceRemark.Text;
             DocAction.Status = "done";
             DocAction.Result = "success";
             await B10DH.SaveLogisticsDocumentAction(DocAction);
