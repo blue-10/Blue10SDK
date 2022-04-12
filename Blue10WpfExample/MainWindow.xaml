@@ -53,8 +53,8 @@
                     <Button x:Name="showDocumentActions" Content="Get document actions" Click="ListDocumentActions" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" Width="160" Grid.ColumnSpan="2"/>
                     <DataGrid  Margin="5,55,0,0" x:Name="documentactionGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=documentactionGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Company" Binding="{Binding Path=Action}" />
-                            <DataGridTextColumn Header="Action" Binding="{Binding Path=Status}" />
+                            <DataGridTextColumn Header="Action" Binding="{Binding Path=Action}" />
+                            <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}" />
                             <DataGridTextColumn Header="Created" Binding="{Binding Path=CreationTime}" />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>

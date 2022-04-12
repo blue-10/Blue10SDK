@@ -39,6 +39,9 @@ namespace Blue10SdkWpfExample
                 case EDocumentAction.block_purchase_invoice_for_payment:
                     FillUnblockInvoiceTab();
                     break;
+                case EDocumentAction.match_purchase_order:
+                    FillMatchPurchaseOrderTab();
+                    break;
 
             }
         }
@@ -62,6 +65,23 @@ namespace Blue10SdkWpfExample
             {
                 DocAction.PurchaseInvoice.PaymentDueDate = (DateTime)CreatePurchaseInvoiceDueDate.SelectedDate;
             }
+            DocAction.Status = "done";
+            DocAction.Result = "success";
+            await B10DH.SaveDocumentAction(DocAction);
+            this.Close();
+        }
+
+        private void FillMatchPurchaseOrderTab()
+        {
+            MatchPurchaseOrderTab.Visibility = Visibility.Visible;
+            MatchPurchaseOrderTab.IsSelected = true;
+            var fInvoice = DocAction.PurchaseInvoice;
+            MatchPurchaseOrderText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, Purchase order number: {fInvoice.PurchaseOrderNumber}";
+        }
+
+        private async void FinishMatchPurchaseOrder(object sender, RoutedEventArgs e)
+        {
+            DocAction.PurchaseInvoice.PurchaseOrderNumber = MatchPurchaseOrderNumber.Text;
             DocAction.Status = "done";
             DocAction.Result = "success";
             await B10DH.SaveDocumentAction(DocAction);
