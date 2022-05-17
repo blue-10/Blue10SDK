@@ -49,8 +49,11 @@
                             <DataGridComboBoxColumn Header="Cost center" x:Name="PurchaseInvoiceLineCostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Cost unit" x:Name="PurchaseInvoiceLineCostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Project" x:Name="PurchaseInvoiceLineProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
-                            <DataGridTextColumn Header="Free field 1" Binding="{Binding Path=FreeField1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
-                            <DataGridTextColumn Header="Free field 2" Binding="{Binding Path=FreeField2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Free field 1" Binding="{Binding Path=FreeField_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Free field 2" Binding="{Binding Path=FreeField_2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Free field 3" Binding="{Binding Path=FreeField_3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Free field 4" Binding="{Binding Path=FreeField_4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                            <DataGridTextColumn Header="Free field 5" Binding="{Binding Path=FreeField_5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                         </DataGrid.Columns>
                     </DataGrid>
                    
