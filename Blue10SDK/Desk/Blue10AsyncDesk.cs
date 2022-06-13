@@ -14,6 +14,9 @@ namespace Blue10SDK
         private const string COMPANIES = "companies";
         private const string COSTCENTERS = "costcenters";
         private const string COSTUNITS = "costunits";
+        private const string DIMENSION3S = "dimension3s";
+        private const string DIMENSION4S = "dimension4s";
+        private const string DIMENSION5S = "dimension5s";
         private const string DOCUMENTACTIONS = "documentactions";
         private const string DOCUMENTORIGINALS = "documentoriginals";
         private const string GLACCOUNTS = "glaccounts";
@@ -120,6 +123,54 @@ namespace Blue10SDK
                 DeleteItem($"{COSTCENTERS}/{pCostCenter.Id}");
 
         #endregion
+
+        #region Dimension3s
+
+        public Task<List<Dimension3>> GetDimension3sAsync(string pIdCompany) =>
+                GetItems<List<Dimension3>>($"{DIMENSION3S}/{pIdCompany}");
+
+        public Task<Dimension3> AddDimension3Async(Dimension3 pDimension3) =>
+                AddItem(pDimension3, DIMENSION3S);
+
+        public Task<Dimension3> EditDimension3Async(Dimension3 pDimension3) =>
+                EditAndReturnItem(pDimension3, $"{DIMENSION3S}/{pDimension3.Id}");
+
+        public Task<bool> DeleteDimension3Async(Dimension3 pDimension3) =>
+               DeleteItem($"{DIMENSION3S}/{pDimension3.Id}");
+
+        #endregion 
+
+        #region Dimension4s
+
+        public Task<List<Dimension4>> GetDimension4sAsync(string pIdCompany) =>
+                GetItems<List<Dimension4>>($"{DIMENSION4S}/{pIdCompany}");
+
+        public Task<Dimension4> AddDimension4Async(Dimension4 pDimension4) =>
+                AddItem(pDimension4, DIMENSION4S);
+
+        public Task<Dimension4> EditDimension4Async(Dimension4 pDimension4) =>
+                EditAndReturnItem(pDimension4, $"{DIMENSION4S}/{pDimension4.Id}");
+
+        public Task<bool> DeleteDimension4Async(Dimension4 pDimension4) =>
+               DeleteItem($"{DIMENSION4S}/{pDimension4.Id}");
+
+        #endregion 
+
+        #region Dimension5s
+
+        public Task<List<Dimension5>> GetDimension5sAsync(string pIdCompany) =>
+                GetItems<List<Dimension5>>($"{DIMENSION5S}/{pIdCompany}");
+
+        public Task<Dimension5> AddDimension5Async(Dimension5 pDimension5) =>
+                AddItem(pDimension5, DIMENSION5S);
+
+        public Task<Dimension5> EditDimension5Async(Dimension5 pDimension5) =>
+                EditAndReturnItem(pDimension5, $"{DIMENSION5S}/{pDimension5.Id}");
+
+        public Task<bool> DeleteDimension5Async(Dimension5 pDimension5) =>
+               DeleteItem($"{DIMENSION5S}/{pDimension5.Id}");
+
+        #endregion 
 
         #region DocumentActions
 

@@ -19,7 +19,9 @@
         public string CostCenterCode { get; set; }
 
         public string CostUnitCode { get; set; }
-
+        public string Dimension3Code { get; set; }
+        public string Dimension4Code { get; set; }
+        public string Dimension5Code { get; set; }
         public string ProjectCode { get; set; }
 
         public string FreeField1 { get; set; }
