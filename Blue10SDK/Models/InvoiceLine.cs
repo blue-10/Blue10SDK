@@ -1,4 +1,6 @@
-﻿namespace Blue10SDK.Models
+﻿using System;
+
+namespace Blue10SDK.Models
 {
     public class InvoiceLine
     {
@@ -22,14 +24,19 @@
 
         public string ProjectCode { get; set; }
 
-        public string FreeField1 { get; set; }
+        public string FreeField_1 { get; set; }
 
-        public string FreeField2 { get; set; }
+        public string FreeField_2 { get; set; }
+        public string FreeField_3 { get; set; }
+        public string FreeField_4 { get; set; }
+        public string FreeField_5 { get; set; }
         public string ArticleCode { get; set; }
 
         public string WarehouseCode { get; set; }
         public string PurchaseOrderCode { get; set; }
 
         public string PurchaseOrderLineCode { get; set; }
+        public DateTime? DeferredFromDate { get; set; }
+        public DateTime? DeferredToDate { get; set; }
     }
 }
