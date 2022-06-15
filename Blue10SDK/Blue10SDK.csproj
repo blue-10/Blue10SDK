@@ -4,7 +4,7 @@
     <Title>Blue10SDK</Title>
     <Description>Blue10 .NET CORE SDK</Description>
     <Summary>Blue10 .NET CORE SDK</Summary>
-    <VersionPrefix>0.1.9</VersionPrefix>
+    <VersionPrefix>0.1.10</VersionPrefix>
     <PackageId>Blue10SDK</PackageId>
     <PackageIcon>b10icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -13,7 +13,7 @@
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Authors>John Zuiderwijk,Yasen Dinkov</Authors>
+    <Authors>John Zuijderwijk,Yasen Dinkov</Authors>
     <Company>Blue10 BV</Company>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>

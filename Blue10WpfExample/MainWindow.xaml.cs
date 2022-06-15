@@ -67,6 +67,7 @@ namespace Blue10SdkWpfExample
         {
             var fValue = (mShowMenu) ? Visibility.Visible : Visibility.Hidden;
             CompanyTab.Visibility = fValue;
+            LogisticsDocumentActionTab.Visibility = fValue;
             DocumentActionTab.Visibility = fValue;
             LogisticActionTab.Visibility = fValue;
             VatCodeTab.Visibility = fValue;
