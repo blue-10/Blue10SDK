@@ -68,6 +68,7 @@ namespace Blue10SdkWpfExample
             var fValue = (mShowMenu) ? Visibility.Visible : Visibility.Hidden;
             CompanyTab.Visibility = fValue;
             DocumentActionTab.Visibility = fValue;
+            LogisticActionTab.Visibility = fValue;
             VatCodeTab.Visibility = fValue;
             VatScenarioTab.Visibility = fValue;
             GLAccountTab.Visibility = fValue;
@@ -136,6 +137,32 @@ namespace Blue10SdkWpfExample
             documentactionGrid.ItemsSource = fDocList.Except(new List<DocumentAction> { fDocumentAction }).ToList();
             var fDocumentActionWindow = new DocumentActionWindow(mB10DH, fDocumentAction);
             fDocumentActionWindow.Show();
+        }
+
+        #endregion
+
+        #region LogisticAction
+
+        private async void ListLogisticActions(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fLogisticActions = await mB10DH.GetLogistictDocumentActions();
+                logisticactionGrid.ItemsSource = fLogisticActions;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"List DocumentActions failed ({ex.Message}");
+            }
+        }
+
+        private void OpenLogisticAction(object sender, RoutedEventArgs e)
+        {
+            var LogisticAction = ((Button)sender).DataContext as LogisticsDocumentAction;
+            var fDocList = (List<LogisticsDocumentAction>)logisticactionGrid.ItemsSource;
+            logisticactionGrid.ItemsSource = fDocList.Except(new List<LogisticsDocumentAction> { LogisticAction }).ToList();
+            var fLogisticsActionWindow = new LogisticsActionWindow(mB10DH, LogisticAction);
+            fLogisticsActionWindow.Show();
         }
 
         #endregion

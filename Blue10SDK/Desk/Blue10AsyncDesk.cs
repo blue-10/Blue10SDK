@@ -200,12 +200,12 @@ namespace Blue10SDK
 
         public Task<bool> DeleteGLAccountAsync(GLAccount pGLAccount) =>
                 DeleteItem($"{GLACCOUNTS}/{pGLAccount.Id}");
-        
-        
-        
-        #endregion 
 
-        #region DocumentActions
+
+
+        #endregion
+
+        #region LogisticsDocumentActions
 
         public Task<List<LogisticsDocumentAction>> GetLogisticsDocumentActionsAsync() =>
                 GetItems<List<LogisticsDocumentAction>>(LOGISTICSDOCUMENTACTIONS);

@@ -53,13 +53,36 @@
                     <Button x:Name="showDocumentActions" Content="Get document actions" Click="ListDocumentActions" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" Width="160" Grid.ColumnSpan="2"/>
                     <DataGrid  Margin="5,55,0,0" x:Name="documentactionGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=documentactionGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Action" Binding="{Binding Path=Action}" />
+                            <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}" />
+                            <DataGridTextColumn Header="Created" Binding="{Binding Path=CreationTime}" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="OpenDocumentAction">Open</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+			<TabItem Header="Logistics actions" Name="LogisticActionTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="767*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="showLogisticActions" Content="Get logistic actions" Click="ListLogisticActions" HorizontalAlignment="Left" Margin="5,15,0,0" VerticalAlignment="Top" Width="160" Grid.ColumnSpan="2"/>
+                    <DataGrid  Margin="5,55,0,0" x:Name="logisticactionGrid" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Path=logisticactionGrid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                        <DataGrid.Columns>
                             <DataGridTextColumn Header="Company" Binding="{Binding Path=Action}" />
                             <DataGridTextColumn Header="Action" Binding="{Binding Path=Status}" />
                             <DataGridTextColumn Header="Created" Binding="{Binding Path=CreationTime}" />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Click="OpenDocumentAction">Open</Button>
+                                        <Button Click="OpenLogisticAction">Open</Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

@@ -3,15 +3,7 @@ using Blue10SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Blue10SdkWpfExample
 {
@@ -47,6 +39,9 @@ namespace Blue10SdkWpfExample
                 case EDocumentAction.block_purchase_invoice_for_payment:
                     FillUnblockInvoiceTab();
                     break;
+                case EDocumentAction.match_purchase_order:
+                    FillMatchPurchaseOrderTab();
+                    break;
 
             }
         }
@@ -70,6 +65,23 @@ namespace Blue10SdkWpfExample
             {
                 DocAction.PurchaseInvoice.PaymentDueDate = (DateTime)CreatePurchaseInvoiceDueDate.SelectedDate;
             }
+            DocAction.Status = "done";
+            DocAction.Result = "success";
+            await B10DH.SaveDocumentAction(DocAction);
+            this.Close();
+        }
+
+        private void FillMatchPurchaseOrderTab()
+        {
+            MatchPurchaseOrderTab.Visibility = Visibility.Visible;
+            MatchPurchaseOrderTab.IsSelected = true;
+            var fInvoice = DocAction.PurchaseInvoice;
+            MatchPurchaseOrderText.Text = $"Invoice: {fInvoice.AdministrationCode} / {fInvoice.Blue10Code}, Company: {fInvoice.IdCompany}, Vendor: {fInvoice.VendorCode}, Purchase order number: {fInvoice.PurchaseOrderNumber}";
+        }
+
+        private async void FinishMatchPurchaseOrder(object sender, RoutedEventArgs e)
+        {
+            DocAction.PurchaseInvoice.PurchaseOrderNumber = MatchPurchaseOrderNumber.Text;
             DocAction.Status = "done";
             DocAction.Result = "success";
             await B10DH.SaveDocumentAction(DocAction);

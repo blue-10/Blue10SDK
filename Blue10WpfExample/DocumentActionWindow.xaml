@@ -134,6 +134,23 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="Match purchase order" Name="MatchPurchaseOrderTab" Visibility="Hidden" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1280*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="MatchPurchaseOrderText" Margin="5,28,0,0">
+                    </TextBlock>
+                    <TextBlock Margin="5,50,0,0">
+                        <Label Margin="0,0,0,0" >Purchase order number : </Label>
+                     <TextBox x:Name="MatchPurchaseOrderNumber" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <LineBreak/>
+                        <Button x:Name="FinishMatchPurchaseOrderButton" Content="Complete action"  Margin="125,5,0,0" Click="FinishMatchPurchaseOrder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                    </TextBlock>
+
+                </Grid>
+            </TabItem>
             
 
         </TabControl>
