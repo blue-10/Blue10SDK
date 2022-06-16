@@ -48,6 +48,9 @@
                             <DataGridCheckBoxColumn Header="VAT shifted" IsThreeState="True"  Binding="{Binding Path=VatReverseCharged, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridComboBoxColumn Header="Cost center" x:Name="PurchaseInvoiceLineCostCenterList" SelectedValueBinding="{Binding CostCenterCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Cost unit" x:Name="PurchaseInvoiceLineCostUnitList" SelectedValueBinding="{Binding CostUnitCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Dim 3" x:Name="PurchaseInvoiceLineDimension3List" SelectedValueBinding="{Binding Dimension3Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Dim 4" x:Name="PurchaseInvoiceLineDimension4List" SelectedValueBinding="{Binding Dimension4Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                            <DataGridComboBoxColumn Header="Dim 5" x:Name="PurchaseInvoiceLineDimension5List" SelectedValueBinding="{Binding Dimension5Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridComboBoxColumn Header="Project" x:Name="PurchaseInvoiceLineProjectList" SelectedValueBinding="{Binding ProjectCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                             <DataGridTextColumn Header="Free field 1" Binding="{Binding Path=FreeField_1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                             <DataGridTextColumn Header="Free field 2" Binding="{Binding Path=FreeField_2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
@@ -111,6 +114,9 @@
                             <DataGridTextColumn Header="Vat code" Binding="{Binding Path=VatCode}" />
                             <DataGridTextColumn Header="Cost Center" Binding="{Binding Path=CostCenterCode}" />
                             <DataGridTextColumn Header="Cost Unit" Binding="{Binding Path=CostUnitCode}" />
+                            <DataGridTextColumn Header="Dim 3" Binding="{Binding Path=Dimension3Code}" />
+                            <DataGridTextColumn Header="Dim 4" Binding="{Binding Path=Dimension4Code}" />
+                            <DataGridTextColumn Header="Dim 5" Binding="{Binding Path=Dimension5Code}" />
                             <DataGridTextColumn Header="Project" Binding="{Binding Path=ProjectCode}" />
                             <DataGridTextColumn Header="Article" Binding="{Binding Path=ArticleCode}" />
                             <DataGridTextColumn Header="Warehouse" Binding="{Binding Path=WarehouseCode}" />

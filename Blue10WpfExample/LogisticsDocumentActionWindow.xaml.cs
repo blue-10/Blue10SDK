@@ -22,13 +22,13 @@ namespace Blue10SdkWpfExample
 
             switch (DocAction.Action)
             {
-                case EDocumentAction.create_logistics_purchase_invoice:
+                case ELogisticsDocumentAction.create_logistics_purchase_invoice:
                     FillCreatePurchaseInvoiceTab();
                     break;
-                case EDocumentAction.get_match_result:
+                case ELogisticsDocumentAction.get_match_result:
                     FillMatchPurchaseOrderTab();
                     break;
-                case EDocumentAction.export_invoice_to_logistics_adapter:                   
+                case ELogisticsDocumentAction.export_logistics_purchase_invoice:                   
                     ExportInvoiceToLogisticsTab();
                     break;
             }
