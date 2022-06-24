@@ -69,6 +69,29 @@ namespace Blue10SDK
 
         #endregion
 
+        #region Dimension3s
+        public List<Dimension3> GetDimension3sAsync(string pIdCompany) => mBlue10Async.GetDimension3sAsync(pIdCompany).Sync();
+        public Dimension3 AddDimension3Async(Dimension3 pDimension3) => mBlue10Async.AddDimension3Async(pDimension3).Sync();
+        public Dimension3 EditDimension3Async(Dimension3 pDimension3) => mBlue10Async.EditDimension3Async(pDimension3).Sync();
+        public bool DeleteDimension3Async(Dimension3 pDimension3) => mBlue10Async.DeleteDimension3Async(pDimension3).Sync();
+        #endregion 
+
+        #region Dimension4s
+
+        public List<Dimension4> GetDimension4sAsync(string pIdCompany) => mBlue10Async.GetDimension4sAsync(pIdCompany).Sync();
+        public Dimension4 AddDimension4Async(Dimension4 pDimension4) => mBlue10Async.AddDimension4Async(pDimension4).Sync();
+        public Dimension4 EditDimension4Async(Dimension4 pDimension4) => mBlue10Async.EditDimension4Async(pDimension4).Sync();
+        public bool DeleteDimension4Async(Dimension4 pDimension4) => mBlue10Async.DeleteDimension4Async(pDimension4).Sync();
+
+        #endregion 
+
+        #region Dimension5s
+        public List<Dimension5> GetDimension5sAsync(string pIdCompany) => mBlue10Async.GetDimension5sAsync(pIdCompany).Sync();
+        public Dimension5 AddDimension5Async(Dimension5 pDimension5) => mBlue10Async.AddDimension5Async(pDimension5).Sync();
+        public Dimension5 EditDimension5Async(Dimension5 pDimension5) => mBlue10Async.EditDimension5Async(pDimension5).Sync();
+        public bool DeleteDimension5Async(Dimension5 pDimension5) => mBlue10Async.DeleteDimension5Async(pDimension5).Sync();
+        #endregion 
+
         #region DocumentActions
         public List<DocumentAction> GetDocumentActions() =>  mBlue10Async.GetDocumentActionsAsync().Sync();
 

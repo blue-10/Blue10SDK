@@ -87,6 +87,10 @@ namespace Blue10SDKExampleConsole
                         var fLine = new XElement("InvoiceLine");
                         fLine.Add(new XElement("LedgerAccount", fInvoiceLine.GlAccountCode));
                         fLine.Add(new XElement("CostCenter", fInvoiceLine.CostCenterCode ?? string.Empty));
+                        fLine.Add(new XElement("CostUnit", fInvoiceLine.CostUnitCode ?? string.Empty));
+                        fLine.Add(new XElement("Dimension3", fInvoiceLine.Dimension3Code ?? string.Empty));
+                        fLine.Add(new XElement("Dimension4", fInvoiceLine.Dimension4Code ?? string.Empty));
+                        fLine.Add(new XElement("Dimension5", fInvoiceLine.Dimension5Code ?? string.Empty));
                         fLine.Add(new XElement("Description", fInvoiceLine.Description));
                         fLine.Add(new XElement("NetAmount", fInvoiceLine.NetAmount));
                         fLine.Add(new XElement("VatCode", fInvoiceLine.VatCode));

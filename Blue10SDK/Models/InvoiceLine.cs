@@ -21,7 +21,9 @@ namespace Blue10SDK.Models
         public string CostCenterCode { get; set; }
 
         public string CostUnitCode { get; set; }
-
+        public string Dimension3Code { get; set; }
+        public string Dimension4Code { get; set; }
+        public string Dimension5Code { get; set; }
         public string ProjectCode { get; set; }
 
         public string FreeField_1 { get; set; }
@@ -36,6 +38,8 @@ namespace Blue10SDK.Models
         public string PurchaseOrderCode { get; set; }
 
         public string PurchaseOrderLineCode { get; set; }
+        public DateTime LineDate { get; set; }
+        public DateTime ReportingDate { get; set; }
         public DateTime? DeferredFromDate { get; set; }
         public DateTime? DeferredToDate { get; set; }
     }

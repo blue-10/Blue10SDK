@@ -50,6 +50,9 @@ namespace Blue10SdkWpfExample
             vatscenarioCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             costcenterCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             costunitCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            dimension3CompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            dimension4CompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
+            dimension5CompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             paymenttermCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             projectCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
             warehouseCompanyList.ItemsSource = fCompanies.Select(x => x.Id).ToList();
@@ -64,6 +67,7 @@ namespace Blue10SdkWpfExample
         {
             var fValue = (mShowMenu) ? Visibility.Visible : Visibility.Hidden;
             CompanyTab.Visibility = fValue;
+            LogisticsDocumentActionTab.Visibility = fValue;
             DocumentActionTab.Visibility = fValue;
             LogisticActionTab.Visibility = fValue;
             VatCodeTab.Visibility = fValue;
@@ -72,6 +76,9 @@ namespace Blue10SdkWpfExample
             VendorTab.Visibility = fValue;
             CostCenterTab.Visibility = fValue;
             CostUnitTab.Visibility = fValue;
+            Dimension3Tab.Visibility = fValue;
+            Dimension4Tab.Visibility = fValue;
+            Dimension5Tab.Visibility = fValue;
             ErpActionTab.Visibility = fValue;
             PaymenttermTab.Visibility = fValue;
             ProjectTab.Visibility = fValue;
@@ -448,6 +455,169 @@ namespace Blue10SdkWpfExample
             }
             return mCurrentCostUnits[pCompanyCode];
         }
+        #endregion
+
+        #region Dimension3s
+        private Dictionary<string, List<Dimension3>> mCurrentDimension3s { get; set; } = new Dictionary<string, List<Dimension3>>();
+        private async void ListDimension3s(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fSelectCompany = (string)dimension3CompanyList.SelectedItem;
+                if (!mCurrentDimension3s.ContainsKey(fSelectCompany)) mCurrentDimension3s.Add(fSelectCompany, null);
+                var fDimension3s = await mB10DH.GetDimension3s(fSelectCompany);
+                mCurrentDimension3s[fSelectCompany] = Extensions.Clone<List<Dimension3>>(fDimension3s);
+                dimension3Grid.ItemsSource = fDimension3s;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve Dimension3s ({ex.Message}");
+            }
+        }
+
+        private async void SaveDimension3(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDimension3 = ((Button)sender).DataContext as Dimension3;
+                var fCurrent = mCurrentDimension3s[(string)dimension3CompanyList.SelectedItem].FirstOrDefault(x => x.Id == fDimension3.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fDimension3.AdministrationCode)
+                {
+                    fDimension3.Id = Guid.Empty;
+                    await mB10DH.DeleteDimension3(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fDimension3.IdCompany)) fDimension3.IdCompany = (string)dimension3CompanyList.SelectedItem;
+                fDimension3 = await mB10DH.SaveDimension3(fDimension3);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save Dimension3 failed ({ex.Message}");
+            }
+            ListDimension3s(sender, e);
+        }
+
+        private async void DeleteDimension3(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDimension3 = ((Button)sender).DataContext as Dimension3;
+                await mB10DH.DeleteDimension3(fDimension3);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete Dimension3 failed ({ex.Message}");
+            }
+            ListDimension3s(sender, e);
+        }
+
+        #endregion
+
+        #region Dimension4s
+        private Dictionary<string, List<Dimension4>> mCurrentDimension4s { get; set; } = new Dictionary<string, List<Dimension4>>();
+        private async void ListDimension4s(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fSelectCompany = (string)dimension4CompanyList.SelectedItem;
+                if (!mCurrentDimension4s.ContainsKey(fSelectCompany)) mCurrentDimension4s.Add(fSelectCompany, null);
+                var fDimension4s = await mB10DH.GetDimension4s(fSelectCompany);
+                mCurrentDimension4s[fSelectCompany] = Extensions.Clone<List<Dimension4>>(fDimension4s);
+                dimension4Grid.ItemsSource = fDimension4s;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve Dimension4s ({ex.Message}");
+            }
+        }
+
+        private async void SaveDimension4(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDimension4 = ((Button)sender).DataContext as Dimension4;
+                var fCurrent = mCurrentDimension4s[(string)dimension4CompanyList.SelectedItem].FirstOrDefault(x => x.Id == fDimension4.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fDimension4.AdministrationCode)
+                {
+                    fDimension4.Id = Guid.Empty;
+                    await mB10DH.DeleteDimension4(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fDimension4.IdCompany)) fDimension4.IdCompany = (string)dimension4CompanyList.SelectedItem;
+                fDimension4 = await mB10DH.SaveDimension4(fDimension4);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save Dimension4 failed ({ex.Message}");
+            }
+            ListDimension4s(sender, e);
+        }
+        private async void DeleteDimension4(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDimension4 = ((Button)sender).DataContext as Dimension4;
+                await mB10DH.DeleteDimension4(fDimension4);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete Dimension4 failed ({ex.Message}");
+            }
+            ListDimension4s(sender, e);
+        }
+        
+        #endregion
+        #region Dimension5s
+        private Dictionary<string, List<Dimension5>> mCurrentDimension5s { get; set; } = new Dictionary<string, List<Dimension5>>();
+        private async void ListDimension5s(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fSelectCompany = (string)dimension5CompanyList.SelectedItem;
+                if (!mCurrentDimension5s.ContainsKey(fSelectCompany)) mCurrentDimension5s.Add(fSelectCompany, null);
+                var fDimension5s = await mB10DH.GetDimension5s(fSelectCompany);
+                mCurrentDimension5s[fSelectCompany] = Extensions.Clone<List<Dimension5>>(fDimension5s);
+                dimension5Grid.ItemsSource = fDimension5s;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed retrieve Dimension5s ({ex.Message}");
+            }
+        }
+
+        private async void SaveDimension5(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDimension5 = ((Button)sender).DataContext as Dimension5;
+                var fCurrent = mCurrentDimension5s[(string)dimension5CompanyList.SelectedItem].FirstOrDefault(x => x.Id == fDimension5.Id);
+                if (fCurrent != null && fCurrent.AdministrationCode != fDimension5.AdministrationCode)
+                {
+                    fDimension5.Id = Guid.Empty;
+                    await mB10DH.DeleteDimension5(fCurrent);
+                }
+                if (string.IsNullOrEmpty(fDimension5.IdCompany)) fDimension5.IdCompany = (string)dimension5CompanyList.SelectedItem;
+                fDimension5 = await mB10DH.SaveDimension5(fDimension5);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Save Dimension5 failed ({ex.Message}");
+            }
+            ListDimension5s(sender, e);
+        }
+
+        private async void DeleteDimension5(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fDimension5 = ((Button)sender).DataContext as Dimension5;
+                await mB10DH.DeleteDimension5(fDimension5);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete Dimension5 failed ({ex.Message}");
+            }
+            ListDimension5s(sender, e);
+        }
+        
         #endregion
 
         #region GLAccounts

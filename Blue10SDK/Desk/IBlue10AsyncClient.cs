@@ -106,7 +106,7 @@ namespace Blue10SDK
         Task<CostCenter> AddCostCenterAsync(CostCenter pCostCenter);
 
         /// <summary>
-        /// Updates CostCenterr information and returns vendor as saved in blue10
+        /// Updates CostCenter information and returns CostCenter as saved in blue10
         /// </summary>
         Task<CostCenter> EditCostCenterAsync(CostCenter pCostCenter);
 
@@ -114,7 +114,63 @@ namespace Blue10SDK
         /// Delete CostCenter from blue10, returns true if successful
         /// </summary>
         Task<bool> DeleteCostCenterAsync(CostCenter pCostCenter);
+        /// <summary>
+        /// Returns all Dimension3 for company. Input is id from company
+        /// </summary>
+        Task<List<Dimension3>> GetDimension3sAsync(string pIdCompany);
 
+        /// <summary>
+        /// Add Dimension3 and returns Dimension3 as saved in blue10
+        /// </summary>
+        Task<Dimension3> AddDimension3Async(Dimension3 pDimension3);
+
+        /// <summary>
+        /// Updates Dimension3 information and returns Dimension3 as saved in blue10
+        /// </summary>
+        Task<Dimension3> EditDimension3Async(Dimension3 pDimension3);
+
+        /// <summary>
+        /// Delete Dimension3 from blue10, returns true if successful
+        /// </summary>
+        Task<bool> DeleteDimension3Async(Dimension3 pDimension3);
+        /// <summary>
+        /// Returns all Dimension4 for company. Input is id from company
+        /// </summary>
+        Task<List<Dimension4>> GetDimension4sAsync(string pIdCompany);
+
+        /// <summary>
+        /// Add Dimension4 and returns Dimension4 as saved in blue10
+        /// </summary>
+        Task<Dimension4> AddDimension4Async(Dimension4 pDimension4);
+
+        /// <summary>
+        /// Updates Dimension4 information and returns Dimension4 as saved in blue10
+        /// </summary>
+        Task<Dimension4> EditDimension4Async(Dimension4 pDimension4);
+
+        /// <summary>
+        /// Delete Dimension4 from blue10, returns true if successful
+        /// </summary>
+        Task<bool> DeleteDimension4Async(Dimension4 pDimension4);
+        /// <summary>
+        /// Returns all Dimension5 for company. Input is id from company
+        /// </summary>
+        Task<List<Dimension5>> GetDimension5sAsync(string pIdCompany);
+
+        /// <summary>
+        /// Add Dimension5 and returns Dimension5 as saved in blue10
+        /// </summary>
+        Task<Dimension5> AddDimension5Async(Dimension5 pDimension5);
+
+        /// <summary>
+        /// Updates Dimension5 information and returns Dimension5 as saved in blue10
+        /// </summary>
+        Task<Dimension5> EditDimension5Async(Dimension5 pDimension5);
+
+        /// <summary>
+        /// Delete Dimension5 from blue10, returns true if successful
+        /// </summary>
+        Task<bool> DeleteDimension5Async(Dimension5 pDimension5);
         Task<List<DocumentAction>> GetDocumentActionsAsync();
 
         /// <summary>

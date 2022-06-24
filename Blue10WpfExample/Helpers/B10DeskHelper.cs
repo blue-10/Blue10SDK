@@ -109,6 +109,53 @@ namespace Blue10SdkWpfExample
             return await mAsyncCLient.DeleteCostUnitAsync(pCostUnit);
         }
 
+        public async Task<List<Dimension3>> GetDimension3s(string pIdCompany)
+        {
+            return await mAsyncCLient.GetDimension3sAsync(pIdCompany);
+        }
+
+        public async Task<Dimension3> SaveDimension3(Dimension3 pDimension3)
+        {
+            if (pDimension3.Id == Guid.Empty) return await mAsyncCLient.AddDimension3Async(pDimension3);
+            return await mAsyncCLient.EditDimension3Async(pDimension3);
+        }
+
+        public async Task<bool> DeleteDimension3(Dimension3 pDimension3)
+        {
+            return await mAsyncCLient.DeleteDimension3Async(pDimension3);
+        }
+
+        public async Task<List<Dimension4>> GetDimension4s(string pIdCompany)
+        {
+            return await mAsyncCLient.GetDimension4sAsync(pIdCompany);
+        }
+
+        public async Task<Dimension4> SaveDimension4(Dimension4 pDimension4)
+        {
+            if (pDimension4.Id == Guid.Empty) return await mAsyncCLient.AddDimension4Async(pDimension4);
+            return await mAsyncCLient.EditDimension4Async(pDimension4);
+        }
+
+        public async Task<bool> DeleteDimension4(Dimension4 pDimension4)
+        {
+            return await mAsyncCLient.DeleteDimension4Async(pDimension4);
+        }
+        public async Task<List<Dimension5>> GetDimension5s(string pIdCompany)
+        {
+            return await mAsyncCLient.GetDimension5sAsync(pIdCompany);
+        }
+
+        public async Task<Dimension5> SaveDimension5(Dimension5 pDimension5)
+        {
+            if (pDimension5.Id == Guid.Empty) return await mAsyncCLient.AddDimension5Async(pDimension5);
+            return await mAsyncCLient.EditDimension5Async(pDimension5);
+        }
+
+        public async Task<bool> DeleteDimension5(Dimension5 pDimension5)
+        {
+            return await mAsyncCLient.DeleteDimension5Async(pDimension5);
+        }
+
         public async Task<List<Project>> GetProjects(string pIdCompany)
         {
             return await mAsyncCLient.GetProjectsAsync(pIdCompany);

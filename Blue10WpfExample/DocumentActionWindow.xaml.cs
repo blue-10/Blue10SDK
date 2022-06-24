@@ -146,6 +146,12 @@ namespace Blue10SdkWpfExample
             PurchaseInvoiceLineCostCenterList.ItemsSource = fCostCenters.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fCostUnits = await B10DH.GetCostUnits(fInvoice.IdCompany);
             PurchaseInvoiceLineCostUnitList.ItemsSource = fCostUnits.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fDimension3s = await B10DH.GetDimension3s(fInvoice.IdCompany);
+            PurchaseInvoiceLineDimension3List.ItemsSource = fDimension3s.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fDimension4s = await B10DH.GetDimension4s(fInvoice.IdCompany);
+            PurchaseInvoiceLineDimension4List.ItemsSource = fDimension4s.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fDimension5s = await B10DH.GetDimension5s(fInvoice.IdCompany);
+            PurchaseInvoiceLineDimension5List.ItemsSource = fDimension5s.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fProjects = await B10DH.GetProjects(fInvoice.IdCompany);
             PurchaseInvoiceLineProjectList.ItemsSource = fProjects.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fItemSource = (DocAction.PurchaseInvoice.InvoiceLines.Count == 0) ? new List<InvoiceLine>() : DocAction.PurchaseInvoice.InvoiceLines;
