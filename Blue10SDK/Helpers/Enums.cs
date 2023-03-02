@@ -28,7 +28,8 @@ namespace Blue10SDK
     public enum EAdministrationAction
     {
         update_all_master_data,
-        update_vendors
+        update_vendors,
+        update_purchase_orders
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
