@@ -553,6 +553,7 @@
                             <DataGridTextColumn Header="Administration Code" Binding="{Binding Path=AdministrationCode, UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="Description" Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridComboBoxColumn Header="Vendor" x:Name="poVendorList" SelectedValueBinding="{Binding VendorCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"    />
+                            <DataGridTextColumn Header="Gross amount" Binding="{Binding Path=GrossAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.00\}}" />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
