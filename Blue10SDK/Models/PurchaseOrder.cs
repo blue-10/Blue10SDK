@@ -7,6 +7,7 @@ namespace Blue10SDK.Models
         public string VendorCode { get; set; }
         public string Description { get; set; }
         public string OrderedByEmail { get;set;}
+        public decimal GrossAmount { get; set; }
         public List<PurchaseOrderLine> OrderLines { get; set; }
     }
 }
