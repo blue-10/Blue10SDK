@@ -152,8 +152,12 @@ namespace Blue10SdkWpfExample
             PurchaseInvoiceLineDimension4List.ItemsSource = fDimension4s.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fDimension5s = await B10DH.GetDimension5s(fInvoice.IdCompany);
             PurchaseInvoiceLineDimension5List.ItemsSource = fDimension5s.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
-            var fProjects = await B10DH.GetProjects(fInvoice.IdCompany);
+            var fProjects = await B10DH.GetProjects(fInvoice.IdCompany);           
             PurchaseInvoiceLineProjectList.ItemsSource = fProjects.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fArticles = await B10DH.GetArticles(fInvoice.IdCompany);
+            PurchaseInvoiceLineArticleList.ItemsSource = fArticles.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
+            var fWarehouses = await B10DH.GetWarehouses(fInvoice.IdCompany);
+            PurchaseInvoiceLineWarehouseList.ItemsSource = fWarehouses.ToDictionary(x => x.AdministrationCode, y => $"{y.AdministrationCode} - {y.Name}");
             var fItemSource = (DocAction.PurchaseInvoice.InvoiceLines.Count == 0) ? new List<InvoiceLine>() : DocAction.PurchaseInvoice.InvoiceLines;
             PurchaseInvoiceLineGrid.ItemsSource = DocAction.PurchaseInvoice.InvoiceLines;
         }

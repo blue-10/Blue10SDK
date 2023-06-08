@@ -33,8 +33,9 @@ namespace Blue10SDK.Models
         public string FreeField_4 { get; set; }
         public string FreeField_5 { get; set; }
         public string ArticleCode { get; set; }
-
         public string WarehouseCode { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
         public string PurchaseOrderCode { get; set; }
 
         public string PurchaseOrderLineCode { get; set; }
