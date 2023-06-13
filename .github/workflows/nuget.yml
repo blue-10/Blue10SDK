@@ -3,14 +3,15 @@ name: Build
 on:
   push:
     # Sequence of patterns matched against refs/heads
-    branches:    
-      - master    
+    branches:
+      - master
+  workflow_dispatch:
+  
 
 jobs:
   build:
-
     runs-on: windows-latest
-    
+
     steps:
       - uses: actions/checkout@v1
       - name: Setup .NET Core
@@ -20,9 +21,10 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
-        
-      - name: Pack with dotnet
-        run: dotnet pack Blue10SDK --configuration Release        
 
       - name: Pack with dotnet
+        run: dotnet pack Blue10SDK --configuration Release
+
+      - name: Push with dotnet
         run: dotnet nuget push Blue10SDK\bin\Release\Blue10SDK.*.nupkg  -s https://www.nuget.org/ -k ${{ secrets.NUGET_KEY }}
+        if: github.ref == 'refs/heads/master'
