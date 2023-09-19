@@ -81,9 +81,18 @@ namespace Blue10SdkWpfExample
 
         private async void FinishMatchPurchaseOrder(object sender, RoutedEventArgs e)
         {
+            if (!string.IsNullOrEmpty(MatchPurchaseOrderError.Text))
+            {
+                DocAction.Result = "error";
+                DocAction.Message = MatchPurchaseOrderError.Text;
+            }
+            else
+            {
+                DocAction.Result = "success";
+            }
             DocAction.PurchaseInvoice.PurchaseOrderNumber = MatchPurchaseOrderNumber.Text;
             DocAction.Status = "done";
-            DocAction.Result = "success";
+            
             await B10DH.SaveDocumentAction(DocAction);
             this.Close();
         }
