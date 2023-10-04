@@ -34,13 +34,13 @@ namespace Blue10SDK.Models
         public string FreeField_5 { get; set; }
         public string ArticleCode { get; set; }
         public string WarehouseCode { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal? UnitPrice { get; set; }
         public string PurchaseOrderCode { get; set; }
 
         public string PurchaseOrderLineCode { get; set; }
-        public DateTime LineDate { get; set; }
-        public DateTime ReportingDate { get; set; }
+        public DateTime? LineDate { get; set; }
+        public DateTime? ReportingDate { get; set; }
         public DateTime? DeferredFromDate { get; set; }
         public DateTime? DeferredToDate { get; set; }
     }
