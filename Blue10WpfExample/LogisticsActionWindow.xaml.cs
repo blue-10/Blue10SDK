@@ -79,7 +79,7 @@ namespace Blue10SdkWpfExample
         private async void FinishMatchResult(object sender, RoutedEventArgs e)
         {
             DocAction.PurchaseInvoice.InvoiceLines = MatchResultInvoiceLineGrid.ItemsSource as List<InvoiceLine>;
-            DocAction.PurchaseInvoice.PurchaseOrderNumber = MatchResultText.Text;
+            DocAction.PurchaseInvoice.PurchaseOrderNumber = PurchaseOrderNumber.Text;
             DocAction.Status = "done";
             DocAction.Result = "success";
             await B10DH.SaveLogisticsDocumentAction(DocAction);
